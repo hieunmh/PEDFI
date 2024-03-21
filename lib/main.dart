@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/theme_data.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/home_screen.dart';
+import 'package:pedfi/screens/bottom_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -25,7 +25,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getCurrentAppTheme();
     super.initState();
   }
@@ -36,13 +35,12 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => themeChangeProvider),
       ],
-      child:
-          Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
+      child: Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Pedfi App",
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: const HomeScreen(),
+          home: const BottomBarScreen(),
         );
       }),
     );
