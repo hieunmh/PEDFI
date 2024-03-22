@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/theme_data.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/bottom_bar.dart';
+import 'package:pedfi/routes/generate_route.dart';
+// import 'package:pedfi/screens/bottom_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -40,7 +41,9 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: "Pedfi App",
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: const BottomBarScreen(),
+          // home: const BottomBarScreen(),
+          initialRoute: '/',
+          onGenerateRoute: RouteGenerator().generateRoute,
         );
       }),
     );
