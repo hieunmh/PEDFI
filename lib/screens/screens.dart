@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedfi/bloc/screen_bloc.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/account_screen.dart';
+import 'package:pedfi/screens/profile/profile_screen.dart';
 import 'package:pedfi/screens/add_screen.dart';
 import 'package:pedfi/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +29,7 @@ List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
 const List<Widget> bottomNavScreen = <Widget>[
   HomeScreen(),
   AddScreen(),
-  AccountScreen(),
+  ProfileScreen()
 ];
 
 class Screens extends StatelessWidget {
