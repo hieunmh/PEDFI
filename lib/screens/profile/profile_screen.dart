@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/profile/profile_detail.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,8 @@ class ProfileScreen extends StatelessWidget {
           'Profile',
           style: TextStyle(
             color: color,
-            fontWeight: FontWeight.w500
+            fontWeight: FontWeight.w500,
+            fontSize: 25
           ),
         ),
       ),
@@ -29,11 +31,11 @@ class ProfileScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
                 child: Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(10),
                   width: 100, height: 100,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
@@ -48,6 +50,18 @@ class ProfileScreen extends StatelessWidget {
                     )
                   );
                 },
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Text(
+                  'Nguyen Minh Hieu',
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15
+                  ),
+                ),
               ),
               
               SwitchListTile(
