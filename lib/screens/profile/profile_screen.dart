@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/profile/profile_detail.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -12,77 +10,90 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
 
-    final Color color = themeState.getDarkTheme ? Colors.white70 : Colors.black87;
+    final Color color = themeState.getDarkTheme ? Colors.white : Colors.black87;
     final Color bgcolor = themeState.getDarkTheme ? Colors.black87 : Colors.white70;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: bgcolor,
-        title: Text(
-          'Profile',
-          style: TextStyle(
-            color: color,
-            fontWeight: FontWeight.w500,
-            fontSize: 25
-          ),
-        ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  width: 100, height: 100,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.asset('assets/images/meo.jpg'),
-                  ),
+      body: Column(
+        children: [
+          Text('Setting',
+            style: TextStyle(
+              fontSize: 36, 
+              fontWeight: FontWeight.bold,
+              color: color
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'Account',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+              color: color
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset('assets/images/meo.jpg', width: 70, height:70)
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => const ProfileDetailScreen()
+                const SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Nguyen Minh Hieu',
+                      style: TextStyle(
+                        color: color,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Detail',
+                      style: TextStyle(
+                        color: Colors.grey
+                      ),
                     )
-                  );
-                },
-              ),
-
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Text(
-                  'Nguyen Minh Hieu',
-                  style: TextStyle(
-                    color: color,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15
+                  ],
+                ),
+                const Spacer(),
+                Container(
+                  width: 60, height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(15)
                   ),
-                ),
-              ),
-              
-              SwitchListTile(
-                title: Text(
-                  'Theme',
-                  style: TextStyle(color: color),
-                ),
-                secondary: Icon(
-                  themeState.getDarkTheme ? CupertinoIcons.moon_stars_fill : CupertinoIcons.sun_max_fill,
-                  color: color,
-                ),
-                onChanged: (bool value) {
-                  themeState.setDarkTheme = value;
-                },
-                value: themeState.getDarkTheme,
-                activeColor: const Color.fromRGBO(24, 119, 242, 1),
-              ),
-            ],
+                  child: const Icon(CupertinoIcons.forward),
+                )
+              ],
+            ),
           ),
-        )
-      ),
+          // SwitchListTile(
+          //   title: Text(
+          //     'Theme',
+          //     style: TextStyle(color: color),
+          //   ),
+          //   secondary: Icon(
+          //     themeState.getDarkTheme 
+          //     ? CupertinoIcons.moon_stars_fill : CupertinoIcons.sun_max_fill,
+          //     color: color,
+          //   ),
+          //   onChanged: (bool value) {
+          //     themeState.setDarkTheme = value;
+          //   },
+          //   value: themeState.getDarkTheme,
+          //   activeColor: const Color.fromRGBO(24, 119, 242, 1),
+          // ),
+        ],
+      )
     );
   }
 }
