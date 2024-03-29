@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
+import 'package:pedfi/screens/profile/profile_detail.dart';
+import 'package:pedfi/widgets/foward_button.dart';
+import 'package:pedfi/widgets/setting_item.dart';
+import 'package:pedfi/widgets/settting_switch.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -16,84 +20,110 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: bgcolor,
+        title: Text(
+          'Settings',
+          style: TextStyle(
+            color: color,
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: Column(
-        children: [
-          Text('Setting',
-            style: TextStyle(
-              fontSize: 36, 
-              fontWeight: FontWeight.bold,
-              color: color
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'Account',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              color: color
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.asset('assets/images/meo.jpg', width: 70, height:70)
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Account',
+                style: TextStyle(
+                  color: color,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
                 ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: Row(
                   children: [
-                    Text(
-                      'Nguyen Minh Hieu',
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                      ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.asset('assets/images/meo.jpg', width: 70, height: 70),
                     ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Detail',
-                      style: TextStyle(
-                        color: Colors.grey
-                      ),
+                    const SizedBox(width: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Nguyen Minh Hieu',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: color
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Full stack developer',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                    const Spacer(),
+                    ForwardButton(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProfileDetailScreen()
+                          )
+                        );
+                      }
                     )
                   ],
                 ),
-                const Spacer(),
-                Container(
-                  width: 60, height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(15)
-                  ),
-                  child: const Icon(CupertinoIcons.forward),
-                )
-              ],
-            ),
+              ),
+              const SizedBox(height: 40),
+              Text(
+                'Settings',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  color: color
+                ),
+              ),
+              SettingItem(
+                title: "Virtual Stock",
+                icon: CupertinoIcons.waveform_path_ecg,
+                bgColor: Colors.transparent,
+                iconColor: Colors.grey,
+                value: "",
+                onTap: () {},
+              ),
+              const SizedBox(height: 20),
+              SettingSwitch(
+                title: 'Dark mode', 
+                bgColor: Colors.transparent,
+                // themeState.getDarkTheme ? 
+                // Colors.purple.shade100 : Colors.orange.shade100, 
+                iconColor: themeState.getDarkTheme ? 
+                Colors.purple : Colors.orange, 
+                icon: themeState.getDarkTheme ? 
+                CupertinoIcons.moon_fill : CupertinoIcons.sun_max_fill, 
+                value: themeState.getDarkTheme, 
+                onTap: (bool value) {
+                  themeState.setDarkTheme = value;
+                }
+              )
+            ],
           ),
-          // SwitchListTile(
-          //   title: Text(
-          //     'Theme',
-          //     style: TextStyle(color: color),
-          //   ),
-          //   secondary: Icon(
-          //     themeState.getDarkTheme 
-          //     ? CupertinoIcons.moon_stars_fill : CupertinoIcons.sun_max_fill,
-          //     color: color,
-          //   ),
-          //   onChanged: (bool value) {
-          //     themeState.setDarkTheme = value;
-          //   },
-          //   value: themeState.getDarkTheme,
-          //   activeColor: const Color.fromRGBO(24, 119, 242, 1),
-          // ),
-        ],
-      )
+        ),
+      ),
     );
   }
 }
