@@ -24,15 +24,15 @@ class SettingItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
-    final Color color = themeState.getDarkTheme ? Colors.white70 : Colors.black87;
+    final Color color = themeState.getDarkTheme ? Colors.white : Colors.black87;
 
     return SizedBox(
       width: double.infinity,
       child: Row(
         children: [
           Container(
-            height: 50,
-            width: 50,
+            height: 40,
+            width: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: bgColor,
@@ -47,7 +47,7 @@ class SettingItem extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w400,
               color: color
             ),
           ),

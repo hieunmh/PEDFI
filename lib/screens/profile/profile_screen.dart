@@ -7,8 +7,14 @@ import 'package:pedfi/widgets/setting_item.dart';
 import 'package:pedfi/widgets/settting_switch.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+class _ProfileScreenState extends State<ProfileScreen>  {
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: bgcolor,
         title: Text(
-          'Settings',
+          'Profile',
           style: TextStyle(
             color: color,
             fontSize: 36,
@@ -80,7 +86,7 @@ class ProfileScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ProfileDetailScreen()
+                            builder: (context) => const ProfileDetail()
                           )
                         );
                       }
@@ -98,21 +104,21 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               SettingItem(
-                title: "Virtual Stock",
+                title: 'Virtual Stock',
                 icon: CupertinoIcons.waveform_path_ecg,
-                bgColor: Colors.transparent,
-                iconColor: Colors.grey,
-                value: "",
+                bgColor: themeState.getDarkTheme ? Colors.green.shade500 : Colors.green.shade200,
+                iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
+                value: '',
                 onTap: () {},
               ),
               const SizedBox(height: 20),
               SettingSwitch(
                 title: 'Dark mode', 
-                bgColor: Colors.transparent,
-                // themeState.getDarkTheme ? 
-                // Colors.purple.shade100 : Colors.orange.shade100, 
+                bgColor: themeState.getDarkTheme ? 
+                const Color.fromRGBO(201, 215, 216, 0.2) 
+                : Colors.orange.shade100, 
                 iconColor: themeState.getDarkTheme ? 
-                Colors.purple : Colors.orange, 
+                const Color.fromRGBO(201, 215, 216, 1) : Colors.orange, 
                 icon: themeState.getDarkTheme ? 
                 CupertinoIcons.moon_fill : CupertinoIcons.sun_max_fill, 
                 value: themeState.getDarkTheme, 
@@ -126,4 +132,5 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+  
 }
