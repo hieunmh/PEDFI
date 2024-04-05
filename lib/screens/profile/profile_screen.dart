@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/profile/profile_detail.dart';
+import 'package:pedfi/screens/stock/stock_screen.dart';
 import 'package:pedfi/widgets/foward_button.dart';
 import 'package:pedfi/widgets/setting_item.dart';
 import 'package:pedfi/widgets/settting_switch.dart';
@@ -109,7 +110,14 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                 bgColor: themeState.getDarkTheme ? Colors.green.shade500 : Colors.green.shade200,
                 iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
                 value: '',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Stockscreen()
+                    )
+                  );
+                },
               ),
               const SizedBox(height: 20),
               SettingSwitch(
