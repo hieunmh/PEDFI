@@ -18,7 +18,7 @@ class ForwardButton extends StatelessWidget {
       child: Container(
         width: 60, height: 60,
         decoration: BoxDecoration(
-          color: themeState.getDarkTheme ? Colors.white24 : Colors.black12,
+          color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
           borderRadius: BorderRadius.circular(15),
         ),
         child: const Icon(CupertinoIcons.forward),
