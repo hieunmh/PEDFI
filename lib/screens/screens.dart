@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pedfi/bloc/screen_bloc.dart';
+import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/profile/profile_screen.dart';
 import 'package:pedfi/screens/add_screen.dart';
@@ -39,7 +40,12 @@ class Screens extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
-    final Color color = themeState.getDarkTheme ? Colors.white70 : Colors.black87;
+    
+    // final Color bgcolor = themeState.getDarkTheme ? 
+    // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+
+    final Color color = themeState.getDarkTheme ? 
+    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
     return BlocConsumer<ScreenBloc, ScreenState>(
       listener: (context, state) {},
