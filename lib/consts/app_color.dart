@@ -4,7 +4,7 @@ class AppColor {
 
   static const bgDarkThemeColor = Colors.black87;
 
-  static const bgLightThemeColor = Colors.white70;
+  static const bgLightThemeColor = Colors.white;
 
   static const textDarkThemeColor = Colors.white;
 
