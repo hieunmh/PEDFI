@@ -6,7 +6,7 @@ import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/profile/profile_screen.dart';
 import 'package:pedfi/screens/add_screen.dart';
-import 'package:pedfi/screens/home_screen.dart';
+import 'package:pedfi/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
