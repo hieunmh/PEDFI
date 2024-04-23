@@ -10,16 +10,19 @@ import 'package:pedfi/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
+
   BottomNavigationBarItem(
     activeIcon: Icon(CupertinoIcons.house_alt_fill),
     icon: Icon(CupertinoIcons.house_alt),
     label: 'Home',
   ),
+
   BottomNavigationBarItem(
     activeIcon: Icon(CupertinoIcons.add_circled_solid),
     icon: Icon(CupertinoIcons.add_circled),
     label: 'Add',
   ),
+  
   BottomNavigationBarItem(
     activeIcon: Icon(CupertinoIcons.person_fill),
     icon: Icon(CupertinoIcons.person),
@@ -52,16 +55,26 @@ class Screens extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           body: Center(child: bottomNavScreen.elementAt(state.screenIndex)),
-          bottomNavigationBar: BottomNavigationBar(
-            items: bottomNavItems,
-            currentIndex: state.screenIndex,
-            selectedItemColor: const Color.fromRGBO(24, 119, 242, 1),
-            unselectedItemColor: color,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            onTap: (index) {
-              BlocProvider.of<ScreenBloc>(context)
-                  .add(TabChange(tabIndex: index));
-            },
+          bottomNavigationBar: Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  color: Colors.grey,
+                  width: 0.5
+                )
+              )
+            ),
+            child: BottomNavigationBar(
+              items: bottomNavItems,
+              currentIndex: state.screenIndex,
+              selectedItemColor: AppColor.commonColor,
+              unselectedItemColor: color,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              onTap: (index) {
+                BlocProvider.of<ScreenBloc>(context)
+                    .add(TabChange(tabIndex: index));
+              },
+            ),
           ),
         );
       },

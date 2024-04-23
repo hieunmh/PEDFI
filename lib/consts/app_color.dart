@@ -9,4 +9,6 @@ class AppColor {
   static const textDarkThemeColor = Colors.white;
 
   static const textLightThemeColor = Colors.black87;
+  
+  static const commonColor = Color.fromRGBO(255, 97, 85, 1);
 }

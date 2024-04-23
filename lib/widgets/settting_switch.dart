@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +69,7 @@ class SettingSwitch extends StatelessWidget {
           CupertinoSwitch(
             value: value, 
             onChanged: onTap,
-            activeColor: const Color.fromRGBO(24, 119, 242, 1),
+            activeColor: AppColor.commonColor,
           ),
         ],
       ),

@@ -3,8 +3,16 @@ import 'package:pedfi/consts/theme_data.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/routes/generate_route.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+Future<void> main() async {
+  await dotenv.load(fileName: '.env');
+  
+  await Supabase.initialize(
+    url: '${dotenv.env['SUPABASE_URL']}',
+    anonKey: '${dotenv.env['SUPABASE_ANNON_KEY']}',
+  );
 
-void main() {
   runApp(const MyApp());
 }
 
