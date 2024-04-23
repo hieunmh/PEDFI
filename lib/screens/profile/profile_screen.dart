@@ -8,6 +8,7 @@ import 'package:pedfi/widgets/foward_button.dart';
 import 'package:pedfi/widgets/setting_item.dart';
 import 'package:pedfi/widgets/settting_switch.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -137,6 +138,13 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                 onTap: (bool value) {
                   themeState.setDarkTheme = value;
                 }
+              ),
+              TextFormField(
+                
+                onFieldSubmitted: (value) async {
+                  await Supabase.instance.client.from('notes')
+                  .insert({'content': value});
+                },
               )
             ],
           ),
