@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/profile/profile_detail.dart';
+import 'package:pedfi/screens/profile/login_screen.dart';
+// import 'package:pedfi/screens/profile/profile_detail.dart';
 import 'package:pedfi/screens/stock/stock_screen.dart';
-import 'package:pedfi/widgets/foward_button.dart';
+import 'package:pedfi/widgets/account.dart';
+// import 'package:pedfi/widgets/foward_button.dart';
 import 'package:pedfi/widgets/setting_item.dart';
 import 'package:pedfi/widgets/settting_switch.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +30,8 @@ class _ProfileScreenState extends State<ProfileScreen>  {
     
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+
+    const isLoggedIn = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -56,49 +60,9 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                 ),
               ),
               const SizedBox(height: 20),
-              SizedBox(
+              const SizedBox(
                 width: double.infinity,
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset('assets/images/meo.jpg', width: 70, height: 70),
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Nguyen Minh Hieu',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: color
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        const Text(
-                          'Full stack developer',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                        )
-                      ],
-                    ),
-                    const Spacer(),
-                    ForwardButton(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProfileDetail()
-                          )
-                        );
-                      }
-                    )
-                  ],
-                ),
+                child: Account(isLoggedIn: isLoggedIn)
               ),
               const SizedBox(height: 40),
               Text(
@@ -119,9 +83,12 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Stockscreen()
+                      builder: (context) => isLoggedIn ? 
+                      // ignore: dead_code
+                      const Stockscreen() : const LoginScreen()
                     )
                   );
+                  
                 },
               ),
               const SizedBox(height: 20),
@@ -140,10 +107,9 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                 }
               ),
               TextFormField(
-                
                 onFieldSubmitted: (value) async {
-                  await Supabase.instance.client.from('notes')
-                  .insert({'content': value});
+                  // await Supabase.instance.client.from('notes')
+                  // .insert({'content': value});
                 },
               )
             ],
