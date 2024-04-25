@@ -2,15 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/profile/login_screen.dart';
-// import 'package:pedfi/screens/profile/profile_detail.dart';
 import 'package:pedfi/screens/stock/stock_screen.dart';
 import 'package:pedfi/widgets/account.dart';
-// import 'package:pedfi/widgets/foward_button.dart';
 import 'package:pedfi/widgets/setting_item.dart';
 import 'package:pedfi/widgets/settting_switch.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -34,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen>  {
     const isLoggedIn = false;
 
     return Scaffold(
+      backgroundColor: bgcolor,
       appBar: AppBar(
         backgroundColor: bgcolor,
         title: Text(
@@ -80,15 +77,70 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                 iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
                 value: '',
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => isLoggedIn ? 
-                      // ignore: dead_code
-                      const Stockscreen() : const LoginScreen()
-                    )
-                  );
-                  
+                  if (isLoggedIn == true) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Stockscreen() 
+                      )
+                    );
+                  } else {
+                    showDialog(context: context, 
+                      builder: (context) {
+                        return AlertDialog(
+                          contentPadding: const EdgeInsets.all(15),
+                          backgroundColor: themeState.getDarkTheme 
+                          ? const Color.fromRGBO(38, 38, 38, 1) : Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          content: Container(
+                            padding: const EdgeInsets.all(0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'You need to sign in first!',
+                                  style: TextStyle(
+                                    color: color,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  'You need to sign in to use this feature',
+                                  style: TextStyle(
+                                    color: themeState.getDarkTheme ? Colors.grey[600] : Colors.grey[500],
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        'Close',
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 20),

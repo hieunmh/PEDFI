@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/profile/login_screen.dart';
+import 'package:pedfi/screens/profile/signin_screen.dart';
 import 'package:pedfi/screens/profile/profile_detail.dart';
 import 'package:pedfi/widgets/foward_button.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +94,7 @@ class Account extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginScreen()
+                  builder: (context) => const SigninScreen()
                 )
               );
             }

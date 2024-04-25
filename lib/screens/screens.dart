@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
 
   BottomNavigationBarItem(
-    activeIcon: Icon(CupertinoIcons.house_alt_fill),
-    icon: Icon(CupertinoIcons.house_alt),
+    activeIcon: Icon(CupertinoIcons.square_list_fill),
+    icon: Icon(CupertinoIcons.square_list),
     label: 'Home',
   ),
 
