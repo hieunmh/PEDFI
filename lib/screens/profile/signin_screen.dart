@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/profile/signup_screen.dart';
 import 'package:pedfi/widgets/button.dart';
-import 'package:pedfi/widgets/square_title.dart';
+import 'package:pedfi/widgets/google_provider.dart';
 import 'package:pedfi/widgets/text_field.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,9 +17,40 @@ class SigninScreen extends StatefulWidget {
 
 class _SigninScreenState extends State<SigninScreen> {
 
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  void signIn() async {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Text(
+                  email.text,
+                  style: const TextStyle(
+                    color: Colors.black
+                  ),
+                ),
+                Text(
+                  password.text,
+                  style: const TextStyle(
+                    color: Colors.black
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-
     final themeState = Provider.of<DarkThemeProvider>(context);
 
     final Color color = themeState.getDarkTheme ? 
@@ -37,9 +67,20 @@ class _SigninScreenState extends State<SigninScreen> {
           onPressed: () {
             Navigator.pop(context);
           }, 
-          icon: Icon(
-            CupertinoIcons.chevron_back,
-            color: color, size: 30
+          icon: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
+              borderRadius: BorderRadius.circular(10)
+            ),
+            child: Center(
+              child: Icon(
+                CupertinoIcons.back,
+                color: color, size: 25
+              ),
+            ),
           )
         ),
         leadingWidth: 80,
@@ -63,8 +104,8 @@ class _SigninScreenState extends State<SigninScreen> {
 
                 const SizedBox(height: 30),
 
-
-                const MyTextField(
+                MyTextField(
+                  controller: email,
                   hintText: 'Email', 
                   placeholder: 'example@gmail.com',
                   obscureText: false,
@@ -72,7 +113,8 @@ class _SigninScreenState extends State<SigninScreen> {
 
                 const SizedBox(height: 10),
 
-                const MyTextField(
+                MyTextField(
+                  controller: password,
                   hintText: 'Password', 
                   placeholder: '●●●●●●●●',
                   obscureText: true,
@@ -101,42 +143,14 @@ class _SigninScreenState extends State<SigninScreen> {
                   : Colors.black,
                   textColor: Colors.white, 
                   textContent: 'Sign in', 
-                  ontap: () {}
+                  onPressed: () {
+                    signIn();
+                  }
                 ),
 
                 const SizedBox(height: 30),
 
-                Row(
-                  children: [
-                    const Expanded(
-                      child: Divider(thickness: 0.5, color: Colors.grey)
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'Or continue with',
-                        style: TextStyle(
-                          color: themeState.getDarkTheme ? 
-                          Colors.grey[200] : Colors.grey[700]
-                        ),
-                      ),
-                    ),
-                    const Expanded(
-                      child: Divider(thickness: 0.5, color: Colors.grey)
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 30),
-
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SquareTitle(imagePath: 'assets/images/google.png')
-                  ],
-                ),
-
-                const SizedBox(height: 30),
+                const GoogleProvider(),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -167,6 +181,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     )
                   ],
                 )
+                
               ],
             ),
           ),

@@ -8,12 +8,15 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final String placeholder;
   final bool obscureText;
+  // ignore: prefer_typing_uninitialized_variables
+  final controller;
 
   const MyTextField({
     super.key,
     required this.hintText,
     required this.placeholder,
     required this.obscureText,
+    required this.controller
   });
 
   @override
@@ -47,6 +50,7 @@ class MyTextField extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: TextField(
+              controller: controller,
               style: TextStyle(
                 color: color
               ),
