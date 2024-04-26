@@ -2,7 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
+import 'package:pedfi/widgets/button.dart';
+import 'package:pedfi/widgets/google_provider.dart';
+import 'package:pedfi/widgets/text_field.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+final supabase = Supabase.instance.client;
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -12,6 +18,24 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final confirmpassword = TextEditingController();
+
+  Future<void> signUpNewUser() async {
+
+    if (email.text == '' || password.text == '') {
+      return;
+    }
+
+    await supabase.auth.signUp(
+      email: email.text,
+      password: password.text
+    );
+
+}
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,9 +54,20 @@ class _SignupScreenState extends State<SignupScreen> {
           onPressed: () {
             Navigator.pop(context);
           }, 
-          icon: Icon(
-            CupertinoIcons.chevron_back,
-            color: color, size: 30
+          icon: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
+              borderRadius: BorderRadius.circular(10)
+            ),
+            child: Center(
+              child: Icon(
+                CupertinoIcons.back,
+                color: color, size: 25
+              ),
+            ),  
           )
         ),
         leadingWidth: 80,
@@ -42,14 +77,86 @@ class _SignupScreenState extends State<SignupScreen> {
           padding: const EdgeInsets.all(30),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const Icon(Icons.android, size: 100),
                 Text(
-                  'Sign up screen',
+                  'Let\'s create an account for you!',
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                     color: color
-                  ),
+                  ), 
                 ),
+
+                const SizedBox(height: 20),
+
+                MyTextField(
+                  controller: email,
+                  hintText: 'Email', 
+                  placeholder: 'example@gmail.com',
+                  obscureText: false,
+                ),
+
+                const SizedBox(height: 10),
+
+                MyTextField(
+                  controller: password,
+                  hintText: 'Password', 
+                  placeholder: '●●●●●●●●',
+                  obscureText: true,
+                ),
+
+                const SizedBox(height: 10),
+
+                MyTextField(
+                  controller: confirmpassword,
+                  hintText: 'Confirm password', 
+                  placeholder: '●●●●●●●●',
+                  obscureText: true,
+                ),
+
+                const SizedBox(height: 25),
+
+                Button(
+                  buttonColor: themeState.getDarkTheme ?
+                  const Color.fromRGBO(30, 30, 30, 1) 
+                  : Colors.black,
+                  textColor: Colors.white, 
+                  textContent: 'Sign up', 
+                  onPressed: () {
+                      signUpNewUser();
+                  }
+                ),
+
+                const SizedBox(height: 25),
+
+                const GoogleProvider(),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already hava a account?',
+                      style: TextStyle(
+                        color: color
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: () {
+                       Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Login now',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
           ),
