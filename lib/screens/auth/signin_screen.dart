@@ -3,11 +3,9 @@ import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/auth/signup_screen.dart';
 import 'package:pedfi/widgets/back_button.dart';
-import 'package:pedfi/widgets/button.dart';
 import 'package:pedfi/widgets/google_provider.dart';
 import 'package:pedfi/widgets/text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -124,15 +122,32 @@ class _SigninScreenState extends State<SigninScreen> {
                 
                 const SizedBox(height: 25),
 
-                Button(
-                  buttonColor: themeState.getDarkTheme ?
-                  const Color.fromRGBO(30, 30, 30, 1) 
-                  : Colors.black,
-                  textColor: Colors.white, 
-                  textContent: 'Sign in', 
+                TextButton(
+                  style: ButtonStyle(
+                    padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
+                  ),
                   onPressed: () {
                     signIn();
-                  }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: themeState.getDarkTheme ?
+                      const Color.fromRGBO(30, 30, 30, 1) 
+                      : Colors.black,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Sign in',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 30),

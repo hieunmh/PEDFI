@@ -6,15 +6,16 @@ import 'package:provider/provider.dart';
 
 class SettingItem extends StatelessWidget {
   final String title;
-  final Color bgColor;
+  final Color? bgColor;
   final Color iconColor;
   final IconData icon;
   final Function() onTap;
   final String? value;
+
   const SettingItem({
     super.key,
     required this.title,
-    required this.bgColor,
+    this.bgColor,
     required this.iconColor,
     required this.icon,
     required this.onTap,
@@ -25,9 +26,6 @@ class SettingItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
-    
-    // final Color bgcolor = themeState.getDarkTheme ? 
-    // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
@@ -48,12 +46,12 @@ class SettingItem extends StatelessWidget {
               color: iconColor,
             ),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 10),
           Text(
             title,
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               color: color
             ),
           ),
@@ -61,9 +59,10 @@ class SettingItem extends StatelessWidget {
           value != null
               ? Text(
                   value!,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500
                   ),
                 )
               : const SizedBox(),
