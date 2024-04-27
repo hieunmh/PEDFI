@@ -1,44 +1,57 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
+import 'package:pedfi/screens/auth/signup_screen.dart';
+import 'package:pedfi/widgets/back_button.dart';
 import 'package:pedfi/widgets/button.dart';
 import 'package:pedfi/widgets/google_provider.dart';
 import 'package:pedfi/widgets/text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/cupertino.dart';
 
-final supabase = Supabase.instance.client;
-
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SigninScreenState extends State<SigninScreen> {
 
   final email = TextEditingController();
   final password = TextEditingController();
-  final confirmpassword = TextEditingController();
 
-  Future<void> signUpNewUser() async {
-
-    if (email.text == '' || password.text == '') {
-      return;
-    }
-
-    await supabase.auth.signUp(
-      email: email.text,
-      password: password.text
+  void signIn() async {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Text(
+                  email.text,
+                  style: const TextStyle(
+                    color: Colors.black
+                  ),
+                ),
+                Text(
+                  password.text,
+                  style: const TextStyle(
+                    color: Colors.black
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }
     );
-
-}
+  }
 
   @override
   Widget build(BuildContext context) {
-
     final themeState = Provider.of<DarkThemeProvider>(context);
 
     final Color color = themeState.getDarkTheme ? 
@@ -48,27 +61,14 @@ class _SignupScreenState extends State<SignupScreen> {
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     return Scaffold(
+      backgroundColor: bgcolor,
       appBar: AppBar(
         backgroundColor: bgcolor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           }, 
-          icon: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
-              borderRadius: BorderRadius.circular(10)
-            ),
-            child: Center(
-              child: Icon(
-                CupertinoIcons.back,
-                color: color, size: 25
-              ),
-            ),  
-          )
+          icon: const MyBackButton()
         ),
         leadingWidth: 80,
       ),
@@ -81,15 +81,15 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 const Icon(Icons.android, size: 100),
                 Text(
-                  'Let\'s create an account for you!',
+                  'Welcome to Pedfi!',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 36,
                     color: color
                   ), 
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
 
                 MyTextField(
                   controller: email,
@@ -109,13 +109,19 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 const SizedBox(height: 10),
 
-                MyTextField(
-                  controller: confirmpassword,
-                  hintText: 'Confirm password', 
-                  placeholder: '●●●●●●●●',
-                  obscureText: true,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        color: themeState.getDarkTheme ? 
+                          Colors.grey[200] : Colors.grey[600]
+                      ),
+                    )
+                  ]
                 ),
-
+                
                 const SizedBox(height: 25),
 
                 Button(
@@ -123,13 +129,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   const Color.fromRGBO(30, 30, 30, 1) 
                   : Colors.black,
                   textColor: Colors.white, 
-                  textContent: 'Sign up', 
+                  textContent: 'Sign in', 
                   onPressed: () {
-                      signUpNewUser();
+                    signIn();
                   }
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(height: 30),
 
                 const GoogleProvider(),
 
@@ -137,7 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Already hava a account?',
+                      'Not a member?',
                       style: TextStyle(
                         color: color
                       ),
@@ -145,10 +151,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: () {
-                       Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignupScreen() 
+                          )
+                        );
                       },
                       child: const Text(
-                        'Login now',
+                        'Register now',
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold
@@ -157,6 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     )
                   ],
                 )
+                
               ],
             ),
           ),

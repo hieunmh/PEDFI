@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/widgets/foward_button.dart';
+import 'package:pedfi/widgets/profile/foward_button.dart';
 import 'package:provider/provider.dart';
 
 class SettingItem extends StatelessWidget {

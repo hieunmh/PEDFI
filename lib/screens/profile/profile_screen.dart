@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/stock/stock_screen.dart';
-import 'package:pedfi/widgets/account.dart';
-import 'package:pedfi/widgets/setting_item.dart';
-import 'package:pedfi/widgets/settting_switch.dart';
+import 'package:pedfi/widgets/profile/account_detail.dart';
+import 'package:pedfi/widgets/profile/alert_signin.dart';
+import 'package:pedfi/widgets/profile/setting_item.dart';
+import 'package:pedfi/widgets/profile/settting_switch.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+final supabase = Supabase.instance.client;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -16,6 +20,34 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 class _ProfileScreenState extends State<ProfileScreen>  {
+  String userEmail = '';
+  bool isLoggedIn = false;
+  String joinDate = '';
+
+  Future<void> _getProfile() async {
+    var email = supabase.auth.currentUser?.email.toString();
+    var createdAt = supabase.auth.currentUser?.createdAt.toString();
+  
+  
+    if (email == null || createdAt == null) {
+      return;
+    } else {
+      userEmail = email;
+
+      final formatter = DateFormat('MMMM yyyy');
+
+      joinDate = formatter.format(DateTime.parse(createdAt)).toString();
+      isLoggedIn = true;
+    }
+  
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getProfile();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +58,6 @@ class _ProfileScreenState extends State<ProfileScreen>  {
     
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
-
-    const isLoggedIn = false;
 
     return Scaffold(
       backgroundColor: bgcolor,
@@ -56,12 +86,20 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                   fontWeight: FontWeight.w500,
                 ),
               ),
+
               const SizedBox(height: 20),
-              const SizedBox(
+
+               SizedBox(
                 width: double.infinity,
-                child: Account(isLoggedIn: isLoggedIn)
+                child: AccountDetail(
+                  isLoggedIn: isLoggedIn, 
+                  userEmail: userEmail,
+                  createdAt: joinDate,
+                )
               ),
+
               const SizedBox(height: 40),
+              
               Text(
                 'Settings',
                 style: TextStyle(
@@ -70,6 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                   color: color
                 ),
               ),
+
               SettingItem(
                 title: 'Virtual Stock',
                 icon: CupertinoIcons.waveform_path_ecg,
@@ -87,63 +126,15 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                   } else {
                     showDialog(context: context, 
                       builder: (context) {
-                        return AlertDialog(
-                          contentPadding: const EdgeInsets.all(15),
-                          backgroundColor: themeState.getDarkTheme 
-                          ? const Color.fromRGBO(38, 38, 38, 1) : Colors.white,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          content: Container(
-                            padding: const EdgeInsets.all(0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'You need to sign in first!',
-                                  style: TextStyle(
-                                    color: color,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  'You need to sign in to use this feature',
-                                  style: TextStyle(
-                                    color: themeState.getDarkTheme ? Colors.grey[600] : Colors.grey[500],
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'Close',
-                                        style: TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
+                        return const AlertSignin();
                       }
                     );
                   }
                 },
               ),
+
               const SizedBox(height: 20),
+
               SettingSwitch(
                 title: 'Dark mode', 
                 bgColor: themeState.getDarkTheme ? 
@@ -158,12 +149,6 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                   themeState.setDarkTheme = value;
                 }
               ),
-              TextFormField(
-                onFieldSubmitted: (value) async {
-                  // await Supabase.instance.client.from('notes')
-                  // .insert({'content': value});
-                },
-              )
             ],
           ),
         ),

@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/widgets/edit_item.dart';
+import 'package:pedfi/widgets/back_button.dart';
+import 'package:pedfi/widgets/profile/edit_item.dart';
 import 'package:provider/provider.dart';
 
 class ProfileDetail extends StatefulWidget {
@@ -34,11 +35,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
           onPressed: () {
             Navigator.pop(context);
           }, 
-          icon: Icon(
-            CupertinoIcons.chevron_back,
-            color: color,
-            size: 30,
-          )
+          icon: const MyBackButton()
         ),
         leadingWidth: 80,
         actions: [

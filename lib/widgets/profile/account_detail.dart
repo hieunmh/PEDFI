@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/profile/signin_screen.dart';
+import 'package:pedfi/screens/auth/signin_screen.dart';
 import 'package:pedfi/screens/profile/profile_detail.dart';
-import 'package:pedfi/widgets/foward_button.dart';
+import 'package:pedfi/widgets/profile/foward_button.dart';
 import 'package:provider/provider.dart';
 
-class Account extends StatelessWidget {
+class AccountDetail extends StatelessWidget {
 
   final bool isLoggedIn;
+  final String userEmail;
+  final String createdAt;
 
-  const Account({super.key, required this.isLoggedIn});
+  const AccountDetail({
+    super.key, 
+    required this.isLoggedIn, 
+    required this.userEmail,
+    required this.createdAt
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,7 @@ class Account extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Nguyen Minh Hieu',
+                userEmail,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -39,9 +46,9 @@ class Account extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Full stack developer',
-                style: TextStyle(
+               Text(
+                'Joined $createdAt',
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.grey,
                 ),
