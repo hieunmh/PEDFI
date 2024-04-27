@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/screens/stock/stock_screen.dart';
-import 'package:pedfi/widgets/profile/account_detail.dart';
+import 'package:pedfi/widgets/profile/account.dart';
 import 'package:pedfi/widgets/profile/alert_signin.dart';
 import 'package:pedfi/widgets/profile/setting_item.dart';
 import 'package:pedfi/widgets/profile/settting_switch.dart';
@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
-
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -28,7 +27,6 @@ class _ProfileScreenState extends State<ProfileScreen>  {
     var email = supabase.auth.currentUser?.email.toString();
     var createdAt = supabase.auth.currentUser?.createdAt.toString();
   
-  
     if (email == null || createdAt == null) {
       return;
     } else {
@@ -39,7 +37,6 @@ class _ProfileScreenState extends State<ProfileScreen>  {
       joinDate = formatter.format(DateTime.parse(createdAt)).toString();
       isLoggedIn = true;
     }
-  
   }
 
   @override
@@ -63,35 +60,30 @@ class _ProfileScreenState extends State<ProfileScreen>  {
       backgroundColor: bgcolor,
       appBar: AppBar(
         backgroundColor: bgcolor,
-        title: Text(
-          'Profile',
-          style: TextStyle(
-            color: color,
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0),
+          child: Text(
+            'Profile',
+            style: TextStyle(
+              color: color,
+              fontSize: 36,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Account',
-                style: TextStyle(
-                  color: color,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
 
               const SizedBox(height: 20),
 
                SizedBox(
                 width: double.infinity,
-                child: AccountDetail(
+                child: Account(
                   isLoggedIn: isLoggedIn, 
                   userEmail: userEmail,
                   createdAt: joinDate,
@@ -109,10 +101,13 @@ class _ProfileScreenState extends State<ProfileScreen>  {
                 ),
               ),
 
+              const SizedBox(height: 20),
+
               SettingItem(
                 title: 'Virtual Stock',
                 icon: CupertinoIcons.waveform_path_ecg,
-                bgColor: themeState.getDarkTheme ? Colors.green.shade500 : Colors.green.shade200,
+                // bgColor: themeState.getDarkTheme ? 
+                // Colors.green.shade500 : Colors.green.shade200,
                 iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
                 value: '',
                 onTap: () {
@@ -135,11 +130,25 @@ class _ProfileScreenState extends State<ProfileScreen>  {
 
               const SizedBox(height: 20),
 
+              SettingItem(
+                title: 'Currency',
+                icon: CupertinoIcons.money_dollar,
+                // bgColor: themeState.getDarkTheme ? 
+                // Colors.green.shade500 : Colors.green.shade500,
+                iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
+                value: 'USD',
+                onTap: () {
+                  
+                },
+              ),
+
+              const SizedBox(height: 20),
+
               SettingSwitch(
                 title: 'Dark mode', 
-                bgColor: themeState.getDarkTheme ? 
-                const Color.fromRGBO(201, 215, 216, 0.2) 
-                : Colors.orange.shade100, 
+                // bgColor: themeState.getDarkTheme ? 
+                // const Color.fromRGBO(201, 215, 216, 0.2) 
+                // : Colors.orange.shade100, 
                 iconColor: themeState.getDarkTheme ? 
                 const Color.fromRGBO(201, 215, 216, 1) : Colors.orange, 
                 icon: themeState.getDarkTheme ? 
@@ -155,5 +164,4 @@ class _ProfileScreenState extends State<ProfileScreen>  {
       ),
     );
   }
-  
 }

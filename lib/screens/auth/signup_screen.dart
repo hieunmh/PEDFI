@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/widgets/back_button.dart';
-import 'package:pedfi/widgets/button.dart';
 import 'package:pedfi/widgets/google_provider.dart';
 import 'package:pedfi/widgets/text_field.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +23,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final confirmpassword = TextEditingController();
 
   Future<void> signUpNewUser() async {
-
     if (email.text == '' || password.text == '') {
       return;
     }
@@ -34,9 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
       email: email.text.trim(),
       password: password.text.trim()
     );
-
-
-}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,15 +101,32 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 const SizedBox(height: 25),
 
-                Button(
-                  buttonColor: themeState.getDarkTheme ?
-                  const Color.fromRGBO(30, 30, 30, 1) 
-                  : Colors.black,
-                  textColor: Colors.white, 
-                  textContent: 'Sign up', 
+                TextButton(
+                  style: ButtonStyle(
+                    padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
+                  ),
                   onPressed: () {
-                      signUpNewUser();
-                  }
+                    signUpNewUser();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: themeState.getDarkTheme ?
+                      const Color.fromRGBO(30, 30, 30, 1) 
+                      : Colors.black,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Sign up',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 25),

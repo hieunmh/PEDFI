@@ -20,25 +20,34 @@ class EditItem extends StatelessWidget {
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
     
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 18,
-              color: color
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      decoration:  BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey.shade100,
+            width: 0.1
+          )
+        )
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Center(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: color,
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),
             ),
           ),
-        ),
-        const SizedBox(width: 20),
-        Expanded(
-          flex: 8,
-          child: widget,
-        )
-      ],
+      
+          widget
+        ],
+      ),
     );
   }
 }

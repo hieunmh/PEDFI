@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class SettingSwitch extends StatelessWidget {
   final String title;
-  final Color bgColor;
+  final Color? bgColor;
   final Color iconColor;
   final IconData icon;
   final bool value;
@@ -13,7 +13,7 @@ class SettingSwitch extends StatelessWidget {
   const SettingSwitch({
     super.key,
     required this.title,
-    required this.bgColor,
+    this.bgColor,
     required this.iconColor,
     required this.icon,
     required this.value,
@@ -47,12 +47,12 @@ class SettingSwitch extends StatelessWidget {
               color: iconColor,
             ),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 10),
           Text(
             title,
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               color: color
             ),
           ),

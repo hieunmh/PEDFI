@@ -6,13 +6,13 @@ import 'package:pedfi/screens/profile/profile_detail.dart';
 import 'package:pedfi/widgets/profile/foward_button.dart';
 import 'package:provider/provider.dart';
 
-class AccountDetail extends StatelessWidget {
+class Account extends StatelessWidget {
 
   final bool isLoggedIn;
   final String userEmail;
   final String createdAt;
 
-  const AccountDetail({
+  const Account({
     super.key, 
     required this.isLoggedIn, 
     required this.userEmail,
