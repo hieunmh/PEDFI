@@ -1,56 +1,46 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/profile/signup_screen.dart';
+import 'package:pedfi/widgets/back_button.dart';
 import 'package:pedfi/widgets/button.dart';
 import 'package:pedfi/widgets/google_provider.dart';
 import 'package:pedfi/widgets/text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SigninScreen extends StatefulWidget {
-  const SigninScreen({super.key});
+final supabase = Supabase.instance.client;
+
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
+class _SignupScreenState extends State<SignupScreen> {
 
   final email = TextEditingController();
   final password = TextEditingController();
+  final confirmpassword = TextEditingController();
 
-  void signIn() async {
-    showDialog(
-      context: context, 
-      builder: (context) {
-        return AlertDialog(
-          content: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Text(
-                  email.text,
-                  style: const TextStyle(
-                    color: Colors.black
-                  ),
-                ),
-                Text(
-                  password.text,
-                  style: const TextStyle(
-                    color: Colors.black
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      }
+  Future<void> signUpNewUser() async {
+
+    if (email.text == '' || password.text == '') {
+      return;
+    }
+
+    await supabase.auth.signUp(
+      email: email.text.trim(),
+      password: password.text.trim()
     );
-  }
+
+
+}
 
   @override
   Widget build(BuildContext context) {
+
     final themeState = Provider.of<DarkThemeProvider>(context);
 
     final Color color = themeState.getDarkTheme ? 
@@ -60,28 +50,13 @@ class _SigninScreenState extends State<SigninScreen> {
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     return Scaffold(
-      backgroundColor: bgcolor,
       appBar: AppBar(
         backgroundColor: bgcolor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           }, 
-          icon: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
-              borderRadius: BorderRadius.circular(10)
-            ),
-            child: Center(
-              child: Icon(
-                CupertinoIcons.back,
-                color: color, size: 25
-              ),
-            ),
-          )
+          icon: const MyBackButton()
         ),
         leadingWidth: 80,
       ),
@@ -94,15 +69,15 @@ class _SigninScreenState extends State<SigninScreen> {
               children: [
                 const Icon(Icons.android, size: 100),
                 Text(
-                  'Welcome to Pedfi!',
+                  'Let\'s create an account for you!',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 36,
+                    fontSize: 18,
                     color: color
                   ), 
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
 
                 MyTextField(
                   controller: email,
@@ -122,19 +97,13 @@ class _SigninScreenState extends State<SigninScreen> {
 
                 const SizedBox(height: 10),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot password?',
-                      style: TextStyle(
-                        color: themeState.getDarkTheme ? 
-                          Colors.grey[200] : Colors.grey[600]
-                      ),
-                    )
-                  ]
+                MyTextField(
+                  controller: confirmpassword,
+                  hintText: 'Confirm password', 
+                  placeholder: '●●●●●●●●',
+                  obscureText: true,
                 ),
-                
+
                 const SizedBox(height: 25),
 
                 Button(
@@ -142,13 +111,13 @@ class _SigninScreenState extends State<SigninScreen> {
                   const Color.fromRGBO(30, 30, 30, 1) 
                   : Colors.black,
                   textColor: Colors.white, 
-                  textContent: 'Sign in', 
+                  textContent: 'Sign up', 
                   onPressed: () {
-                    signIn();
+                      signUpNewUser();
                   }
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 25),
 
                 const GoogleProvider(),
 
@@ -156,7 +125,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a member?',
+                      'Already hava a account?',
                       style: TextStyle(
                         color: color
                       ),
@@ -164,15 +133,10 @@ class _SigninScreenState extends State<SigninScreen> {
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignupScreen() 
-                          )
-                        );
+                       Navigator.pop(context);
                       },
                       child: const Text(
-                        'Register now',
+                        'Login now',
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold
@@ -181,7 +145,6 @@ class _SigninScreenState extends State<SigninScreen> {
                     )
                   ],
                 )
-                
               ],
             ),
           ),
