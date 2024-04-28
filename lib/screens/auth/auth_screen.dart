@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/widgets/back_button.dart';
@@ -9,29 +10,50 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _AuthScreenState extends State<AuthScreen> {
 
   final email = TextEditingController();
   final password = TextEditingController();
-  final confirmpassword = TextEditingController();
+  final confirmPassword = TextEditingController();
 
-  Future<void> signUpNewUser() async {
-    if (email.text == '' || password.text == '') {
-      return;
+  String action = 'signin';
+  bool isLoading = false;
+
+  Future<void> submitForm() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    if (action == 'signin') {
+      await supabase.auth.signInWithPassword(
+        email: email.text.trim(),
+        password: password.text.trim()
+      );
+    } 
+    
+    else if (action == 'signup') {
+      if (email.text == '' || password.text == '') {
+          return;
+        }
+
+        await supabase.auth.signUp(
+          email: email.text.trim(),
+          password: password.text.trim()
+        );
     }
 
-    await supabase.auth.signUp(
-      email: email.text.trim(),
-      password: password.text.trim()
-    );
+    setState(() {
+      isLoading = false;
+    });
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     return Scaffold(
+      backgroundColor: bgcolor,
       appBar: AppBar(
         backgroundColor: bgcolor,
         leading: IconButton(
@@ -57,22 +80,23 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.all(20),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Icon(Icons.android, size: 100),
                 Text(
-                  'Let\'s create an account for you!',
+                  action == 'signin' ?
+                  'Welcome to Pedfi!' : 'Let \'s create an account for you!',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: action == 'signin' ? 40 : 20,
                     color: color
                   ), 
                 ),
 
-                const SizedBox(height: 20),
+                action == 'signin' ?
+                const SizedBox(height: 35) : const SizedBox(height: 20),
 
                 MyTextField(
                   controller: email,
@@ -92,34 +116,49 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 const SizedBox(height: 10),
 
-                MyTextField(
-                  controller: confirmpassword,
+                if (action == 'signup') MyTextField(
+                  controller: confirmPassword,
                   hintText: 'Confirm password', 
                   placeholder: '●●●●●●●●',
                   obscureText: true,
                 ),
 
-                const SizedBox(height: 25),
+                if (action == 'signin') Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        color: themeState.getDarkTheme ? 
+                          Colors.grey[200] : Colors.grey[600]
+                      ),
+                    )
+                  ]
+                ),
+                
+                action == 'signin' ?
+                const SizedBox(height: 35) : const SizedBox(height: 25),
 
                 TextButton(
                   style: ButtonStyle(
                     padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                   ),
                   onPressed: () {
-                    signUpNewUser();
+                    submitForm();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       color: themeState.getDarkTheme ?
-                      const Color.fromRGBO(30, 30, 30, 1) 
-                      : Colors.black,
+                      const Color.fromRGBO(30, 30, 30, 1) : Colors.black,
                       borderRadius: BorderRadius.circular(5)
                     ),
-                    child: const Center(
-                      child: Text(
-                        'Sign up',
-                        style: TextStyle(
+                    child: Center(
+                      child: isLoading ? LoadingAnimationWidget.threeArchedCircle(
+                        color: Colors.white, size: 26
+                      ) : Text(
+                        action == 'signin' ? 'Sign in' : 'Sign up',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 18
@@ -129,7 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(height: 30),
 
                 const GoogleProvider(),
 
@@ -137,7 +176,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Already hava a account?',
+                      action == 'signin' ? 'Not a member?' : 'Already hava a account?',
                       style: TextStyle(
                         color: color
                       ),
@@ -145,11 +184,20 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: () {
-                       Navigator.pop(context);
+                        if (isLoading) {
+                          return;
+                        }
+                        setState(() {
+                          if (action == 'signin') {
+                            action = 'signup';
+                          } else if (action == 'signup') {
+                             action = 'signin';
+                          }
+                        });
                       },
-                      child: const Text(
-                        'Login now',
-                        style: TextStyle(
+                      child: Text(
+                        action == 'signin' ? 'Sign up now' : 'Sign in',
+                        style: const TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold
                         ),
@@ -163,5 +211,6 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+
   }
 }

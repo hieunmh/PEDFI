@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/widgets/back_button.dart';
@@ -18,9 +20,18 @@ class ProfileDetail extends StatefulWidget {
 class _ProfileDetailState extends State<ProfileDetail> {
 
   String gender = 'male';
+  bool isLoading = false;
 
   Future<void> signOutUser() async {
+    setState(() {
+      isLoading = true;
+    });
+
     await supabase.auth.signOut();
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -73,7 +84,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
               ),
 
               EditItem(
-                title: 'Name',
+                title: 'Email',
                 widget: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Text(
@@ -145,28 +156,32 @@ class _ProfileDetailState extends State<ProfileDetail> {
 
               const SizedBox(height: 40),
 
-              TextButton(
-                style: ButtonStyle(
-                  padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(30)),
-                ),
-                onPressed: () {
-                  signOutUser();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: themeState.getDarkTheme ?
-                    const Color.fromRGBO(30, 30, 30, 1) 
-                    : Colors.black,
-                    borderRadius: BorderRadius.circular(5)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: TextButton(
+                  style: ButtonStyle(
+                    padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'Sign out',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18
+                  onPressed: () {
+                    signOutUser();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: themeState.getDarkTheme ?
+                      const Color.fromRGBO(30, 30, 30, 1) 
+                      : Colors.black,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child:  Center(
+                      child: isLoading ? LoadingAnimationWidget.threeArchedCircle(
+                        color: Colors.white, size: 26) : const Text(
+                        'Sign out',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        ),
                       ),
                     ),
                   ),
