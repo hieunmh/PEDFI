@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColor {
 
-  static const bgDarkThemeColor = Colors.black87;
+  static const bgDarkThemeColor = Color.fromRGBO(38, 38, 38, 1);
 
   static const bgLightThemeColor = Colors.white;
 

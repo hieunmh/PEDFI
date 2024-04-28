@@ -1,24 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/widgets/foward_button.dart';
 import 'package:provider/provider.dart';
 
-class SettingItem extends StatelessWidget {
+class SettingSwitch extends StatelessWidget {
   final String title;
-  final Color bgColor;
+  final Color? bgColor;
   final Color iconColor;
   final IconData icon;
-  final Function() onTap;
-  final String? value;
-  const SettingItem({
+  final bool value;
+  final Function(bool value) onTap;
+  const SettingSwitch({
     super.key,
     required this.title,
-    required this.bgColor,
+    this.bgColor,
     required this.iconColor,
     required this.icon,
+    required this.value,
     required this.onTap,
-    this.value,
   });
 
   @override
@@ -48,28 +47,29 @@ class SettingItem extends StatelessWidget {
               color: iconColor,
             ),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 10),
           Text(
             title,
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               color: color
             ),
           ),
           const Spacer(),
-          value != null
-              ? Text(
-                  value!,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                )
-              : const SizedBox(),
+          Text(
+            value ? 'On' : 'Off',
+            style: TextStyle(
+              fontSize: 16,
+              color: color,
+              fontWeight: FontWeight.w500
+            ),
+          ),
           const SizedBox(width: 20),
-          ForwardButton(
-            onTap: onTap,
+          CupertinoSwitch(
+            value: value, 
+            onChanged: onTap,
+            activeColor: AppColor.commonColor,
           ),
         ],
       ),

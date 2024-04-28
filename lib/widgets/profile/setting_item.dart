@@ -1,32 +1,31 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
+import 'package:pedfi/widgets/profile/foward_button.dart';
 import 'package:provider/provider.dart';
 
-class SettingSwitch extends StatelessWidget {
+class SettingItem extends StatelessWidget {
   final String title;
-  final Color bgColor;
+  final Color? bgColor;
   final Color iconColor;
   final IconData icon;
-  final bool value;
-  final Function(bool value) onTap;
-  const SettingSwitch({
+  final Function() onTap;
+  final String? value;
+
+  const SettingItem({
     super.key,
     required this.title,
-    required this.bgColor,
+    this.bgColor,
     required this.iconColor,
     required this.icon,
-    required this.value,
     required this.onTap,
+    this.value,
   });
 
   @override
   Widget build(BuildContext context) {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
-    
-    // final Color bgcolor = themeState.getDarkTheme ? 
-    // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
@@ -47,29 +46,29 @@ class SettingSwitch extends StatelessWidget {
               color: iconColor,
             ),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(width: 10),
           Text(
             title,
             style: TextStyle(
               fontSize: 16,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               color: color
             ),
           ),
           const Spacer(),
-          Text(
-            value ? 'On' : 'Off',
-            style: TextStyle(
-              fontSize: 16,
-              color: color,
-              fontWeight: FontWeight.w500
-            ),
-          ),
+          value != null
+              ? Text(
+                  value!,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500
+                  ),
+                )
+              : const SizedBox(),
           const SizedBox(width: 20),
-          CupertinoSwitch(
-            value: value, 
-            onChanged: onTap,
-            activeColor: AppColor.commonColor,
+          ForwardButton(
+            onTap: onTap,
           ),
         ],
       ),

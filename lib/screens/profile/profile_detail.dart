@@ -1,9 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/widgets/edit_item.dart';
+import 'package:pedfi/widgets/back_button.dart';
+import 'package:pedfi/widgets/profile/edit_item.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+final supabase = Supabase.instance.client;
 
 class ProfileDetail extends StatefulWidget {
   const ProfileDetail({super.key});
@@ -15,6 +20,19 @@ class ProfileDetail extends StatefulWidget {
 class _ProfileDetailState extends State<ProfileDetail> {
 
   String gender = 'male';
+  bool isLoading = false;
+
+  Future<void> signOutUser() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await supabase.auth.signOut();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,132 +52,140 @@ class _ProfileDetailState extends State<ProfileDetail> {
           onPressed: () {
             Navigator.pop(context);
           }, 
-          icon: Icon(
-            CupertinoIcons.chevron_back,
-            color: color,
-            size: 30,
-          )
+          icon: const MyBackButton()
         ),
         leadingWidth: 80,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              onPressed: () {},
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.lightBlueAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                fixedSize: const Size(50, 50),
-                elevation: 10,
-              ),
-              icon:const Icon(
-                CupertinoIcons.checkmark_alt, color: Colors.white
-              ),
-            ),
-          )
-        ],
+        centerTitle: true,
+        title: Text(
+          'Profile detail',
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.w400,
+            fontSize: 16
+          ),
+        )
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'Account',
-                style: TextStyle(
-                  color: color,
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
               const SizedBox(height: 40),
-              Center(
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        'assets/images/meo.jpg', width: 100, height: 100
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {}, 
-                      child: Text(
-                        'Upload image',
-                        style: TextStyle(
-                          color: color
-                        ),
-                      )
-                    )
-                  ],
-                ),
-              ),
+
               EditItem(
-                title: 'Name',
-                widget: TextField(
-                  style: TextStyle(
-                    color: color
+                title: 'Profile picture',
+                widget: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    'assets/images/meo.jpg', width: 40, height: 40
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+
+              EditItem(
+                title: 'Email',
+                widget: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Text(
+                    'Nguyen Minh Hieu',
+                    style: TextStyle(
+                      color: Colors.grey[600]
+                    ),
+                  )
+                ),
+              ),
+
               EditItem(
                 title: 'Gender',
                 widget: Row(
                   children: [
-                    IconButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         setState(() {
                           gender = 'male';
                         });
                       },
-                      style: IconButton.styleFrom(
-                        backgroundColor: gender == 'male'
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: gender == 'male'
                             ? const Color.fromRGBO(2, 176, 240, 1)
-                            : themeState.getDarkTheme ? Colors.white24 : Colors.black12,
-                        fixedSize: const Size(50, 50),
-                      ),
-                      icon: Icon(
-                        Icons.male_rounded,
-                        color: gender == "male" ? Colors.white
-                         : themeState.getDarkTheme ? Colors.white : Colors.black,
-                        size: 25,
+                            : themeState.getDarkTheme ? Colors.white10 : Colors.black12,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          Icons.male_rounded,
+                          color: gender == 'male' ? Colors.white : 
+                          themeState.getDarkTheme ? Colors.white : Colors.black,
+                          size: 25,
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    IconButton(
-                      onPressed: () {
+
+                    const SizedBox(width: 10),
+
+                    GestureDetector(
+                      onTap: () {
                         setState(() {
                           gender = 'female';
                         });
                       },
-                      style: IconButton.styleFrom(
-                        backgroundColor: gender == 'female'
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: gender == 'female'
                             ? const Color.fromRGBO(247, 91, 149, 1)
-                            : themeState.getDarkTheme ? Colors.white24 : Colors.black12,
-                        fixedSize: const Size(50, 50),
+                            : themeState.getDarkTheme ? Colors.white10 : Colors.black12,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Icon(
+                          Icons.female_rounded,
+                          color: gender == 'female' ? Colors.white : 
+                          themeState.getDarkTheme ? Colors.white : Colors.black,
+                          size: 25,
+                        ),
                       ),
-                      icon: Icon(
-                        Icons.female,
-                        color: gender == 'female' ? Colors.white : 
-                        themeState.getDarkTheme ? Colors.white : Colors.black,
-                        size: 25,
-                      ),
-                    )
+                    ),
+
                   ],
-                ),
+                )
               ),
+
               const SizedBox(height: 40),
-              EditItem(
-                widget: TextField(
-                  style: TextStyle(
-                    color: color
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: TextButton(
+                  style: ButtonStyle(
+                    padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
+                  ),
+                  onPressed: () {
+                    signOutUser();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: themeState.getDarkTheme ?
+                      const Color.fromRGBO(30, 30, 30, 1) 
+                      : Colors.black,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child:  Center(
+                      child: isLoading ? LoadingAnimationWidget.threeArchedCircle(
+                        color: Colors.white, size: 26) : const Text(
+                        'Sign out',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                title: "Email",
               ),
             ],
           ),
