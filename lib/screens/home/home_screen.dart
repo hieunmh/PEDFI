@@ -4,177 +4,138 @@ import 'package:flutter/widgets.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:fl_chart/fl_chart.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<StatefulWidget> createState() => _HomeScreen();
+}
+
+class _HomeScreen extends State<HomeScreen> {
+  int totalBalance = 0;
+  int totalIncome = 0;
+  int totalExpense = 0;
+
+  @override
   Widget build(BuildContext context) {
+    final themeState = Provider.of<DarkThemeProvider>(context);
+
+    final Color color = themeState.getDarkTheme ?
+    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+
+    final Color bgcolor = themeState.getDarkTheme ?
+    AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+
+    final Color chartcolor = themeState.getDarkTheme ?
+    Colors.black12 : Colors.white;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0.0,
       ),
 
-      body: ListView(
-        padding: EdgeInsets.only(
-          right: 12.0,
-          left: 12.0,
-        ),
+      body:ListView(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Row(
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
                   children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "0",
-                          border: InputBorder.none,
-                        ),
-                        style: TextStyle(
-                          fontSize: 35.0,
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(32.0),
+                        color: Color(0xffe2e7ef),
+                      ),
+                      child:CircleAvatar(
+                        maxRadius: 32.0,
+                        child: Image.asset(
+                          "assets/images/placeholder.jpg",
+                          width: 64.0,
                         ),
                       ),
                     ),
-                    Icon(
-                      Icons.attach_money,
-                      size: 35.0,
-                      color: Colors.blue,
+                    SizedBox(width: 8.0),
+                    Text(
+                      'Hello, User',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.w700,
+                        color: color,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Icon(
-                Icons.visibility,
-                size: 35.0,
-                color: Colors.blue,
-              ),
-              Icon(
-                Icons.notifications,
-                size: 35.0,
-                color: Colors.blue,
-              ),
-            ],
-          ),
-
-          Row(
-            children: [
-              Text(
-                "Tổng số dư",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black38,
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    color: Color(0xffe2e7ef),
+                  ),
+                  padding: EdgeInsets.all(
+                    12.0,
+                  ),
+                  child: Icon(
+                    Icons.settings,
+                    size: 32.0,
+                    color: Color(0xff3E454C),
+                  ),
                 ),
-              ),
-              Icon(
-                Icons.help_outline,
-                size: 20.0,
-                color: Colors.black38,
-              ),
-            ],
+              ],
+            ),
           ),
 
           Container(
-            padding: EdgeInsets.only(
-              top: 12.0,
-              bottom: 20.0,
-            ),
+            width: MediaQuery.of(context).size.width * 0.9,
+            margin: EdgeInsets.all(12.0,),
             child: Container(
-              width: 200,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 4,
-                    offset: Offset(0, 3),
-                  ),
-                ],
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.blue,
+                    Colors.blue,
+                  ],
+                ),
+                borderRadius: BorderRadius.all(
+                    Radius.circular(24.0)
+                ),
               ),
-              padding: EdgeInsets.all(
-                12.0,
+              padding: EdgeInsets.symmetric(
+                vertical: 20.0,
+                horizontal: 8.0,
               ),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Ví của tôi',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Xem tất cả',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(
-                    height: 20.0,
-                  ),
-
-                  Container(
-                    padding: EdgeInsets.only(
-                      top: 12.0,
-                      bottom: 12.0,
+                  Text(
+                    'Total Balance',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      color: Colors.white,
                     ),
-                    height: 1,
-                    color: Colors.grey,
                   ),
-
-                  SizedBox(
-                    height: 76.0,
+                  SizedBox(height: 12.0,),
+                  Text(
+                    'Rs 3400',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 26.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 12.0),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/meo.jpg',
-                              width: 35.0,
-                              height: 35.0,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Tiền mặt',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
+                        cardIncome(
+                          totalIncome.toString(),
                         ),
-                        
-                        Row(
-                          children: [
-                            Text(
-                              '0',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Icon(
-                              Icons.attach_money,
-                              size: 20.0,
-                              color: Colors.black,
-                            ),
-                          ],
+                        cardExpense(
+                          totalExpense.toString(),
                         ),
                       ],
                     ),
@@ -183,69 +144,262 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Báo cáo chi tiêu',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
 
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              "Expenses",
+              style: TextStyle(
+                fontSize: 32.0,
+                color: color,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+
+          Container(
+            decoration: BoxDecoration(
+              color: chartcolor,
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.4),
+                ),
+              ],
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: 40.0,
+              horizontal: 12.0,
+            ),
+            margin: EdgeInsets.all(12.0),
+            height: 400.0,
+            child: LineChart(
+              LineChartData(
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: [
+                      FlSpot(1, 4),
+                      FlSpot(2, 9),
+                      FlSpot(3, 5),
+                    ],
+                    isCurved: false,
+                    barWidth: 2.5,
+                    colors: [
+                      Colors.blue,
+                      Colors.red,
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(
+              "Recent Expenses",
+              style: TextStyle(
+                fontSize: 32.0,
+                color: color,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+
+          expenseTile(500, "" ),
+          incomeTile(100, ""),
+        ],
+      ),
+    );
+  }
+  Widget cardIncome(String value) {
+    return Row(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white60,
+            borderRadius: BorderRadius.circular(
+              20.0,
+            ),
+          ),
+          padding: EdgeInsets.all(
+            6.0,
+          ),
+          child: Icon(
+            Icons.arrow_downward,
+            size: 28.0,
+            color: Colors.green[700],
+          ),
+          margin: EdgeInsets.only(
+            right: 8.0,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Income",
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white70,
+              ),
+            ),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget cardExpense(String value) {
+    return Row(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white60,
+            borderRadius: BorderRadius.circular(
+              20.0,
+            ),
+          ),
+          padding: EdgeInsets.all(
+            6.0,
+          ),
+          child: Icon(
+            Icons.arrow_upward,
+            size: 28.0,
+            color: Colors.red[700],
+          ),
+          margin: EdgeInsets.only(
+            right: 8.0,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Expense",
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white70,
+              ),
+            ),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget expenseTile(int value, String note) {
+
+    final themeState = Provider.of<DarkThemeProvider>(context);
+
+    final Color color = themeState.getDarkTheme ?
+    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+
+    final Color bgcolor = themeState.getDarkTheme ?
+    Colors.white12 : Color(0xffced4eb);
+
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(18.0),
+      decoration: BoxDecoration(
+        color: bgcolor,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.arrow_circle_up_outlined,
+                size: 28.0,
+                color: Colors.red[700],
+              ),
+              SizedBox(width: 4.0,),
               Text(
-                'Xem báo cáo',
+                "Expense",
                 style: TextStyle(
                   fontSize: 20.0,
-                  color: Colors.green,
+                  color: color,
                 ),
               ),
             ],
           ),
-
-          Container(
-            padding: EdgeInsets.only(
-              top: 12.0,
-              bottom: 20.0,
+          Text(
+            "-$value",
+            style: TextStyle(
+              fontSize: 24.0,
+              color: color,
+              fontWeight: FontWeight.w700,
             ),
-            child: Container(
-              width: 200,
-              height: 1000,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 4,
-                    offset: Offset(0, 3),
-                  ),
-                ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget incomeTile(int value, String note) {
+
+    final themeState = Provider.of<DarkThemeProvider>(context);
+
+    final Color color = themeState.getDarkTheme ?
+    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+
+    final Color bgcolor = themeState.getDarkTheme ?
+    Colors.white12 : Color(0xffced4eb);
+
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(18.0),
+      decoration: BoxDecoration(
+        color: bgcolor,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.arrow_circle_down_outlined,
+                size: 28.0,
+                color: Colors.blue[700],
               ),
-              padding: EdgeInsets.only(
-                top: 20.0,
-                right: 12.0,
-                left: 12.0,
-                bottom: 12.0,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 4,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
+              SizedBox(width: 4.0,),
+              Text(
+                "Income",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: color,
                 ),
               ),
+            ],
+          ),
+          Text(
+            "+$value",
+            style: TextStyle(
+              fontSize: 24.0,
+              color: color,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
@@ -253,6 +407,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
 
