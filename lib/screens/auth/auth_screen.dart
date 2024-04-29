@@ -52,6 +52,11 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       isLoading = false;
     });
+
+    Navigator.pop(context, {
+      'email': 'example@example.com',
+      'image': 'https://example.com/image.jpg'
+    });
   }
   
 
