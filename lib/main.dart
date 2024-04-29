@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pedfi/consts/theme_data.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/routes/generate_route.dart';
+// import 'package:pedfi/routes/pages.dart';
+// import 'package:pedfi/routes/routes.dart';
+// import 'package:pedfi/screens/bottombar_screen.dart';
+import 'package:pedfi/screens/navmenu/nav_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
   
@@ -44,13 +49,13 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => themeChangeProvider),
       ],
       child: Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
-        return MaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Pedfi App",
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          // home: const BottomBarScreen(),
-          initialRoute: '/',
-          onGenerateRoute: RouteGenerator().generateRoute,
+          home: const NavMenu(),
+          // initialRoute: AppRoutes.PROFILESCREEN,
+          // getPages: AppPages.routes,
         );
       }),
     );

@@ -103,7 +103,7 @@ class Account extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => const AuthScreen()
                 )
-              );
+              );        
             }
           )
         ],
