@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/theme_data.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-// import 'package:pedfi/routes/pages.dart';
-// import 'package:pedfi/routes/routes.dart';
-// import 'package:pedfi/screens/bottombar_screen.dart';
-import 'package:pedfi/screens/navmenu/nav_menu.dart';
+import 'package:pedfi/routes/pages.dart';
+import 'package:pedfi/routes/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
   
   await Supabase.initialize(
@@ -53,9 +52,8 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: "Pedfi App",
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: const NavMenu(),
-          // initialRoute: AppRoutes.PROFILESCREEN,
-          // getPages: AppPages.routes,
+          initialRoute: AppRoutes.APPLICATION,
+          getPages: AppPages.routes,
         );
       }),
     );
