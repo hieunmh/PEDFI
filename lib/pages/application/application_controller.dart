@@ -39,22 +39,28 @@ class ApplicationController extends GetxController {
     
     bottomNavDes = const [
       NavigationDestination(
-        selectedIcon: Icon(CupertinoIcons.square_list_fill, 
-           size: 25,
+        selectedIcon: Icon(
+          CupertinoIcons.square_list_fill, 
+          size: 25,
+          color: Colors.white,
         ),
         icon: Icon(CupertinoIcons.square_list, size: 25), 
         label: ''
       ),
       NavigationDestination(
-        selectedIcon: Icon(CupertinoIcons.add_circled_solid, 
+        selectedIcon: Icon(
+          CupertinoIcons.add_circled_solid, 
           size: 25,
+          color: Colors.white,
         ),
         icon: Icon(CupertinoIcons.add_circled, size: 25), 
         label: ''
       ),
       NavigationDestination(
-        selectedIcon: Icon(CupertinoIcons.person_fill, 
+        selectedIcon: Icon(
+          CupertinoIcons.person_fill, 
            size: 25,
+           color: Colors.white,
         ),
         icon: Icon(CupertinoIcons.person, size: 25), 
         label: '',

@@ -68,7 +68,6 @@ class ApplicationPage extends GetView<ApplicationController> {
                 color: color
               )
             )
-            
           ),
           child: NavigationBar(
             height: 50,
@@ -77,7 +76,7 @@ class ApplicationPage extends GetView<ApplicationController> {
             selectedIndex: controller.state.value,
             onDestinationSelected: (index) => controller.handleNavBarTap(index),
             // shadowColor: Colors.transparent,
-            indicatorColor: const Color.fromARGB(255, 255, 97, 85),
+            indicatorColor: AppColor.commonColor,
             surfaceTintColor: Colors.transparent,
             backgroundColor: bgcolor,
           ),
