@@ -10,5 +10,5 @@ class AppColor {
 
   static const textLightThemeColor = Colors.black87;
   
-  static const commonColor = Color.fromRGBO(255, 97, 85, 1);
+  static const commonColor = Color.fromRGBO(210, 60, 63, 1);
 }
