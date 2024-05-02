@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ApplicationController extends GetxController {
-  
-  ApplicationController();
 
   final state = 0.obs;
   final position = ''.obs;
