@@ -1,48 +1,41 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthController extends GetxController {
   final supabase = Supabase.instance.client;
 
-  var email = TextEditingController();
-  var password = TextEditingController();
-  var confirmPassword = TextEditingController();
-
   var action = 'signin'.obs;
   var isLoading = false.obs;
   
-  Future<void> submitForm() async {
-    
+  Future<void> handleSignIn(String email, String password) async {
+
     isLoading.value = true;
     
-    if (action.value == 'signin') {
-      await supabase.auth.signInWithPassword(
-        email: email.text.trim(),
-        password: password.text.trim()
-      );
+    var data = await supabase.auth.signInWithPassword(
+      email: email,
+      password: password
+    );
 
-      // Get.off(const ProfilePage());
-    } 
+    final formatter = DateFormat('MMMM yyyy');
     
-    else if (action.value == 'signup') {
-      if (email.text == '' || password.text == '') {
-        return;
+    Get.back(
+      result: {
+        'isLoggedIn': true,
+        'userEmail': data.user!.email,
+        'joinDate': formatter.format(DateTime.parse(data.user!.createdAt)).toString()
       }
-
-      await supabase.auth.signUp(
-        email: email.text.trim(),
-        password: password.text.trim()
-      );
-    }
+    );
 
     isLoading.value = false;
   }
 
-  void toggleAuth() {
+
+
+  void toggleAction() {
     if (action.value == 'signin') {
       action.value = 'signup';
-    } else if (action.value == 'signup') {
+    } else {
       action.value = 'signin';
     }
   }

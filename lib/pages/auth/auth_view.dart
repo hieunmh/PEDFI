@@ -1,16 +1,24 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/auth/auth_controller.dart';
+import 'package:pedfi/pages/auth/text_input.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/widgets/back_button.dart';
 import 'package:pedfi/widgets/google_provider.dart';
-import 'package:pedfi/widgets/text_field.dart';
 import 'package:provider/provider.dart';
 
 class AuthPage extends GetView<AuthController> {
-  const AuthPage({super.key});
+
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+
+
+  AuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,84 +31,108 @@ class AuthPage extends GetView<AuthController> {
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
-    return Obx(() => Scaffold(
+    return Scaffold(
+      backgroundColor: bgcolor,
+      appBar: AppBar(
         backgroundColor: bgcolor,
-        appBar: AppBar(
-          backgroundColor: bgcolor,
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            }, 
-            icon: const MyBackButton()
-          ),
-          leadingWidth: 80,
+        leading: IconButton(
+          onPressed: () {
+            Get.back(
+              result: {
+                'isLoggedIn': false,
+                'userEmail': '',
+                'joinDate': ''
+              }
+            );
+          }, 
+          icon: const MyBackButton()
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Center(
-              child: Column(
+        leadingWidth: 80,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Center(
+            child: Obx(() =>
+              Column(
                 children: [
-                  const Icon(Icons.android, size: 100),
-      
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/images/pf.png', width: 150, height: 100)
+                    ],
+                  ),
+              
                   Text(
-                    controller.action.value == 'signin' ?
-                    'Welcome to Pedfi' : 'Let\'s create an account for you!',
+                    controller.action.value == 'signin' ? 
+                    'Welcome back!' : 'Let\'s create an account for you!',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: controller.action.value == 'signin' ? 40 : 20,
-                      color: color
-                    ), 
+                      color: color,
+                      fontSize: controller.action.value == 'signin' ? 40 : 20
+                    ),
                   ),
-      
-                  controller.action.value == 'signin' ?
-                  const SizedBox(height: 35) : const SizedBox(height: 20),
-      
-                  MyTextField(
+              
+                  controller.action.value == 'signin' ? 
+                  const SizedBox(height: 45) : const SizedBox(height: 20),
+                  
+              
+                  TextInput(
                     hintText: 'Email', 
-                    placeholder: 'example@gmail.com', 
+                    placeholder: 'example@gmail.com',
                     obscureText: false, 
-                    controller: controller.email
+                    ctrler: emailController
                   ),
-      
+                  
                   const SizedBox(height: 10),
-      
-                  MyTextField(
+              
+                  TextInput(
                     hintText: 'Password', 
-                    placeholder: '●●●●●●●●', 
+                    placeholder: '●●●●●●●●',
                     obscureText: true, 
-                    controller: controller.password
+                    ctrler: passwordController
                   ),
-      
-                  if (controller.action.value == 'signup') MyTextField(
-                    controller: controller.confirmPassword,
+              
+                  controller.action.value == 'signup' ? 
+                  const SizedBox(height: 10) : const SizedBox(height: 0),
+              
+                  controller.action.value == 'signup' ? TextInput(
                     hintText: 'Confirm password', 
                     placeholder: '●●●●●●●●',
-                    obscureText: true,
-                  ),
-      
-                  if (controller.action.value == 'signin') Row(
+                    obscureText: true, 
+                    ctrler: confirmPasswordController
+                  ) : const SizedBox(height: 0),
+
+                  controller.action.value == 'signin' ?
+                  const SizedBox(height: 5) : const SizedBox(height: 0),
+                  
+                  controller.action.value == 'signin' ? Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         'Forgot password?',
                         style: TextStyle(
                           color: themeState.getDarkTheme ? 
-                            Colors.grey[200] : Colors.grey[600]
+                            Colors.grey[200] : Colors.grey[600], 
                         ),
                       )
                     ]
-                  ),
-      
+                  ) : const SizedBox(height: 0),
+                  
                   controller.action.value == 'signin' ?
-                  const SizedBox(height: 35) : const SizedBox(height: 25),
-      
+                  const SizedBox(height: 30) : const SizedBox(height: 25),
+                  
                   TextButton(
                     style: ButtonStyle(
                       padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                     ),
                     onPressed: () {
-                      controller.submitForm();
+                      if (controller.action.value == 'signin') {
+                        controller.handleSignIn(
+                          emailController.text.trim(), 
+                          passwordController.text.trim()
+                        );
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.all(15),
@@ -111,8 +143,9 @@ class AuthPage extends GetView<AuthController> {
                       ),
                       child: Center(
                         child: controller.isLoading.value ? 
-                          LoadingAnimationWidget.threeArchedCircle(
-                          color: Colors.white, size: 26
+                        LoadingAnimationWidget.dotsTriangle(
+                          color: Colors.white, 
+                          size: 26
                         ) : Text(
                           controller.action.value == 'signin' ? 'Sign in' : 'Sign up',
                           style: const TextStyle(
@@ -126,9 +159,10 @@ class AuthPage extends GetView<AuthController> {
                   ),
                   
                   const SizedBox(height: 30),
-      
+                  
                   const GoogleProvider(),
-      
+              
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -140,13 +174,10 @@ class AuthPage extends GetView<AuthController> {
                         ),
                       ),
                       const SizedBox(width: 4),
-      
+                  
                       GestureDetector(
                         onTap: () {
-                          if (controller.isLoading.value == true) {
-                            return;
-                          }
-                          controller.toggleAuth();
+                          controller.toggleAction();
                         },
                         child: Text(
                           controller.action.value == 'signin' 

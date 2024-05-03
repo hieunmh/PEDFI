@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/auth/auth_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class MyTextField extends StatelessWidget {
+class TextInput extends GetView<AuthController> {
 
   final String hintText;
   final String placeholder;
   final bool obscureText;
   // ignore: prefer_typing_uninitialized_variables
-  final controller;
+  final ctrler;
 
-  const MyTextField({
+  const TextInput({
     super.key,
     required this.hintText,
     required this.placeholder,
     required this.obscureText,
-    required this.controller
+    required this.ctrler
   });
-
+  
   @override
   Widget build(BuildContext context) {
-
+    
     final themeState = Provider.of<DarkThemeProvider>(context);
 
     final Color color = themeState.getDarkTheme ? 
@@ -40,7 +42,9 @@ class MyTextField extends StatelessWidget {
             )
           ],
         ),
+
         const SizedBox(height: 5),
+
         Container(
           decoration: BoxDecoration(
             color: themeState.getDarkTheme ? 
@@ -50,7 +54,7 @@ class MyTextField extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: TextField(
-              controller: controller,
+              controller: ctrler,
               style: TextStyle(
                 color: color
               ),
@@ -66,7 +70,8 @@ class MyTextField extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        )
+
       ],
     );
   }

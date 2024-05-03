@@ -136,7 +136,7 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
                         padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                       ),
                       onPressed: () {
-                        controller.signOutUser();
+                        controller.signOutUser(context);
                       },
                       child: Container(
                         padding: const EdgeInsets.all(15),
