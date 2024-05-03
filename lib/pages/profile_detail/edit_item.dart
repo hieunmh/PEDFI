@@ -20,12 +20,12 @@ class EditItem extends GetView<ProfileDetailController> {
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal:20),
       decoration:  BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.grey.shade100,
-            width: 0.1
+            color: themeState.getDarkTheme ? Colors.grey : Colors.black26,
+            width: 0.5
           )
         )
       ),

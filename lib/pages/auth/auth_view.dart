@@ -59,7 +59,7 @@ class AuthPage extends GetView<AuthController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/images/pf.png', width: 150, height: 100)
+                      Image.asset('assets/images/pf.png', width: 150, height: 60)
                     ],
                   ),
               
@@ -76,7 +76,6 @@ class AuthPage extends GetView<AuthController> {
                   controller.action.value == 'signin' ? 
                   const SizedBox(height: 45) : const SizedBox(height: 20),
                   
-              
                   TextInput(
                     hintText: 'Email', 
                     placeholder: 'example@gmail.com',
@@ -88,7 +87,7 @@ class AuthPage extends GetView<AuthController> {
               
                   TextInput(
                     hintText: 'Password', 
-                    placeholder: '●●●●●●●●',
+                    placeholder: '••••••••',
                     obscureText: true, 
                     ctrler: passwordController
                   ),
@@ -98,7 +97,7 @@ class AuthPage extends GetView<AuthController> {
               
                   controller.action.value == 'signup' ? TextInput(
                     hintText: 'Confirm password', 
-                    placeholder: '●●●●●●●●',
+                    placeholder: '••••••••',
                     obscureText: true, 
                     ctrler: confirmPasswordController
                   ) : const SizedBox(height: 0),
@@ -161,8 +160,7 @@ class AuthPage extends GetView<AuthController> {
                   const SizedBox(height: 30),
                   
                   const GoogleProvider(),
-              
-                  
+                              
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
