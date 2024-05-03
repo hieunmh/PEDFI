@@ -31,13 +31,17 @@ class ProfilePage extends GetView<ProfileController> {
         backgroundColor: bgcolor,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
-          child: Text(
-            'Profile',
-            style:  TextStyle(
-              color: color,
-              fontSize: 36,
-              fontWeight: FontWeight.w500,
-            ),
+          child: Row(
+            children: [
+              Text(
+                'Profile',
+                style:  TextStyle(
+                  color: color,
+                  fontSize: 36,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+            ]
           ),  
         ),
       ),
@@ -54,18 +58,26 @@ class ProfilePage extends GetView<ProfileController> {
                   child: controller.isLoggedin.value ? (
                     Row(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset('assets/images/meo.jpg', width: 70, height: 70),
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/meo.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                            border: Border.all(color: Colors.grey, width: 0.2),
+                            borderRadius: BorderRadius.circular(30)
+                          ),
                         ),
-                        const SizedBox(width: 20),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               controller.userEmail.value,
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 color: color
                               ),
@@ -74,7 +86,7 @@ class ProfilePage extends GetView<ProfileController> {
                             Text(
                               'Join ${controller.joinDate.value}',
                               style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 color: Colors.grey,
                               ),
                             )
@@ -106,18 +118,26 @@ class ProfilePage extends GetView<ProfileController> {
                   ) : (
                     Row(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset('assets/images/placeholder.jpg', width: 70, height: 70),
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/placeholder.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                            border: Border.all(color: Colors.grey, width: 0.2),
+                            borderRadius: BorderRadius.circular(30)
+                          ),
                         ),
-                        const SizedBox(width: 20),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Sign in | Sign up',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 color: color
                               ),
@@ -126,7 +146,7 @@ class ProfilePage extends GetView<ProfileController> {
                             const Text(
                               'Sign in to save your data',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 color: Colors.grey,
                               ),
                             )
