@@ -136,7 +136,7 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
                         padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                       ),
                       onPressed: () {
-                        controller.signOutUser(context);
+                        controller.signOutUser();
                       },
                       child: Container(
                         padding: const EdgeInsets.all(15),
@@ -147,7 +147,7 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
                           borderRadius: BorderRadius.circular(5)
                         ),
                         child:  Center(
-                          child: controller.isLoading.value ? LoadingAnimationWidget.threeArchedCircle(
+                          child: controller.isLoading.value ? LoadingAnimationWidget.dotsTriangle(
                             color: Colors.white, size: 26) : const Text(
                             'Sign out',
                             style: TextStyle(

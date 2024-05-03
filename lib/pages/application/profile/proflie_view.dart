@@ -82,14 +82,23 @@ class ProfilePage extends GetView<ProfileController> {
                         ),
                         const Spacer(),
                         ForwardButton(
-                          onTap: () {
-                            Get.toNamed(
+                          onTap: () async {
+                            var data = await Get.toNamed(
                               AppRoutes.PROFILE_DETAIL,
                               parameters: {
                                 'userEmail': controller.userEmail.value,
                                 'joinDate': controller.joinDate.value
                               }
                             );
+
+                            if (data == null) {
+                              return;
+                            } else {
+                              controller.userEmail.value = '';
+                              controller.joinDate.value = '';
+                              controller.isLoggedin.value = false;
+                            }
+                            
                           }
                         )
                       ],
