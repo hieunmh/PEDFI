@@ -6,6 +6,8 @@ class AppRoutes {
 
   static const AUTH = '/auth';
 
+  static const SIGN_IN = '/sign_in';
+
   static const PROFILE_DETAIL = '/profile_detail';
 
 }

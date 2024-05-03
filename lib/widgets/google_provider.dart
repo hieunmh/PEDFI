@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/widgets/square_title.dart';
 import 'package:provider/provider.dart';
 
 class GoogleProvider extends StatelessWidget {
@@ -10,9 +9,6 @@ class GoogleProvider extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
-
-    // final Color color = themeState.getDarkTheme ? 
-    // AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
     
 
     return Column(
@@ -40,10 +36,20 @@ class GoogleProvider extends StatelessWidget {
 
         const SizedBox(height: 30),
 
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SquareTitle(imagePath: 'assets/images/google.png')
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: themeState.getDarkTheme ? Colors.white12 : Colors.black12
+              ),
+              child: Image.asset(
+                'assets/images/google.png',
+                height: 40,
+              ),
+            )
           ],
         ),
 

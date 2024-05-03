@@ -25,30 +25,31 @@ class ProfilePage extends GetView<ProfileController> {
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
-    return Obx(() => Scaffold(
+    return Scaffold(
+      backgroundColor: bgcolor,
+      appBar: AppBar(
         backgroundColor: bgcolor,
-        appBar: AppBar(
-          backgroundColor: bgcolor,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            child: Text(
-              'Profile',
-              style:  TextStyle(
-                color: color,
-                fontSize: 36,
-                fontWeight: FontWeight.w500,
-              ),
-            ),  
-          ),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0),
+          child: Text(
+            'Profile',
+            style:  TextStyle(
+              color: color,
+              fontSize: 36,
+              fontWeight: FontWeight.w500,
+            ),
+          ),  
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Obx(() =>
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-      
+                
                 SizedBox(
                   child: controller.isLoggedin.value ? (
                     Row(
@@ -124,15 +125,18 @@ class ProfilePage extends GetView<ProfileController> {
                         ),
                         const Spacer(),
                         ForwardButton(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.AUTH);
+                          onTap: () async {
+                            var data = await Get.toNamed(AppRoutes.AUTH);
+                            controller.isLoggedin.value = data['isLoggedIn'];
+                            controller.userEmail.value = data['userEmail'] ?? '';
+                            controller.joinDate.value = data['joinDate'] ?? '';
                           }
                         )
                       ],
                     )
                   )
                 ),
-      
+                
                 const SizedBox(height: 40),
                 
                 Text(
@@ -143,9 +147,9 @@ class ProfilePage extends GetView<ProfileController> {
                     color: color
                   ),
                 ),
-      
+                
                 const SizedBox(height: 20),
-      
+                
                 SettingItem(
                   title: 'Virtual Stock',
                   icon: CupertinoIcons.waveform_path_ecg,
@@ -155,9 +159,9 @@ class ProfilePage extends GetView<ProfileController> {
                     
                   },
                 ),
-      
+                
                 const SizedBox(height: 20),
-      
+                
                 SettingItem(
                   title: 'Currency',
                   icon: CupertinoIcons.money_dollar,
@@ -167,9 +171,9 @@ class ProfilePage extends GetView<ProfileController> {
                     
                   },
                 ),
-      
+                
                 const SizedBox(height: 20),
-      
+                
                 SettingSwitch(
                   title: 'Dark mode', 
                   iconColor: themeState.getDarkTheme ? 
