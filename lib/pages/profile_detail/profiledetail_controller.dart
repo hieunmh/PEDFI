@@ -1,6 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -26,13 +23,19 @@ class ProfileDetailController extends GetxController {
   }
 
 
-  void signOutUser(BuildContext context) async {
+  void signOutUser() async {
     isLoading.value = true;
 
     await supabase.auth.signOut();
 
-    isLoading.value = false;
+    Get.back(
+      result: {
+        'userEmail': '',
+        'joinDate': '',
+        'isLoggedIn': false
+      }
+    );
 
-    // Get.offAll(const ApplicationPage());
+    isLoading.value = false;
   }
 }
