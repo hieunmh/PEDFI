@@ -156,6 +156,9 @@ class ProfilePage extends GetView<ProfileController> {
                         ForwardButton(
                           onTap: () async {
                             var data = await Get.toNamed(AppRoutes.AUTH);
+                            if (data == null) {
+                              return;
+                            }
                             controller.isLoggedin.value = data['isLoggedIn'];
                             controller.userEmail.value = data['userEmail'] ?? '';
                             controller.joinDate.value = data['joinDate'] ?? '';

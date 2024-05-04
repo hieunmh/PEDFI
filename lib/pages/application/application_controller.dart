@@ -43,7 +43,7 @@ class ApplicationController extends GetxController {
           color: Colors.white,
         ),
         icon: Icon(CupertinoIcons.square_list, size: 25), 
-        label: ''
+        label: 'Home'
       ),
       NavigationDestination(
         selectedIcon: Icon(
@@ -52,7 +52,7 @@ class ApplicationController extends GetxController {
           color: Colors.white,
         ),
         icon: Icon(CupertinoIcons.add_circled, size: 25), 
-        label: ''
+        label: 'Add'
       ),
       NavigationDestination(
         selectedIcon: Icon(
@@ -61,7 +61,7 @@ class ApplicationController extends GetxController {
            color: Colors.white,
         ),
         icon: Icon(CupertinoIcons.person, size: 25), 
-        label: '',
+        label: 'Profile',
       ),
     ];
 
