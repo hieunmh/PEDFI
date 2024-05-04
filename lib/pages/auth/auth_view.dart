@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
@@ -51,7 +52,7 @@ class AuthPage extends GetView<AuthController> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Center(
             child: Obx(() =>
               Column(
@@ -69,37 +70,45 @@ class AuthPage extends GetView<AuthController> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: color,
-                      fontSize: controller.action.value == 'signin' ? 40 : 20
+                      fontSize: controller.action.value == 'signin' ? 39 : 18
                     ),
                   ),
               
                   controller.action.value == 'signin' ? 
                   const SizedBox(height: 45) : const SizedBox(height: 20),
                   
-                  TextInput(
+                  InputPlaceholder(
                     hintText: 'Email', 
                     placeholder: 'example@gmail.com',
                     obscureText: false, 
-                    ctrler: emailController
+                    ctrler: controller.emailController,
+                    borderColor: controller.emailError.isEmpty ? 
+                    Colors.transparent : AppColor.commonColor,
+                    errorMsg: controller.emailError.value,
                   ),
                   
                   const SizedBox(height: 10),
               
-                  TextInput(
+                  InputPlaceholder(
                     hintText: 'Password', 
                     placeholder: '••••••••',
                     obscureText: true, 
-                    ctrler: passwordController
+                    ctrler: controller.passwordController,
+                    borderColor: controller.passwordError.isEmpty ? 
+                    Colors.transparent : AppColor.commonColor,
+                    errorMsg: controller.passwordError.value,
                   ),
               
                   controller.action.value == 'signup' ? 
                   const SizedBox(height: 10) : const SizedBox(height: 0),
               
-                  controller.action.value == 'signup' ? TextInput(
+                  controller.action.value == 'signup' ? InputPlaceholder(
                     hintText: 'Confirm password', 
                     placeholder: '••••••••',
                     obscureText: true, 
-                    ctrler: confirmPasswordController
+                    ctrler: confirmPasswordController,
+                    borderColor: Colors.transparent,
+                    errorMsg: controller.passwordConfirmError.value,
                   ) : const SizedBox(height: 0),
 
                   controller.action.value == 'signin' ?
@@ -120,17 +129,15 @@ class AuthPage extends GetView<AuthController> {
                   
                   controller.action.value == 'signin' ?
                   const SizedBox(height: 30) : const SizedBox(height: 25),
-                  
+
                   TextButton(
                     style: ButtonStyle(
                       padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                     ),
                     onPressed: () {
                       if (controller.action.value == 'signin') {
-                        controller.handleSignIn(
-                          emailController.text.trim(), 
-                          passwordController.text.trim()
-                        );
+                        SystemChannels.textInput.invokeMethod('TextInput.hide');
+                        controller.handleSignIn();
                       }
                     },
                     child: Container(
@@ -156,8 +163,24 @@ class AuthPage extends GetView<AuthController> {
                       ),
                     ),
                   ),
+
+                  controller.serverError.value.isNotEmpty ? SizedBox(
+                    height: 40,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          controller.serverError.value,
+                          style: const TextStyle(
+                            color: AppColor.commonColor,
+                            fontWeight: FontWeight.w500
+                          ),
+                        )
+                      ],
+                    )
+                  )
                   
-                  const SizedBox(height: 30),
+                  : const SizedBox(height: 40),
                   
                   const GoogleProvider(),
                               
