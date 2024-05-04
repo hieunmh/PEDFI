@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/theme_data.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
@@ -50,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: "Pedfi App",
+          title: "Pedfi",
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
           initialRoute: AppRoutes.APPLICATION,
           getPages: AppPages.routes,
