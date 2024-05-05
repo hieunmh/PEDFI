@@ -1,10 +1,10 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_const_constructors
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
+import 'package:pedfi/pages/application/home/line_chart.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +35,7 @@ class HomePage extends GetView<HomeController> {
         // appBar: AppBar(
         //   backgroundColor: bgcolor,
         // ),
-        body:ListView(
+        body: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.all(12.0),
@@ -168,32 +168,11 @@ class HomePage extends GetView<HomeController> {
               ),
               padding: EdgeInsets.symmetric(
                 vertical: 40.0,
-                horizontal: 12.0,
+                horizontal: 10,
               ),
-              margin: EdgeInsets.all(12.0),
+              margin: EdgeInsets.all(0),
               height: 400.0,
-              child: LineChart(
-                LineChartData(
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: [
-                        FlSpot(1, 4),
-                        FlSpot(2, 9),
-                        FlSpot(3, 5),
-                      ],
-                      isCurved: false,
-                      barWidth: 2.5,
-                      colors: [
-                        Colors.blue,
-                        Colors.red,
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              child: BarChartSample2()
             ),
       
             Padding(

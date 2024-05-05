@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileController extends GetxController {
@@ -23,10 +22,8 @@ class ProfileController extends GetxController {
     if (email == null || createdAt == null) {
       return;
     } else {
-      final formatter = DateFormat('MMMM yyyy');
-
       userEmail.value = email;
-      joinDate.value = formatter.format(DateTime.parse(createdAt)).toString();
+      joinDate.value = createdAt;
       isLoggedin.value = true;
     }
   }
