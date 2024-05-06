@@ -187,7 +187,7 @@ class ProfilePage extends GetView<ProfileController> {
                 
                 SettingItem(
                   title: 'Virtual Stock',
-                  icon: CupertinoIcons.waveform_path_ecg,
+                  icon: CupertinoIcons.bitcoin,
                   iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
                   value: '',
                   onTap: () {
