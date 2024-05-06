@@ -1,39 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
+
+  final supabase = Supabase.instance.client;
 
   final state = 0.obs;
   final position = ''.obs;
 
+  var userEmail = ''.obs;
+  var joinDate = ''.obs;
+  var isLoggedin = false.obs;
+
+
   late final PageController pageController;
-  // late final List<BottomNavigationBarItem> bottomNavBar;
   late final List<NavigationDestination> bottomNavDes;
 
   @override
   void onInit() {
     super.onInit();
-
-    // bottomNavBar = <BottomNavigationBarItem> [
-    //   const BottomNavigationBarItem(
-    //     activeIcon: Icon(CupertinoIcons.square_list_fill),
-    //     icon: Icon(CupertinoIcons.square_list),
-    //     label: 'Home',
-    //   ),
-
-    //   const BottomNavigationBarItem(
-    //     activeIcon: Icon(CupertinoIcons.add_circled_solid),
-    //     icon: Icon(CupertinoIcons.add_circled),
-    //     label: 'Add',
-    //   ),
-      
-    //   const BottomNavigationBarItem(
-    //     activeIcon: Icon(CupertinoIcons.person_fill),
-    //     icon: Icon(CupertinoIcons.person),
-    //     label: 'Profile',
-    //   ),
-    // ];
+    getProfile();
     
     bottomNavDes = const [
       NavigationDestination(
@@ -72,6 +60,19 @@ class ApplicationController extends GetxController {
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> getProfile() async {
+    var email = supabase.auth.currentUser?.email.toString();
+    var createdAt = supabase.auth.currentUser?.createdAt.toString();
+
+    if (email == null || createdAt == null) {
+      return;
+    } else {
+      userEmail.value = email;
+      joinDate.value = createdAt;
+      isLoggedin.value = true;
+    }
   }
 
   void handlePageChange(int index) {

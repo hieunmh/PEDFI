@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/profile_detail/edit_item.dart';
@@ -21,6 +22,8 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
     
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+
+    final formatter = DateFormat('E, dd-MM-yyyy');
 
     return Obx(() => Scaffold(
         backgroundColor: bgcolor,
@@ -67,6 +70,19 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
                       borderRadius: BorderRadius.circular(50),
                       child: Text(
                         controller.userEmail,
+                        style: TextStyle(
+                          color: Colors.grey[600]
+                        ),
+                      )
+                    ),
+                  ),
+
+                  EditItem(
+                    title: 'Join date',
+                    widget: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Text(
+                        formatter.format(DateTime.parse(controller.joinDate)),
                         style: TextStyle(
                           color: Colors.grey[600]
                         ),
@@ -147,7 +163,7 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
                           borderRadius: BorderRadius.circular(5)
                         ),
                         child:  Center(
-                          child: controller.isLoading.value ? LoadingAnimationWidget.dotsTriangle(
+                          child: controller.isLoading.value ? LoadingAnimationWidget.fallingDot(
                             color: Colors.white, size: 26) : const Text(
                             'Sign out',
                             style: TextStyle(

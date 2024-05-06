@@ -1,410 +1,92 @@
-// ignore_for_file: must_be_immutable
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
+import 'package:pedfi/pages/application/home/total_balance.dart';
+import 'package:pedfi/pages/application/home/transaction.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends GetView<HomeController> {
-
-  var totalBalance = 0;
-  var totalIncome = 0;
-  var totalExpense = 0;
-
-  HomePage({super.key});
+class HomePage extends GetView<HomeController>  {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
 
-    final Color color = themeState.getDarkTheme ?
+    final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
-    final Color bgcolor = themeState.getDarkTheme ?
+    final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
-
-    final Color chartcolor = themeState.getDarkTheme ?
-    Colors.black12 : Colors.white;
-
-    return SafeArea(
-      child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: bgcolor,
-        // ),
-        body:ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: bgcolor,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(32.0),
-                          color: Color(0xffe2e7ef),
-                        ),
-                        child:CircleAvatar(
-                          maxRadius: 32.0,
-                          child: Image.asset(
-                            "assets/images/placeholder.jpg",
-                            width: 64.0,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8.0),
-                      Text(
-                        'Hello, User',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
-                          color: color,
-                        ),
-                      ),
-                    ],
-                  ),
                   Container(
+                    width: 60, 
+                    height: 60,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      color: Color(0xffe2e7ef),
+                      shape: BoxShape.circle,
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/placeholder.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                      border: Border.all(color: Colors.grey, width: 0.2)
                     ),
-                    padding: EdgeInsets.all(
-                      12.0,
-                    ),
-                    child: Icon(
-                      Icons.settings,
-                      size: 32.0,
-                      color: Color(0xff3E454C),
+                  ),
+        
+                  const SizedBox(width: 10),
+        
+                  Obx(() =>
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Welcome to pedfi!',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey
+                          ),
+                        ),
+                        Text(
+                          controller.userEmail.value.isEmpty ? 
+                          'Sign in' : controller.userEmail.value,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: color
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-      
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              margin: EdgeInsets.all(12.0,),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.blue,
-                      Colors.blue,
-                    ],
-                  ),
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(24.0)
-                  ),
-                ),
-                padding: EdgeInsets.symmetric(
-                  vertical: 20.0,
-                  horizontal: 8.0,
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Total Balance',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 12.0,),
-                    Text(
-                      'Rs 3400',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 26.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: 12.0),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          cardIncome(
-                            totalIncome.toString(),
-                          ),
-                          cardExpense(
-                            totalExpense.toString(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-      
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                "Expenses",
-                style: TextStyle(
-                  fontSize: 32.0,
-                  color: color,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ),
-      
-            Container(
-              decoration: BoxDecoration(
-                color: chartcolor,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.symmetric(
-                vertical: 40.0,
-                horizontal: 12.0,
-              ),
-              margin: EdgeInsets.all(12.0),
-              height: 400.0,
-              child: LineChart(
-                LineChartData(
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: [
-                        FlSpot(1, 4),
-                        FlSpot(2, 9),
-                        FlSpot(3, 5),
-                      ],
-                      isCurved: false,
-                      barWidth: 2.5,
-                      colors: [
-                        Colors.blue,
-                        Colors.red,
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-      
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                "Recent Expenses",
-                style: TextStyle(
-                  fontSize: 32.0,
-                  color: color,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ),
-      
-            expenseTile(500, "", context ),
-            incomeTile(100, "", context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget cardIncome(String value) {
-    return Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white60,
-            borderRadius: BorderRadius.circular(
-              20.0,
-            ),
-          ),
-          padding: EdgeInsets.all(
-            6.0,
-          ),
-          child: Icon(
-            Icons.arrow_downward,
-            size: 28.0,
-            color: Colors.green[700],
-          ),
-          margin: EdgeInsets.only(
-            right: 8.0,
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Income",
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.white70,
-              ),
-            ),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget cardExpense(String value) {
-    return Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white60,
-            borderRadius: BorderRadius.circular(
-              20.0,
-            ),
-          ),
-          padding: EdgeInsets.all(
-            6.0,
-          ),
-          child: Icon(
-            Icons.arrow_upward,
-            size: 28.0,
-            color: Colors.red[700],
-          ),
-          margin: EdgeInsets.only(
-            right: 8.0,
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Expense",
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.white70,
-              ),
-            ),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget expenseTile(int value, String note, BuildContext context) {
-
-    final themeState = Provider.of<DarkThemeProvider>(context);
-
-    final Color color = themeState.getDarkTheme ?
-    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
-
-    final Color bgcolor = themeState.getDarkTheme ?
-    Colors.white12 : Color(0xffced4eb);
-
-    return Container(
-      margin: EdgeInsets.all(8.0),
-      padding: EdgeInsets.all(18.0),
-      decoration: BoxDecoration(
-        color: bgcolor,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.arrow_circle_up_outlined,
-                size: 28.0,
-                color: Colors.red[700],
-              ),
-              SizedBox(width: 4.0,),
-              Text(
-                "Expense",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: color,
-                ),
-              ),
+              const SizedBox(height: 20),
+        
+              const TotalBalance(),
+        
+              const SizedBox(height: 30),
+              
+              const Transaction()
             ],
           ),
-          Text(
-            "-$value",
-            style: TextStyle(
-              fontSize: 24.0,
-              color: color,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
+        ),
+      )
     );
   }
 
-  Widget incomeTile(int value, String note, BuildContext context) {
-
-    final themeState = Provider.of<DarkThemeProvider>(context);
-
-    final Color color = themeState.getDarkTheme ?
-    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
-
-    final Color bgcolor = themeState.getDarkTheme ?
-    Colors.white12 : Color(0xffced4eb);
-
-    return Container(
-      margin: EdgeInsets.all(8.0),
-      padding: EdgeInsets.all(18.0),
-      decoration: BoxDecoration(
-        color: bgcolor,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.arrow_circle_down_outlined,
-                size: 28.0,
-                color: Colors.blue[700],
-              ),
-              SizedBox(width: 4.0,),
-              Text(
-                "Income",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: color,
-                ),
-              ),
-            ],
-          ),
-          Text(
-            "+$value",
-            style: TextStyle(
-              fontSize: 24.0,
-              color: color,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  
 }

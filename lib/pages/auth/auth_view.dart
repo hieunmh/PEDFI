@@ -14,12 +14,8 @@ import 'package:provider/provider.dart';
 
 class AuthPage extends GetView<AuthController> {
 
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var confirmPasswordController = TextEditingController();
 
-
-  AuthPage({super.key});
+  const AuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +102,7 @@ class AuthPage extends GetView<AuthController> {
                     hintText: 'Confirm password', 
                     placeholder: '••••••••',
                     obscureText: true, 
-                    ctrler: confirmPasswordController,
+                    ctrler: controller.passwordConfirmController,
                     borderColor: Colors.transparent,
                     errorMsg: controller.passwordConfirmError.value,
                   ) : const SizedBox(height: 0),
@@ -135,9 +131,11 @@ class AuthPage extends GetView<AuthController> {
                       padding:MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(0)),
                     ),
                     onPressed: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
                       if (controller.action.value == 'signin') {
-                        SystemChannels.textInput.invokeMethod('TextInput.hide');
                         controller.handleSignIn();
+                      } else if (controller.action.value == 'signup') {
+                        controller.handleSignUp();
                       }
                     },
                     child: Container(
@@ -149,7 +147,7 @@ class AuthPage extends GetView<AuthController> {
                       ),
                       child: Center(
                         child: controller.isLoading.value ? 
-                        LoadingAnimationWidget.dotsTriangle(
+                        LoadingAnimationWidget.fallingDot(
                           color: Colors.white, 
                           size: 26
                         ) : Text(

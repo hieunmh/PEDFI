@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileController extends GetxController {
@@ -10,25 +10,15 @@ class ProfileController extends GetxController {
   var joinDate = ''.obs;
   var isLoggedin = false.obs;
 
+  var appController = Get.find<ApplicationController>();
+
   @override
   void onInit() {
     super.onInit();
-    getProfile();
-  }
-
-  Future<void> getProfile() async {
-    var email = supabase.auth.currentUser?.email.toString();
-    var createdAt = supabase.auth.currentUser?.createdAt.toString();
-
-    if (email == null || createdAt == null) {
-      return;
-    } else {
-      final formatter = DateFormat('MMMM yyyy');
-
-      userEmail.value = email;
-      joinDate.value = formatter.format(DateTime.parse(createdAt)).toString();
-      isLoggedin.value = true;
-    }
+    
+    userEmail.value = appController.userEmail.value;
+    joinDate.value = appController.joinDate.value;
+    isLoggedin.value = appController.isLoggedin.value;
   }
 
 }

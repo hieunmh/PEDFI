@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/profile/profile_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
@@ -24,6 +25,8 @@ class ProfilePage extends GetView<ProfileController> {
     
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+
+    final formatter = DateFormat('MMMM yyyy');
 
     return Scaffold(
       backgroundColor: bgcolor,
@@ -84,7 +87,7 @@ class ProfilePage extends GetView<ProfileController> {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              'Join ${controller.joinDate.value}',
+                              'Join ${formatter.format(DateTime.parse(controller.joinDate.value)).toString()}',
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -184,7 +187,7 @@ class ProfilePage extends GetView<ProfileController> {
                 
                 SettingItem(
                   title: 'Virtual Stock',
-                  icon: CupertinoIcons.waveform_path_ecg,
+                  icon: CupertinoIcons.bitcoin,
                   iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
                   value: '',
                   onTap: () {
