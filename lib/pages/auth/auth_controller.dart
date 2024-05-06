@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthController extends GetxController {
@@ -15,6 +16,8 @@ class AuthController extends GetxController {
   var passwordError = ''.obs;
   var passwordConfirmError = ''.obs;
   var serverError = ''.obs;
+
+  var homeController = Get.find<HomeController>();
   
   Future<void> handleSignIn() async {
 
@@ -61,6 +64,7 @@ class AuthController extends GetxController {
     if (email == null || createdAt == null) {
       return;
     } else {
+      homeController.setUserEmail(email);
       Get.back(
         result: {
           'isLoggedIn': true,
