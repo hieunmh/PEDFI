@@ -18,36 +18,43 @@ class Transaction extends GetView<HomeController> {
 
     final bgColor = themeState.getDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100;
 
+    final incomeColor = themeState.getDarkTheme ? Colors.blue.shade800 : Colors.blue.shade400;
+
+    final expenseColor = themeState.getDarkTheme ? Colors.red.shade800 : Colors.red.shade400;
 
 
     final List<Map<String, dynamic>> transactionsData = [
     {
       'icon': FontAwesomeIcons.burger,
-      'color': Colors.yellow[700],
+      'iconcolor': Colors.yellow[700],
       'name': 'Food',
       'totalAmount': '-\$45.00',
       'date': 'Today',
+      'color': expenseColor
     },
     {
-      'icon': FontAwesomeIcons.bagShopping,
-      'color': Colors.purple,
-      'name': 'Shopping',
-      'totalAmount': '-\$230.00',
+      'icon': FontAwesomeIcons.dollarSign,
+      'iconcolor': Colors.purple,
+      'name': 'Work',
+      'totalAmount': '+\$230.00',
       'date': 'Today',
+      'color': incomeColor
     },
     {
       'icon':FontAwesomeIcons.heartCircleBolt,
-      'color': Colors.green,
+      'iconcolor': Colors.green,
       'name': 'Health',
       'totalAmount': '-\$79.00',
       'date': 'Yesterday',
+      'color': expenseColor
     },
     {
       'icon': FontAwesomeIcons.planeUp,
-      'color': Colors.blue,
+      'iconcolor': Colors.blue,
       'name': 'Travel',
       'totalAmount': '-\$350.00',
       'date': 'Yesterday',
+      'color': expenseColor
     }
   ];
 
@@ -71,7 +78,7 @@ class Transaction extends GetView<HomeController> {
               style: TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.w500,
-                fontSize: 15
+                fontSize: 14
               ),
             )
           ],
@@ -100,7 +107,7 @@ class Transaction extends GetView<HomeController> {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              color: transactionsData[index]['color'],
+                              color: transactionsData[index]['iconcolor'],
                               shape: BoxShape.circle
                             ),
                           ),
@@ -132,7 +139,7 @@ class Transaction extends GetView<HomeController> {
                         transactionsData[index]['totalAmount'],
                         style: TextStyle(
                           fontSize: 14,
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: transactionsData[index]['color'],
                           fontWeight: FontWeight.w700
                         ),
                       ),
@@ -140,7 +147,7 @@ class Transaction extends GetView<HomeController> {
                         transactionsData[index]['date'],
                         style: TextStyle(
                           fontSize: 14,
-                          color: Theme.of(context).colorScheme.outline,
+                          color: Colors.grey.shade500,
                           fontWeight: FontWeight.w400
                         ),
                       ),
