@@ -10,4 +10,6 @@ class AppRoutes {
 
   static const PROFILE_DETAIL = '/profile_detail';
 
+  static const STOCK = '/stock';
+
 }

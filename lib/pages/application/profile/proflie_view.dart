@@ -191,7 +191,7 @@ class ProfilePage extends GetView<ProfileController> {
                   iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
                   value: '',
                   onTap: () {
-                    
+                    Get.toNamed(AppRoutes.STOCK);
                   },
                 ),
                 
