@@ -7,6 +7,8 @@ import 'package:pedfi/pages/application/application_bindings.dart';
 import 'package:pedfi/pages/application/application_view.dart';
 import 'package:pedfi/pages/auth/auth_bindings.dart';
 import 'package:pedfi/pages/auth/auth_view.dart';
+import 'package:pedfi/pages/stock/stock_bindings.dart';
+import 'package:pedfi/pages/stock/stock_view.dart';
 import 'package:pedfi/routes/routes.dart';
 
 class AppPages {
@@ -28,6 +30,12 @@ class AppPages {
       name: AppRoutes.PROFILE_DETAIL, 
       page: () => ProfileDetailPage(),
       binding: ProfileDetailBindings()
+    ),
+
+    GetPage(
+      name: AppRoutes.STOCK, 
+      page: () => StockPage(),
+      binding: StockBindings()
     ),
 
 
