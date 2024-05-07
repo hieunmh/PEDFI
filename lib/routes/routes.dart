@@ -12,4 +12,6 @@ class AppRoutes {
 
   static const STOCK = '/stock';
 
+  static const TRANSACTION = '/transaction';
+
 }

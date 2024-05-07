@@ -9,6 +9,8 @@ import 'package:pedfi/pages/auth/auth_bindings.dart';
 import 'package:pedfi/pages/auth/auth_view.dart';
 import 'package:pedfi/pages/stock/stock_bindings.dart';
 import 'package:pedfi/pages/stock/stock_view.dart';
+import 'package:pedfi/pages/transaction/transaction_bindings.dart';
+import 'package:pedfi/pages/transaction/transaction_view.dart';
 import 'package:pedfi/routes/routes.dart';
 
 class AppPages {
@@ -36,6 +38,12 @@ class AppPages {
       name: AppRoutes.STOCK, 
       page: () => StockPage(),
       binding: StockBindings()
+    ),
+
+    GetPage(
+      name: AppRoutes.TRANSACTION, 
+      page: () => TransactionPage(),
+      binding: TransactionBindings()
     ),
 
 

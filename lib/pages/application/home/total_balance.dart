@@ -58,7 +58,7 @@ class TotalBalance extends GetView<HomeController> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: themeState.getDarkTheme ? 
-                    Colors.blue.shade800 : Colors.blue.shade400,
+                    AppColor.incomeDarkColor : AppColor.incomeLightColor,
                     borderRadius: BorderRadius.circular(10)
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -96,7 +96,7 @@ class TotalBalance extends GetView<HomeController> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: themeState.getDarkTheme ? 
-                    Colors.red.shade800 : Colors.red.shade400,
+                    AppColor.expenseDarkColor : AppColor.expenseLightColor,
                     borderRadius: BorderRadius.circular(10)
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
