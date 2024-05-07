@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
+import 'package:pedfi/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class Transaction extends GetView<HomeController> {
@@ -18,44 +19,47 @@ class Transaction extends GetView<HomeController> {
 
     final bgColor = themeState.getDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100;
 
-    final incomeColor = themeState.getDarkTheme ? Colors.blue.shade800 : Colors.blue.shade400;
+    final incomeColor = themeState.getDarkTheme ? AppColor.incomeDarkColor : AppColor.incomeLightColor;
 
-    final expenseColor = themeState.getDarkTheme ? Colors.red.shade800 : Colors.red.shade400;
-
+    final expenseColor = themeState.getDarkTheme ? AppColor.expenseDarkColor : AppColor.expenseLightColor;
 
     final List<Map<String, dynamic>> transactionsData = [
     {
       'icon': FontAwesomeIcons.burger,
-      'iconcolor': Colors.yellow[700],
+      'iconcolor': expenseColor,
       'name': 'Food',
+      'detail': 'Dookki',
       'totalAmount': '-\$45.00',
       'date': 'Today',
       'color': expenseColor
     },
     {
       'icon': FontAwesomeIcons.dollarSign,
-      'iconcolor': Colors.purple,
+      'iconcolor': incomeColor,
       'name': 'Work',
-      'totalAmount': '+\$230.00',
+      'detail': 'Salary',
+      'totalAmount': '+\$2000.00',
       'date': 'Today',
       'color': incomeColor
     },
     {
       'icon':FontAwesomeIcons.heartCircleBolt,
-      'iconcolor': Colors.green,
+      'iconcolor': expenseColor,
       'name': 'Health',
+      'detail': 'Hospital',
       'totalAmount': '-\$79.00',
       'date': 'Yesterday',
       'color': expenseColor
     },
     {
       'icon': FontAwesomeIcons.planeUp,
-      'iconcolor': Colors.blue,
+      'iconcolor': expenseColor,
       'name': 'Travel',
+      'detail': 'Hai Phong food tour',
       'totalAmount': '-\$350.00',
       'date': 'Yesterday',
       'color': expenseColor
-    }
+    },
   ];
 
 
@@ -73,12 +77,17 @@ class Transaction extends GetView<HomeController> {
               ),
             ),
 
-            const Text(
-              'View all',
-              style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-                fontSize: 14
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(AppRoutes.TRANSACTION);
+              },
+              child: const Text(
+                'View all',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14
+                ),
               ),
             )
           ],
@@ -91,7 +100,15 @@ class Transaction extends GetView<HomeController> {
           child: Container(
             decoration: BoxDecoration(
               color: bgColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
+                  offset: Offset.zero,
+                  blurRadius: 4,
+                  spreadRadius: 2
+                )
+              ]
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -108,7 +125,8 @@ class Transaction extends GetView<HomeController> {
                             height: 50,
                             decoration: BoxDecoration(
                               color: transactionsData[index]['iconcolor'],
-                              shape: BoxShape.circle
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10)
                             ),
                           ),
                           Icon(
@@ -121,13 +139,27 @@ class Transaction extends GetView<HomeController> {
                             
                       const SizedBox(width: 12),
                       
-                      Text(
-                        transactionsData[index]['name'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: color,
-                          fontWeight: FontWeight.w500
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            transactionsData[index]['name'],
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: color,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          Text(
+                            transactionsData[index]['detail'],
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade500,
+                              fontWeight: FontWeight.w400
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),

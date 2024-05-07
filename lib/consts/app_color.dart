@@ -11,4 +11,13 @@ class AppColor {
   static const textLightThemeColor = Colors.black87;
   
   static const commonColor = Color.fromRGBO(210, 60, 63, 1);
+
+  static final incomeDarkColor = Colors.green.shade600;
+
+  static final incomeLightColor = Colors.green.shade400;
+
+  static final expenseDarkColor = Colors.red.shade600;
+
+  static final expenseLightColor = Colors.red.shade400;
+
 }
