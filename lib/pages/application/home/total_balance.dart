@@ -22,114 +22,165 @@ class TotalBalance extends GetView<HomeController> {
 
     return Container(
       width: double.infinity,
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(0),
+        color: themeState.getDarkTheme ? Colors.black26 : Colors.grey.shade200
       ),
-      child: Column(
-        children: [
-          Center(
-            child: Column(
+      
+      child: Obx(() =>
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '\$1234.56',
+                  controller.firstDay.value,
                   style: TextStyle(
                     color: color,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800
-                  )
+                    fontWeight: FontWeight.w600
+                  ),
                 ),
+        
                 Text(
-                  'Total balance',
+                  ' - ',
                   style: TextStyle(
-                    color: Colors.grey.shade500,
-                    fontSize: 14,
-                  )
+                    color: color,
+                    fontWeight: FontWeight.w600
+                  ),
+                ),
+        
+                Text(
+                  controller.lastDay.value,
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.w600
+                  ),
                 )
               ],
             ),
-          ),
-          
-          const SizedBox(height: 20),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: themeState.getDarkTheme ? 
-                    AppColor.incomeDarkColor : AppColor.incomeLightColor,
-                    borderRadius: BorderRadius.circular(10)
+            const SizedBox(height: 10),
+        
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    'Total balance',
+                    style: TextStyle(
+                      color: Colors.grey.shade500,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600
+                    )
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+                  Text(
+                    '\$1234.56',
+                    style: TextStyle(
+                      color: color,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800
+                    )
+                  ),
+                ],
+              ),
+            ),
+            
+            // const SizedBox(height: 10),
+        
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                         Column(
                           children: [
                             Text(
                               'Incoming',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: themeState.getDarkTheme ? 
+                                AppColor.incomeDarkColor : AppColor.incomeLightColor,
                                 fontWeight: FontWeight.w500
                               ),
                             ),
                             Text(
                               '+\$2600.10',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: themeState.getDarkTheme ? 
+                                AppColor.incomeDarkColor : AppColor.incomeLightColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700
                               ),
                             )
                           ],
                         ),
-                      Icon(FontAwesomeIcons.arrowTrendUp, color: Colors.white, size: 20)
-                    ],
+                        const SizedBox(width: 10),
+                        Icon(
+                          FontAwesomeIcons.arrowTrendUp, 
+                          color: themeState.getDarkTheme ? 
+                          AppColor.incomeDarkColor : AppColor.incomeLightColor, 
+                          size: 20
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-          
-              const SizedBox(width: 10),
-          
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: themeState.getDarkTheme ? 
-                    AppColor.expenseDarkColor : AppColor.expenseLightColor,
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Expense',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500
+            
+                const SizedBox(width: 10),
+            
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              'Expense',
+                              style: TextStyle(
+                                color: themeState.getDarkTheme ? 
+                                AppColor.expenseDarkColor : AppColor.expenseLightColor,
+                                fontWeight: FontWeight.w500
+                              ),
                             ),
-                          ),
-                          Text(
-                            '-\$1000.25',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700
-                            ),
-                          )
-                        ],
-                      ),
-                      Icon(FontAwesomeIcons.arrowTrendDown, color: Colors.white, size: 20)
-                    ],
+                            Text(
+                              '-\$1000.25',
+                              style: TextStyle(
+                                color: themeState.getDarkTheme ? 
+                                AppColor.expenseDarkColor : AppColor.expenseLightColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(width: 10),
+                        Icon(
+                          FontAwesomeIcons.arrowTrendDown, 
+                          color: themeState.getDarkTheme ? 
+                          AppColor.expenseDarkColor : AppColor.expenseLightColor, 
+                          size: 20
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

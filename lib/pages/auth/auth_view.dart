@@ -42,7 +42,7 @@ class AuthPage extends GetView<AuthController> {
               }
             );
           }, 
-          icon: const MyBackButton()
+          icon: MyBackButton(buttonColor: color)
         ),
         leadingWidth: 80,
       ),
