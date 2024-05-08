@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
@@ -13,7 +14,6 @@ class ApplicationController extends GetxController {
   var userEmail = ''.obs;
   var joinDate = ''.obs;
   var isLoggedin = false.obs;
-
 
   late final PageController pageController;
   late final List<NavigationDestination> bottomNavDes;
@@ -80,6 +80,15 @@ class ApplicationController extends GetxController {
   }
 
   void handleNavBarTap(int index) {
+    if (state.value != 0 && index == 0) {
+      var homeController =  Get.find<HomeController>();
+      
+      Future.delayed(const Duration(milliseconds: 50), () {
+        homeController.scrollToCurrentMonth();
+      });
+    }
+
     pageController.jumpToPage(index);
+
   }
 }

@@ -33,7 +33,7 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
             onPressed: () {
               Get.back();
             }, 
-            icon: const MyBackButton()
+            icon: MyBackButton(buttonColor: color)
           ),
           leadingWidth: 80,
           centerTitle: true,

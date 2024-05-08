@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class Transaction extends GetView<HomeController> {
@@ -42,6 +41,7 @@ class Transaction extends GetView<HomeController> {
       'date': 'Today',
       'color': incomeColor
     },
+    
     {
       'icon':FontAwesomeIcons.heartCircleBolt,
       'iconcolor': expenseColor,
@@ -79,7 +79,7 @@ class Transaction extends GetView<HomeController> {
 
             GestureDetector(
               onTap: () {
-                Get.toNamed(AppRoutes.TRANSACTION);
+                // Get.toNamed(AppRoutes.TRANSACTION);
               },
               child: const Text(
                 'View all',
@@ -95,101 +95,93 @@ class Transaction extends GetView<HomeController> {
 
         const SizedBox(height: 10),
 
-        ...List.generate(transactionsData.length, (index) => Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: Container(
-            decoration: BoxDecoration(
-              color: bgColor,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
-                  offset: Offset.zero,
-                  blurRadius: 4,
-                  spreadRadius: 2
-                )
-              ]
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: transactionsData[index]['iconcolor'],
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-                          ),
-                          Icon(
-                            transactionsData[index]['icon'],
-                            color: Colors.white,
-                            size: 20,
-                          )
-                        ],
-                      ),
+        // ...List.generate(transactionsData.length, (index) => Padding(
+        //   padding: const EdgeInsets.only(bottom: 15),
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       color: bgColor,
+        //       borderRadius: BorderRadius.circular(15),
+        //     ),
+        //     child: Padding(
+        //       padding: const EdgeInsets.all(15),
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //         children: [
+        //           Row(
+        //             children: [
+        //               Stack(
+        //                 alignment: Alignment.center,
+        //                 children: [
+        //                   Container(
+        //                     width: 50,
+        //                     height: 50,
+        //                     decoration: BoxDecoration(
+        //                       color: transactionsData[index]['iconcolor'],
+        //                       shape: BoxShape.rectangle,
+        //                       borderRadius: BorderRadius.circular(10)
+        //                     ),
+        //                   ),
+        //                   Icon(
+        //                     transactionsData[index]['icon'],
+        //                     color: Colors.white,
+        //                     size: 20,
+        //                   )
+        //                 ],
+        //               ),
                             
-                      const SizedBox(width: 12),
+        //               const SizedBox(width: 12),
                       
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            transactionsData[index]['name'],
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: color,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+        //               Column(
+        //                 crossAxisAlignment: CrossAxisAlignment.start,
+        //                 children: [
+        //                   Text(
+        //                     transactionsData[index]['name'],
+        //                     style: TextStyle(
+        //                       fontSize: 14,
+        //                       color: color,
+        //                       fontWeight: FontWeight.w600,
+        //                     ),
+        //                   ),
 
-                          Text(
-                            transactionsData[index]['detail'],
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey.shade500,
-                              fontWeight: FontWeight.w400
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+        //                   Text(
+        //                     transactionsData[index]['detail'],
+        //                     style: TextStyle(
+        //                       fontSize: 12,
+        //                       color: Colors.grey.shade500,
+        //                       fontWeight: FontWeight.w400
+        //                     ),
+        //                   ),
+        //                 ],
+        //               )
+        //             ],
+        //           ),
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        transactionsData[index]['totalAmount'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: transactionsData[index]['color'],
-                          fontWeight: FontWeight.w700
-                        ),
-                      ),
-                      Text(
-                        transactionsData[index]['date'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade500,
-                          fontWeight: FontWeight.w400
-                        ),
-                      ),
-                    ],
-                  )
-                ]
-              ),
-            ),
-          ),
-        )),
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.end,
+        //             children: [
+        //               Text(
+        //                 transactionsData[index]['totalAmount'],
+        //                 style: TextStyle(
+        //                   fontSize: 14,
+        //                   color: transactionsData[index]['color'],
+        //                   fontWeight: FontWeight.w700
+        //                 ),
+        //               ),
+        //               Text(
+        //                 transactionsData[index]['date'],
+        //                 style: TextStyle(
+        //                   fontSize: 14,
+        //                   color: Colors.grey.shade500,
+        //                   fontWeight: FontWeight.w400
+        //                 ),
+        //               ),
+        //             ],
+        //           )
+        //         ]
+        //       ),
+        //     ),
+        //   ),
+        // )),
       ],
     );
   }

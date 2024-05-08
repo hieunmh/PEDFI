@@ -10,14 +10,16 @@ class AppColor {
 
   static const textLightThemeColor = Colors.black87;
   
-  static const commonColor = Color.fromRGBO(210, 60, 63, 1);
+  // static const commonColor = Color.fromRGBO(210, 60, 63, 1);
+  static const commonColor = Color(0xffd23c3f);
 
-  static final incomeDarkColor = Colors.green.shade600;
+  static const incomeDarkColor = Color(0xff1bb455);
 
-  static final incomeLightColor = Colors.green.shade400;
+  static const incomeLightColor = Color(0xff1bb455);
 
-  static final expenseDarkColor = Colors.red.shade600;
 
-  static final expenseLightColor = Colors.red.shade400;
+  static const expenseDarkColor = Color(0xffd23c3f);
+
+  static const expenseLightColor = Color(0xffd23c3f);
 
 }
