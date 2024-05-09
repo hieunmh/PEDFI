@@ -47,7 +47,7 @@ class HomeController extends GetxController {
     var intMonth = int.parse(splitted[0]);
 
     firstDay.value = DateFormat('dd MMMM, y').format(DateTime(intYear, intMonth, 1)).toString();
-    lastDay.value = DateFormat('dd MMM, y').format(DateTime(intYear, intMonth + 1, 0)).toString();
+    lastDay.value = DateFormat('dd MMMM, y').format(DateTime(intYear, intMonth + 1, 0)).toString();
   }
 
   void scrollToCurrentMonth() {
