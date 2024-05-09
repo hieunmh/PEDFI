@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
@@ -18,9 +16,6 @@ class ApplicationPage extends GetView<ApplicationController> {
   Widget build(BuildContext context) {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
-    
-    final Color color = themeState.getDarkTheme ? 
-    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
@@ -32,19 +27,13 @@ class ApplicationPage extends GetView<ApplicationController> {
         onPageChanged: (index) {
           controller.handlePageChange(index);
         },
-        children: [
+        children: const [
           HomePage(),
           AddScreen(),
           ProfilePage(),
         ],
       ),
-      // bottomNavigationBar: Obx(() => BottomNavigationBar(
-      //   items: controller.bottomNavBar,
-      //   currentIndex: controller.state.value,
-      //   onTap: controller.handleNavBarTap,
-      //   unselectedItemColor: color,
-      //   selectedItemColor: AppColor.commonColor,
-      // )),
+
       bottomNavigationBar: Obx(() => Container(
         decoration: const BoxDecoration(
           border: Border(
@@ -54,34 +43,66 @@ class ApplicationPage extends GetView<ApplicationController> {
             )
           )
         ),
-        child: NavigationBarTheme(
-          data: NavigationBarThemeData(
-            labelTextStyle: MaterialStateProperty.all(
-              TextStyle(
-                fontSize: 0,
-                color: color,
-                fontWeight: FontWeight.w500
-              ),
-            ),
-            iconTheme: MaterialStateProperty.all(
-              IconThemeData(
-                color: color
-              )
-            )
+        child: Theme(
+          data: ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
-          child: NavigationBar(
-            height: 50,
-            elevation: 0,
-            destinations: controller.bottomNavDes,
-            selectedIndex: controller.state.value,
-            onDestinationSelected: (index) => controller.handleNavBarTap(index),
-            // shadowColor: Colors.transparent,
-            indicatorColor: AppColor.commonColor,
-            surfaceTintColor: Colors.transparent,
+          child: BottomNavigationBar(
             backgroundColor: bgcolor,
+            items: controller.bottomNavBar,
+            currentIndex: controller.state.value,
+            onTap: controller.handleNavBarTap,
+            unselectedItemColor: themeState.getDarkTheme ? Colors.white : Colors.grey.shade500,
+            selectedItemColor: AppColor.commonColor,
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w700
+            ),
+            selectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w700
+            ),
           ),
         ),
       )),
+
+      
+      // bottomNavigationBar: Obx(() => Container(
+      //   decoration: const BoxDecoration(
+      //     border: Border(
+      //       top: BorderSide(
+      //         color: Colors.grey,
+      //         width: 0.5
+      //       )
+      //     )
+      //   ),
+      //   child: NavigationBarTheme(
+      //     data: NavigationBarThemeData(
+      //       labelTextStyle: MaterialStateProperty.all(
+      //         TextStyle(
+      //           fontSize: 0,
+      //           color: color,
+      //           fontWeight: FontWeight.w500
+      //         ),
+      //       ),
+      //       iconTheme: MaterialStateProperty.all(
+      //         IconThemeData(
+      //           color: color
+      //         )
+      //       )
+      //     ),
+      //     child: NavigationBar(
+      //       height: 50,
+      //       elevation: 0,
+      //       destinations: controller.bottomNavDes,
+      //       selectedIndex: controller.state.value,
+      //       onDestinationSelected: (index) => controller.handleNavBarTap(index),
+      //       // shadowColor: Colors.transparent,
+      //       indicatorColor: AppColor.commonColor,
+      //       surfaceTintColor: Colors.transparent,
+      //       backgroundColor: bgcolor,
+      //     ),
+      //   ),
+      // )),
       
     );
   }

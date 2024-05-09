@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
@@ -16,42 +15,61 @@ class ApplicationController extends GetxController {
   var isLoggedin = false.obs;
 
   late final PageController pageController;
-  late final List<NavigationDestination> bottomNavDes;
+  // late final List<NavigationDestination> bottomNavDes;
+  
+  final bottomNavBar = const [
+      BottomNavigationBarItem(
+        activeIcon: Icon(CupertinoIcons.square_list_fill),
+        label: 'Home',
+        icon: Icon(CupertinoIcons.square_list_fill)
+      ),
+      BottomNavigationBarItem(
+        activeIcon: Icon(FontAwesomeIcons.penToSquare),
+        label: 'Create',
+        icon: Icon(FontAwesomeIcons.penToSquare)
+      ),
+      BottomNavigationBarItem(
+        activeIcon: Icon(CupertinoIcons.person_fill),
+        label: 'Profile',
+        icon: Icon(CupertinoIcons.person_fill)
+      ),
+    ];
 
   @override
   void onInit() {
     super.onInit();
     getProfile();
+
     
-    bottomNavDes = const [
-      NavigationDestination(
-        selectedIcon: Icon(
-          CupertinoIcons.square_list_fill, 
-          size: 25,
-          color: Colors.white,
-        ),
-        icon: Icon(CupertinoIcons.square_list, size: 25), 
-        label: 'Home'
-      ),
-      NavigationDestination(
-        selectedIcon: Icon(
-          CupertinoIcons.add_circled_solid, 
-          size: 25,
-          color: Colors.white,
-        ),
-        icon: Icon(CupertinoIcons.add_circled, size: 25), 
-        label: 'Add'
-      ),
-      NavigationDestination(
-        selectedIcon: Icon(
-          CupertinoIcons.person_fill, 
-           size: 25,
-           color: Colors.white,
-        ),
-        icon: Icon(CupertinoIcons.person, size: 25), 
-        label: 'Profile',
-      ),
-    ];
+    // bottomNavDes = const [
+    //   NavigationDestination(
+    //     selectedIcon: Icon(
+    //       CupertinoIcons.square_list_fill, 
+    //       size: 25,
+    //       color: Colors.white,
+    //     ),
+    //     icon: Icon(CupertinoIcons.square_list, size: 25), 
+    //     label: 'Home'
+    //   ),
+    //   NavigationDestination(
+    //     selectedIcon: Icon(
+    //       CupertinoIcons.add_circled_solid, 
+    //       size: 25,
+    //       color: Colors.white,
+    //     ),
+    //     icon: Icon(CupertinoIcons.add_circled, size: 25), 
+    //     label: 'Add'
+    //   ),
+    //   NavigationDestination(
+    //     selectedIcon: Icon(
+    //       CupertinoIcons.person_fill, 
+    //        size: 25,
+    //        color: Colors.white,
+    //     ),
+    //     icon: Icon(CupertinoIcons.person, size: 25), 
+    //     label: 'Profile',
+    //   ),
+    // ];
 
     pageController = PageController(initialPage: state.value);
   }
@@ -80,14 +98,6 @@ class ApplicationController extends GetxController {
   }
 
   void handleNavBarTap(int index) {
-    if (state.value != 0 && index == 0) {
-      var homeController =  Get.find<HomeController>();
-      
-      Future.delayed(const Duration(milliseconds: 50), () {
-        homeController.scrollToCurrentMonth();
-      });
-    }
-
     pageController.jumpToPage(index);
 
   }
