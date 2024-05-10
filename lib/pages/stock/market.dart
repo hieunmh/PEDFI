@@ -6,14 +6,14 @@ import 'package:pedfi/model/coinModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:pedfi/pages/stock/Components/item.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Market extends StatefulWidget {
+  const Market({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Market> createState() => _MarketState();
 }
 
-class _HomeState extends State<Home> {
+class _MarketState extends State<Market> {
   void initState() {
     super.initState();
     getCoinMarket();
@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(20)),
                     child: Text(
-                      "Portfolio",
+                      "Crypto Market",
                       style: TextStyle(fontSize: 25, color: textColor),
                     ),
                   ),
@@ -69,43 +69,14 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: myWidth * 0.05),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("\$ 100,000.000",
-                    style: TextStyle(fontSize: 30, color: textColor)),
-                Container(
-                    padding: EdgeInsets.all(myWidth * 0.01),
-                    height: myHeight * 0.05,
-                    width: myWidth * 0.1,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.6),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Image.asset(
-                      'assets/icons/5.1.png',
-                    ))
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: myWidth * 0.07),
-            child: Row(
-              children: [
-                Text("+ 162% all time",
-                    style: TextStyle(fontSize: 15, color: textColor)),
-              ],
-            ),
-          ),
           Container(
-            height: myHeight * 0.7,
+            height: myHeight * 0.8,
             width: myWidth,
             decoration: BoxDecoration(
                 color: bgColor,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50)),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
                 boxShadow: [
                   BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
@@ -123,13 +94,12 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Assets",
+                        "Coins List",
                         style: TextStyle(
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
                             color: textColor),
-                      ),
-                      Icon(Icons.add)
+                      )
                     ],
                   ),
                 ),
