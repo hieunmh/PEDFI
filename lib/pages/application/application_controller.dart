@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
-
   final supabase = Supabase.instance.client;
 
   final state = 0.obs;
@@ -16,57 +17,53 @@ class ApplicationController extends GetxController {
 
   late final PageController pageController;
   // late final List<NavigationDestination> bottomNavDes;
-  
+
   final bottomNavBar = const [
-      BottomNavigationBarItem(
+    BottomNavigationBarItem(
         activeIcon: Icon(CupertinoIcons.square_list_fill),
         label: 'Home',
-        icon: Icon(CupertinoIcons.square_list_fill)
-      ),
-      BottomNavigationBarItem(
+        icon: Icon(CupertinoIcons.square_list_fill)),
+    BottomNavigationBarItem(
         activeIcon: Icon(FontAwesomeIcons.penToSquare),
         label: 'Create',
-        icon: Icon(FontAwesomeIcons.penToSquare)
-      ),
-      BottomNavigationBarItem(
+        icon: Icon(FontAwesomeIcons.penToSquare)),
+    BottomNavigationBarItem(
         activeIcon: Icon(CupertinoIcons.person_fill),
         label: 'Profile',
-        icon: Icon(CupertinoIcons.person_fill)
-      ),
-    ];
+        icon: Icon(CupertinoIcons.person_fill)),
+  ];
 
   @override
   void onInit() {
     super.onInit();
     getProfile();
 
-    
     // bottomNavDes = const [
     //   NavigationDestination(
     //     selectedIcon: Icon(
-    //       CupertinoIcons.square_list_fill, 
+    //       CupertinoIcons.square_list_fill,
     //       size: 25,
     //       color: Colors.white,
     //     ),
-    //     icon: Icon(CupertinoIcons.square_list, size: 25), 
+    //     icon: Icon(CupertinoIcons.square_list, size: 25),
     //     label: 'Home'
     //   ),
     //   NavigationDestination(
     //     selectedIcon: Icon(
-    //       CupertinoIcons.add_circled_solid, 
+    //       CupertinoIcons.add_circled_solid,
     //       size: 25,
     //       color: Colors.white,
     //     ),
-    //     icon: Icon(CupertinoIcons.add_circled, size: 25), 
+    //     icon: Icon(CupertinoIcons.add_circled, size: 25),
     //     label: 'Add'
     //   ),
     //   NavigationDestination(
     //     selectedIcon: Icon(
-    //       CupertinoIcons.person_fill, 
+    //       CupertinoIcons.person_fill,
     //        size: 25,
     //        color: Colors.white,
     //     ),
-    //     icon: Icon(CupertinoIcons.person, size: 25), 
+    //     icon: Icon(CupertinoIcons.person, size: 25),
     //     label: 'Profile',
     //   ),
     // ];
@@ -99,6 +96,5 @@ class ApplicationController extends GetxController {
 
   void handleNavBarTap(int index) {
     pageController.jumpToPage(index);
-
   }
 }
