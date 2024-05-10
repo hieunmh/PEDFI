@@ -35,7 +35,23 @@ class CreateTransactionPage extends GetView<CreateTranController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            
+            ElevatedButton(
+              onPressed: () {
+                controller.showDateTimePicker(context, color);
+              }, 
+              child: const Text('Choose date')
+            ),
+
+            Obx(() =>
+              Center(
+                child: Text(
+                  controller.pickedDateTime.value,
+                  style: TextStyle(
+                    color: color
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
