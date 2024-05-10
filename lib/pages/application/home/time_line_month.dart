@@ -28,6 +28,7 @@ class TimeLineMonth extends GetView<HomeController> {
       padding: const EdgeInsets.symmetric(horizontal: 0),
       height: 40,
       child: ListView.builder(
+        key: const PageStorageKey<String>('timelinemonth'),
         controller: controller.scrollController,
         itemCount: controller.month.length,
         scrollDirection: Axis.horizontal,

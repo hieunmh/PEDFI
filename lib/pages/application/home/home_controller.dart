@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 
 class HomeController extends GetxController {
+
+
   
   var userEmail = ''.obs;
 
@@ -13,6 +17,63 @@ class HomeController extends GetxController {
 
   var firstDay = DateFormat('dd MMMM, y').format(DateTime(DateTime.now().year, DateTime.now().month, 1)).toString().obs;
   var lastDay = DateFormat('dd MMMM, y').format(DateTime(DateTime.now().year, DateTime.now().month + 1, 0)).toString().obs;
+
+  final List transactionsData = [
+    {
+      'icon': FontAwesomeIcons.burger,
+      'iconcolor': AppColor.expenseDarkColor,
+      'name': 'Food',
+      'detail': 'Dookki',
+      'totalAmount': '-\$45.00',
+      'date': 'Today',
+      'color': AppColor.expenseDarkColor
+    },
+    {
+      'icon': FontAwesomeIcons.dollarSign,
+      'iconcolor': AppColor.incomeDarkColor,
+      'name': 'Work',
+      'detail': 'Salary',
+      'totalAmount': '+\$2000.00',
+      'date': 'Today',
+      'color': AppColor.incomeDarkColor
+    },
+    {
+      'icon': FontAwesomeIcons.burger,
+      'iconcolor': AppColor.expenseDarkColor,
+      'name': 'Food',
+      'detail': 'Dookki',
+      'totalAmount': '-\$45.00',
+      'date': 'Today',
+      'color': AppColor.expenseDarkColor
+    },
+    {
+      'icon': FontAwesomeIcons.dollarSign,
+      'iconcolor': AppColor.incomeDarkColor,
+      'name': 'Work',
+      'detail': 'Salary',
+      'totalAmount': '+\$2000.00',
+      'date': 'Today',
+      'color': AppColor.incomeDarkColor
+    },
+    {
+      'icon':FontAwesomeIcons.heartCircleBolt,
+      'iconcolor': AppColor.expenseDarkColor,
+      'name': 'Health',
+      'detail': 'Hospital',
+      'totalAmount': '-\$79.00',
+      'date': 'Yesterday',
+      'color': AppColor.expenseDarkColor
+    },
+    {
+      'icon': FontAwesomeIcons.planeUp,
+      'iconcolor': AppColor.expenseDarkColor,
+      'name': 'Travel',
+      'detail': 'Hai Phong food tour',
+      'totalAmount': '-\$350.00',
+      'date': 'Yesterday',
+      'color': AppColor.expenseDarkColor
+    },
+  ].obs;
 
   final scrollController = ScrollController();
 
@@ -35,6 +96,11 @@ class HomeController extends GetxController {
 
   }
 
+  void deleteItem(index) {
+    transactionsData.removeAt(index);
+    update();
+  }
+
   void setCurrentMonth(String month) {
     currentMonth.value = month;
   }
@@ -51,8 +117,14 @@ class HomeController extends GetxController {
   }
 
   void scrollToCurrentMonth() {
+
     final selectedMonth = month.indexOf(currentMonth.value);
-    if (selectedMonth >= 2 && selectedMonth <= month.length - 3) {
+    final maxItemPerScreen  = (Get.width / 90.0).round();
+    print(selectedMonth);
+
+    if (selectedMonth >= (maxItemPerScreen / 2).round() && 
+      selectedMonth < month.length - (maxItemPerScreen / 2).round()
+    ) {
       final scrollOffset = (selectedMonth * 90.0) - Get.width / 2 + 45;
       scrollController.animateTo(
         scrollOffset, 
@@ -61,7 +133,7 @@ class HomeController extends GetxController {
       );
     }
 
-    if (selectedMonth == 1 || selectedMonth == 0) {
+    if (selectedMonth < (maxItemPerScreen / 2).round()) {
       scrollController.animateTo(
         0, 
         duration: const Duration(milliseconds: 500), 
@@ -69,8 +141,7 @@ class HomeController extends GetxController {
       );
     }
 
-    if (selectedMonth > month.length - 3) {
-      
+    if (selectedMonth >= month.length - (maxItemPerScreen / 2).round()) {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent, 
         duration: const Duration(milliseconds: 500), 
@@ -80,7 +151,6 @@ class HomeController extends GetxController {
   }
 
   void scrollToLast() {
-
     final lengthScroll = month.length;
 
     scrollController.animateTo(
