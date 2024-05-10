@@ -3,10 +3,13 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/stock/history.dart';
 import 'package:pedfi/pages/stock/stock_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pedfi/pages/stock/home.dart';
+import 'package:pedfi/pages/stock/market.dart';
+import 'package:pedfi/pages/stock/coinSelect.dart';
 
 class StockPage extends GetView<StockController> {
   const StockPage({super.key});
@@ -25,27 +28,6 @@ class StockPage extends GetView<StockController> {
         ? AppColor.bgDarkThemeColor
         : AppColor.bgLightThemeColor;
 
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     backgroundColor: bgColor,
-    //   ),
-    //   body: Obx(
-    //     () => SingleChildScrollView(
-    //       child: Row(
-    //         children: [
-    //           Text(
-    //             'Stock',
-    //             style: TextStyle(color: color),
-    //           ),
-    //           Text(
-    //             controller.count.value,
-    //             style: TextStyle(color: color),
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
     return SafeArea(
         child: Scaffold(
       backgroundColor: bgColor,
@@ -55,7 +37,7 @@ class StockPage extends GetView<StockController> {
         onPageChanged: (index) {
           controller.handlePageChange(index);
         },
-        children: const [Home(), Home(), Home(), Home()],
+        children: const [Home(), CoinSelect(), HistoryPage(), Market()],
       ),
       bottomNavigationBar: Obx(() => Container(
             decoration: const BoxDecoration(
@@ -115,19 +97,19 @@ class StockPage extends GetView<StockController> {
                       color: Color(0xffFBC700),
                     ),
                   ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
-                      'assets/icons/4.1.png',
-                      height: myHeight * 0.03,
-                      color: Colors.grey,
-                    ),
-                    label: '',
-                    activeIcon: Image.asset(
-                      'assets/icons/4.2.png',
-                      height: myHeight * 0.03,
-                      color: Color(0xffFBC700),
-                    ),
-                  ),
+                  // BottomNavigationBarItem(
+                  //   icon: Image.asset(
+                  //     'assets/icons/4.1.png',
+                  //     height: myHeight * 0.03,
+                  //     color: Colors.grey,
+                  //   ),
+                  //   label: '',
+                  //   activeIcon: Image.asset(
+                  //     'assets/icons/4.2.png',
+                  //     height: myHeight * 0.03,
+                  //     color: Color(0xffFBC700),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
