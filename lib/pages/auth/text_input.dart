@@ -59,6 +59,7 @@ class InputPlaceholder extends GetView<AuthController> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: TextField(
+              cursorColor: color,
               controller: ctrler,
               style: TextStyle(
                 color: color

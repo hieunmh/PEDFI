@@ -5,14 +5,17 @@ import 'package:pedfi/consts/app_color.dart';
 
 class CreateTranController extends GetxController {
 
+  var pickedDateTime = ''.obs;
 
-  var pickedDateTime = 'datetime'.obs;
+  var amountController = TextEditingController();
+  var noteController = TextEditingController();
   
   void showDateTimePicker(BuildContext context, Color textColor) async {
-    await showBoardDateTimePicker(
+    var dateTime = await showBoardDateTimePicker(
       context: context, 
       pickerType: DateTimePickerType.date,
-      initialDate: DateTime.now(),
+      initialDate: pickedDateTime.value.isEmpty ? 
+      DateTime.now() : DateTime.parse(pickedDateTime.value),
       radius: 0,
       options: BoardDateTimeOptions(
         activeColor: AppColor.commonColor,
@@ -26,9 +29,16 @@ class CreateTranController extends GetxController {
           day: 'Day',
         ),
       )
-    ).then((datetime) => pickedDateTime.value = datetime.toString());
+    );
 
-
+    if (dateTime == null) {
+      if (pickedDateTime.value.isEmpty) {
+        pickedDateTime.value = DateTime.now().toString();
+      }
+      return;
+    } else {
+      pickedDateTime.value = dateTime.toString();
+    }
 
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/application/create/amount_input.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
+import 'package:pedfi/pages/application/create/date_input.dart';
+import 'package:pedfi/pages/application/create/note_input.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,37 +24,26 @@ class CreateTransactionPage extends GetView<CreateTranController> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.commonColor,
+        backgroundColor: themeState.getDarkTheme ? 
+        AppColor.commonColor : Colors.grey.shade200,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Create transaction',
           style: TextStyle(
-            color: Colors.white,
+            color: color,
             fontWeight: FontWeight.w700,
-            fontSize: 16
+            fontSize: 20
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                controller.showDateTimePicker(context, color);
-              }, 
-              child: const Text('Choose date')
-            ),
+            DateInput(),
 
-            Obx(() =>
-              Center(
-                child: Text(
-                  controller.pickedDateTime.value,
-                  style: TextStyle(
-                    color: color
-                  ),
-                ),
-              ),
-            )
+            AmountInput(),
+
+            NoteInput()
           ],
         ),
       ),
