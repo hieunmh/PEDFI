@@ -21,11 +21,15 @@ class HomePage extends GetView<HomeController>  {
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
-    // final Color bgcolor = themeState.getDarkTheme ? 
-    // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+    final Color bgcolor = themeState.getDarkTheme ? 
+    AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
     
-    return SafeArea(
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: bgcolor,
+        toolbarHeight: 0,
+      ),
+      body: Column(
           children: [
             
             TimeLineMonth(),

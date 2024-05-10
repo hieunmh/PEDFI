@@ -117,9 +117,14 @@ class HomeController extends GetxController {
   }
 
   void scrollToCurrentMonth() {
-    final selectedMonth = month.indexOf(currentMonth.value);
 
-    if (selectedMonth >= 2 && selectedMonth <= month.length - 3) {
+    final selectedMonth = month.indexOf(currentMonth.value);
+    final maxItemPerScreen  = (Get.width / 90.0).round();
+    print(selectedMonth);
+
+    if (selectedMonth >= (maxItemPerScreen / 2).round() && 
+      selectedMonth < month.length - (maxItemPerScreen / 2).round()
+    ) {
       final scrollOffset = (selectedMonth * 90.0) - Get.width / 2 + 45;
       scrollController.animateTo(
         scrollOffset, 
@@ -128,7 +133,7 @@ class HomeController extends GetxController {
       );
     }
 
-    if (selectedMonth == 1 || selectedMonth == 0) {
+    if (selectedMonth < (maxItemPerScreen / 2).round()) {
       scrollController.animateTo(
         0, 
         duration: const Duration(milliseconds: 500), 
@@ -136,8 +141,7 @@ class HomeController extends GetxController {
       );
     }
 
-    if (selectedMonth > month.length - 3) {
-      
+    if (selectedMonth >= month.length - (maxItemPerScreen / 2).round()) {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent, 
         duration: const Duration(milliseconds: 500), 

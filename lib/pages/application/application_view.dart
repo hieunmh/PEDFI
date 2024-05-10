@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:pedfi/pages/application/create/create_transaction_view.dart';
 import 'package:pedfi/pages/application/home/home_view.dart';
 import 'package:pedfi/pages/application/profile/proflie_view.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
-import 'package:pedfi/screens/add_screen.dart';
 import 'package:provider/provider.dart';
 
 class ApplicationPage extends GetView<ApplicationController> {
@@ -29,7 +29,7 @@ class ApplicationPage extends GetView<ApplicationController> {
         },
         children: const [
           HomePage(),
-          AddScreen(),
+          CreateTransactionPage(),
           ProfilePage(),
         ],
       ),
