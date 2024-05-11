@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -45,14 +43,21 @@ class TranCatergory extends GetView<CreateTranController> {
           const SizedBox(width: 20),
           
           GestureDetector(
-            onTap: () {
-              Get.toNamed(AppRoutes.CATEGORY);
+            onTap: () async {
+              var data = await Get.toNamed(AppRoutes.CATEGORY);
+              if (data == null) {
+                return;
+              } 
+              controller.categoryname.value = data['name'] ?? '';
+              controller.categoryicon.value = data['icon'];
             },
-            child: Expanded(
-              child: Row(
+            child: Obx(() =>
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(
-                    FontAwesomeIcons.solidCircleQuestion,
+                  Icon(
+                    controller.categoryicon.value,
                     size: 20,
                     color: Colors.grey,
                   ),
@@ -60,14 +65,14 @@ class TranCatergory extends GetView<CreateTranController> {
                   const SizedBox(width: 10),
             
                   Text(
-                    'Select category',
+                    controller.categoryname.value,
                     style: TextStyle(
                       color: Colors.grey.shade500,
                       fontWeight: FontWeight.w500
                     ),
                   )
                 ],
-              )
+              ),
             ),
           )
         ],

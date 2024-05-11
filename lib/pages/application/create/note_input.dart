@@ -57,7 +57,7 @@ class NoteInput extends GetView<CreateTranController> {
                   cursorColor: color,
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Optional', 
+                    hintText: 'Description', 
                     hintStyle:  TextStyle(
                       color: Colors.grey.shade500,
                       fontWeight: FontWeight.w500,

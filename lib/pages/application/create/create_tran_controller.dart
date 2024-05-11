@@ -1,5 +1,6 @@
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 
@@ -9,11 +10,16 @@ class CreateTranController extends GetxController {
 
   var amountController = TextEditingController();
   var noteController = TextEditingController();
+
+  var categoryicon = FontAwesomeIcons.solidCircleQuestion.obs;
+  var categoryname = 'Select category'.obs;
   
   void showDateTimePicker(BuildContext context, Color textColor) async {
     var dateTime = await showBoardDateTimePicker(
       context: context, 
       pickerType: DateTimePickerType.date,
+      minimumDate: DateTime(1000),
+      maximumDate: DateTime(3000),
       initialDate: pickedDateTime.value.isEmpty ? 
       DateTime.now() : DateTime.parse(pickedDateTime.value),
       radius: 0,

@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/category/category_controller.dart';
+import 'package:pedfi/pages/category/expense_category.dart';
+import 'package:pedfi/pages/category/income_category.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -119,12 +121,12 @@ class CategoryPage extends GetView<CategoryController> {
                     TabBar(
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicatorColor: AppColor.commonColor,
-                      indicator: const BoxDecoration(
-                        color: AppColor.commonColor
-                      ),
+                      // indicator: const BoxDecoration(
+                      //   color: AppColor.commonColor
+                      // ),
                       splashFactory: NoSplash.splashFactory,
                       overlayColor: const MaterialStatePropertyAll(Colors.transparent),
-                      labelColor: Colors.white,
+                      labelColor: AppColor.commonColor,
                       unselectedLabelColor: color,
                       dividerColor: Colors.grey,
                       dividerHeight: 0.2,
@@ -148,26 +150,12 @@ class CategoryPage extends GetView<CategoryController> {
                       ]
                     ),
           
-                    Expanded(
+                    const Expanded(
                       child: TabBarView(
                         children: [
-                          Center(
-                            child: Text(
-                              'Income',
-                              style: TextStyle(
-                                color: color
-                              ),
-                            ),
-                          ),
+                          IncomeCategory(),
           
-                          Center(
-                            child: Text(
-                              'Expense',
-                              style: TextStyle(
-                                color: color
-                              ),
-                            ),
-                          )
+                          ExpenseCategory()
                         ]
                       )
                     )
