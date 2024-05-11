@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,10 @@ class ForwardButton extends StatelessWidget {
           color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: const Icon(CupertinoIcons.forward),
+        child: const Icon(
+          FontAwesomeIcons.chevronRight,
+          size: 18,
+        ),
       ),
     );
   }

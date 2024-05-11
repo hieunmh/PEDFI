@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/amount_input.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
 import 'package:pedfi/pages/application/create/date_input.dart';
 import 'package:pedfi/pages/application/create/note_input.dart';
+import 'package:pedfi/pages/application/create/tran_category.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +29,7 @@ class CreateTransactionPage extends GetView<CreateTranController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeState.getDarkTheme ? 
-        AppColor.commonColor : Colors.grey.shade200,
+        Colors.black12 : Colors.grey.shade200,
         centerTitle: true,
         title: Text(
           'Create transaction',
@@ -36,14 +40,40 @@ class CreateTransactionPage extends GetView<CreateTranController> {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            DateInput(),
+            const DateInput(),
+        
+            const AmountInput(),
+        
+            const NoteInput(),
+        
+            const TranCatergory(),
 
-            AmountInput(),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: GestureDetector(
 
-            NoteInput()
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: AppColor.commonColor,
+                    borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Create',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16
+                      ),
+                    ),
+                  ),
+                )
+              ),
+            )
           ],
         ),
       ),
