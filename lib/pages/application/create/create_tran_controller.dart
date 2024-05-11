@@ -39,6 +39,42 @@ class CreateTranController extends GetxController {
     } else {
       pickedDateTime.value = dateTime.toString();
     }
+  }
 
+  void setPreviousDay() {
+    if (pickedDateTime.value.isEmpty) {
+      pickedDateTime.value = DateTime(
+        DateTime.now().year, 
+        DateTime.now().month, 
+        DateTime.now().day - 1
+      ).toString();
+
+    } else {
+      var dt = DateTime.parse(pickedDateTime.value);
+      pickedDateTime.value = DateTime(
+        dt.year, 
+        dt.month , 
+        dt.day - 1
+      ).toString();
+    }
+
+  }
+
+  void setNextDay() {
+    if (pickedDateTime.value.isEmpty) {
+      pickedDateTime.value = DateTime(
+        DateTime.now().year, 
+        DateTime.now().month, 
+        DateTime.now().day + 1
+      ).toString();
+
+    } else {
+      var dt = DateTime.parse(pickedDateTime.value);
+      pickedDateTime.value = DateTime(
+        dt.year, 
+        dt.month , 
+        dt.day + 1
+      ).toString();
+    }
   }
 }

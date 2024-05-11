@@ -1,6 +1,5 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -21,14 +20,14 @@ class AmountInput extends GetView<CreateTranController> {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: color,
-            width: 0.2
-          )
-        )
-      ),
+      // decoration: BoxDecoration(
+      //   border: Border(
+      //     bottom: BorderSide(
+      //       color: color,
+      //       width: 0.2
+      //     )
+      //   )
+      // ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,7 +38,8 @@ class AmountInput extends GetView<CreateTranController> {
               'Amount',
               style: TextStyle(
                 color: color,
-                fontWeight: FontWeight.w700
+                fontWeight: FontWeight.w700,
+                fontSize: 14
               ),
             ),
           ),
@@ -52,9 +52,10 @@ class AmountInput extends GetView<CreateTranController> {
                 TextField(
                   textAlignVertical: TextAlignVertical.top,
                   controller: controller.amountController,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: color,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: AppColor.commonColor,
+                    fontSize: 25
                   ),
                   inputFormatters: [
                     CurrencyTextInputFormatter.currency(
@@ -63,12 +64,12 @@ class AmountInput extends GetView<CreateTranController> {
                     )
                   ],
                   keyboardType: TextInputType.number,
-                  cursorColor: color,
-                  decoration: InputDecoration(
+                  cursorColor: AppColor.commonColor,
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: '0', 
-                    hintStyle:  TextStyle(
-                      color: Colors.grey.shade500,
+                    hintStyle: TextStyle(
+                      color: AppColor.commonColor,
                       fontWeight: FontWeight.w500
                     )
                   ),

@@ -120,7 +120,6 @@ class HomeController extends GetxController {
 
     final selectedMonth = month.indexOf(currentMonth.value);
     final maxItemPerScreen  = (Get.width / 90.0).round();
-    print(selectedMonth);
 
     if (selectedMonth >= (maxItemPerScreen / 2).round() && 
       selectedMonth < month.length - (maxItemPerScreen / 2).round()
@@ -151,13 +150,7 @@ class HomeController extends GetxController {
   }
 
   void scrollToLast() {
-    final lengthScroll = month.length;
-
-    scrollController.animateTo(
-      90.0 * lengthScroll - Get.width, 
-      duration: const Duration(milliseconds: 500), 
-      curve: Curves.ease
-    );
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
   }
 
 

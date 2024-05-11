@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +25,8 @@ class MyBackButton extends StatelessWidget {
       ),
       child: Center(
         child: Icon(
-          CupertinoIcons.back,
-          color: buttonColor, size: 25
+          FontAwesomeIcons.chevronLeft,
+          color: buttonColor, size: 18
         ),
       ),
     );

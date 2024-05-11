@@ -23,7 +23,7 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
-    final formatter = DateFormat('E, dd-MM-yyyy');
+    final formatter = DateFormat('EEEE, dd/MM/yyyy');
 
     return Obx(() => Scaffold(
         backgroundColor: bgcolor,
@@ -41,8 +41,8 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
             'Profile detail',
             style: TextStyle(
               color: color,
-              fontWeight: FontWeight.w400,
-              fontSize: 16
+              fontWeight: FontWeight.w700,
+              fontSize: 18
             ),
           )
         ),
@@ -71,7 +71,8 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
                       child: Text(
                         controller.userEmail,
                         style: TextStyle(
-                          color: Colors.grey[600]
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500
                         ),
                       )
                     ),
@@ -84,7 +85,8 @@ class ProfileDetailPage extends GetView<ProfileDetailController> {
                       child: Text(
                         formatter.format(DateTime.parse(controller.joinDate)),
                         style: TextStyle(
-                          color: Colors.grey[600]
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500
                         ),
                       )
                     ),

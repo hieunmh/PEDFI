@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:get/get.dart';
+import 'package:pedfi/pages/category/category_bindings.dart';
+import 'package:pedfi/pages/category/category_view.dart';
 import 'package:pedfi/pages/profile_detail/profiledetail_bindings.dart';
 import 'package:pedfi/pages/profile_detail/profiledetail_view.dart';
 import 'package:pedfi/pages/application/application_bindings.dart';
@@ -38,6 +40,10 @@ class AppPages {
       binding: StockBindings()
     ),
 
-
+    GetPage(
+      name: AppRoutes.CATEGORY, 
+      page: () => CategoryPage(),
+      binding: CategoryBindings()
+    ),
   ];
 }

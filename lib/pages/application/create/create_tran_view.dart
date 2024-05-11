@@ -5,6 +5,7 @@ import 'package:pedfi/pages/application/create/amount_input.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
 import 'package:pedfi/pages/application/create/date_input.dart';
 import 'package:pedfi/pages/application/create/note_input.dart';
+import 'package:pedfi/pages/application/create/tran_category.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class CreateTransactionPage extends GetView<CreateTranController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeState.getDarkTheme ? 
-        AppColor.commonColor : Colors.grey.shade200,
+        Colors.black12 : Colors.grey.shade200,
         centerTitle: true,
         title: Text(
           'Create transaction',
@@ -40,10 +41,12 @@ class CreateTransactionPage extends GetView<CreateTranController> {
         child: Column(
           children: [
             DateInput(),
-
+        
             AmountInput(),
-
-            NoteInput()
+        
+            NoteInput(),
+        
+            TranCatergory(),
           ],
         ),
       ),
