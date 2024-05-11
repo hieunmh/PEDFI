@@ -18,17 +18,21 @@ class ApplicationController extends GetxController {
 
   final bottomNavBar = const [
     BottomNavigationBarItem(
-        activeIcon: Icon(CupertinoIcons.square_list_fill),
-        label: 'Home',
-        icon: Icon(CupertinoIcons.square_list_fill)),
+      activeIcon: Icon(FontAwesomeIcons.chartPie),
+      label: 'Home',
+      icon: Icon(FontAwesomeIcons.chartPie)
+    ),
     BottomNavigationBarItem(
-        activeIcon: Icon(FontAwesomeIcons.penToSquare),
-        label: 'Create',
-        icon: Icon(FontAwesomeIcons.penToSquare)),
+      activeIcon: Icon(FontAwesomeIcons.penToSquare),
+      label: 'Create',
+      icon: Icon(FontAwesomeIcons.penToSquare)
+    ),
     BottomNavigationBarItem(
-        activeIcon: Icon(CupertinoIcons.person_fill),
-        label: 'Profile',
-        icon: Icon(CupertinoIcons.person_fill)),
+      activeIcon: Icon(FontAwesomeIcons.userAstronaut),
+      label: 'Profile',
+      icon: Icon(FontAwesomeIcons.userAstronaut)
+    )
+
   ];
 
   @override

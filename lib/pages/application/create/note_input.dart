@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -54,7 +53,7 @@ class NoteInput extends GetView<CreateTranController> {
                     color: color,
                     fontSize: 14
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.text,
                   cursorColor: color,
                   decoration: InputDecoration(
                     border: InputBorder.none,
