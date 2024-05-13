@@ -14,22 +14,7 @@ class CategoryController extends GetxController {
   var categoryName = 'Select category'.obs;
 
   var incomeCategory = Get.find<ApplicationController>().incomeCategory;
-
-  final List incomeList = [
-    {
-      'icon': FontAwesomeIcons.handHoldingDollar,
-      'name' : 'Donate'
-    },
-    {
-      'icon': FontAwesomeIcons.dollarSign,
-      'name' : 'Salary'
-    },
-    {
-      'icon': FontAwesomeIcons.parachuteBox,
-      'name': 'Other'
-    },
-    
-  ].obs;
+  var expenseCategory = Get.find<ApplicationController>().expenseCategory;
 
   final List expenseList = [
     {

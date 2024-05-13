@@ -19,6 +19,7 @@ class CreateTranController extends GetxController {
   var selectIncome = ''.obs;
 
   var incomeCategory = Get.find<ApplicationController>().incomeCategory;
+  var expenseCategory = Get.find<ApplicationController>().expenseCategory;
 
   void setSelectIncome(String select) {
     selectIncome.value = select;
