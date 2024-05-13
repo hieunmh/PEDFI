@@ -33,98 +33,88 @@ class _MarketState extends State<Market> {
         ? AppColor.bgDarkThemeColor
         : AppColor.bgLightThemeColor;
 
+    final themeIsDark = themeState.getDarkTheme;
+
     return Scaffold(
-        body: Container(
-      height: myHeight,
-      width: myWidth,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(0, 151, 150, 150), bgColor]),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: myHeight * 0.01),
-            child: Container(
-              color:
-                  themeState.getDarkTheme ? Colors.blueGrey[900] : Colors.amber,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: myWidth * 0.05, vertical: myHeight * 0.01),
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                    child: Text(
-                      "Crypto Market",
-                      style: TextStyle(fontSize: 25, color: textColor),
-                    ),
-                  ),
-                  // to do
-                ],
-              ),
+        appBar: AppBar(
+          backgroundColor: themeIsDark ? Colors.blueGrey[900] : Colors.amber,
+          title: Text(
+            "Stock Market",
+            style: TextStyle(
+              color: themeIsDark ? Colors.white : Colors.black,
             ),
           ),
-          Container(
-            height: myHeight * 0.8,
-            width: myWidth,
-            decoration: BoxDecoration(
-                color: bgColor,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      blurRadius: 10,
-                      spreadRadius: 5)
-                ]),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: myHeight * 0.02,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: myWidth * 0.07),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Coins List",
-                        style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
-                            color: textColor),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: myHeight * 0.02,
-                ),
-                Expanded(
-                    flex: 2,
-                    child: isRefreshing == true
-                        ? Center(
-                            child: CircularProgressIndicator(),
+          centerTitle: true,
+        ),
+        body: Container(
+          height: myHeight,
+          width: myWidth,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color.fromARGB(0, 151, 150, 150), bgColor]),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(padding: EdgeInsets.only(bottom: myHeight * 0.025)),
+              Container(
+                height: myHeight * 0.8,
+                width: myWidth,
+                decoration: BoxDecoration(
+                    color: bgColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 10,
+                          spreadRadius: 5)
+                    ]),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: myHeight * 0.02,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: myWidth * 0.07),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Coins List",
+                            style: TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                                color: textColor),
                           )
-                        : ListView.builder(
-                            itemCount: coinMarket!.length,
-                            itemBuilder: (context, index) {
-                              return Item(
-                                item: coinMarket![index],
-                              );
-                            })),
-              ],
-            ),
-          )
-        ],
-      ),
-    ));
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: myHeight * 0.02,
+                    ),
+                    Expanded(
+                        flex: 2,
+                        child: isRefreshing == true
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : ListView.builder(
+                                itemCount: coinMarket!.length,
+                                itemBuilder: (context, index) {
+                                  return Item(
+                                    item: coinMarket![index],
+                                  );
+                                })),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
   bool isRefreshing = false;
