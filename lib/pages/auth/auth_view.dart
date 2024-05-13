@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
@@ -32,19 +33,8 @@ class AuthPage extends GetView<AuthController> {
       backgroundColor: bgcolor,
       appBar: AppBar(
         backgroundColor: bgcolor,
-        leading: IconButton(
-          onPressed: () {
-            Get.back(
-              result: {
-                'isLoggedIn': false,
-                'userEmail': '',
-                'joinDate': ''
-              }
-            );
-          }, 
-          icon: MyBackButton(buttonColor: color)
-        ),
-        leadingWidth: 80,
+        scrolledUnderElevation: 0.0,
+        toolbarHeight: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -53,11 +43,27 @@ class AuthPage extends GetView<AuthController> {
             child: Obx(() =>
               Column(
                 children: [
+                  const SizedBox(height: 20),
+
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/images/pf.png', width: 150, height: 60)
+                      GestureDetector(
+                        onTap: () {
+                          Get.back(
+                            result: {
+                              'isLoggedIn': false,
+                              'userEmail': '',
+                              'joinDate': ''
+                            }
+                          );
+                        },
+                        child: MyBackButton(buttonColor: color)
+                      ),
                     ],
+                  ),
+
+                  Center(
+                    child: Image.asset('assets/images/pf.png', width: 150, height: 60),
                   ),
               
                   Text(

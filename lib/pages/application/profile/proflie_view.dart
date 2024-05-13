@@ -92,6 +92,18 @@ class ProfilePage extends GetView<ProfileController> {
                 ),
                 
                 const SizedBox(height: 20),
+
+                SettingItem(
+                  title: 'Category',
+                  icon: CupertinoIcons.square_list,
+                  iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
+                  value: '',
+                  onTap: () {
+                    Get.toNamed(AppRoutes.CATEGORY);
+                  },
+                ),
+                
+                const SizedBox(height: 20),
                 
                 SettingSwitch(
                   title: 'Dark mode', 

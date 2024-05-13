@@ -54,7 +54,7 @@ class TranCatergory extends GetView<CreateTranController> {
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     decoration: TextDecoration.underline,
-                    color: color
+                    color: Colors.grey.shade500
                   ),
                 ),
               )
@@ -67,95 +67,131 @@ class TranCatergory extends GetView<CreateTranController> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: controller.trantype.value == 'income' ? 
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: controller.incomeCategory.map((item) {
-                  return GestureDetector(
-                    onTap: () {
-                      controller.setSelectIncome(item.name);
-                    },
-                    child: Obx(() =>
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        width: Get.width / 2 - 25,
-                        decoration:  BoxDecoration(
-                          color: themeState.getDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            color: controller.selectIncome.value == item.name ? 
-                            AppColor.incomeDarkColor : Colors.transparent,
-                            width: 2.5
-                          )
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/income/${item.image}',
-                              height: 20,
-                            ),
-                      
-                            const SizedBox(width: 10),
-                      
-                            Text(
-                              item.name,
-                              style:  TextStyle(
-                                color: color,
-                                fontWeight:  FontWeight.w500
-                              ),
-                            )
-                          ],
-                        )
-                      ),
+              SizedBox(
+                width: double.infinity,
+                height: 200,
+                child: ScrollConfiguration(
+                  key: const PageStorageKey<String>('incomecategory'),
+                  behavior: const ScrollBehavior(),
+                  child: GridView(
+                    scrollDirection: Axis.vertical,
+                    physics: const PageScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisExtent: 60,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.3
                     ),
-                  );
-                }).toList(),
-              ) : Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: controller.expenseCategory.map((item) {
-                  return GestureDetector(
-                    onTap: () {
-                      controller.setSelectIncome(item.name);
-                    },
-                    child: Obx(() =>
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        width: Get.width / 2 - 25,
-                        decoration:  BoxDecoration(
-                          color: themeState.getDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            color: controller.selectIncome.value == item.name ? 
-                            AppColor.expenseDarkColor : Colors.transparent,
-                            width: 2.5
-                          )
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/expense/${item.image}',
-                              height: 20,
-                            ),
-                      
-                            const SizedBox(width: 10),
-                      
-                            Text(
-                              item.name,
-                              style:  TextStyle(
-                                color: color,
-                                fontWeight:  FontWeight.w500
-                              ),
+                    children: controller.incomeCategory.map(
+                      (item) => GestureDetector(
+                        onTap: () {
+                          controller.setSelectIncome(item.name);
+                        },
+                        child: Container(
+                          // height: 60,
+                          width: 400,
+                          decoration:  BoxDecoration(
+                            color: themeState.getDarkTheme ? 
+                            Colors.grey.shade900 : Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: controller.selectIncome.value == item.name ? 
+                              AppColor.incomeDarkColor : Colors.transparent,
+                              width: 2.5
                             )
-                          ],
-                        )
-                      ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/income/${item.image}',
+                                height: 20,
+                                width: 20,
+                              ),
+
+                              const SizedBox(height: 5),
+
+                              Text(
+                                item.name,
+                                style: TextStyle(
+                                  color: color,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11
+                                ),
+                              )
+                            ],
+                          ) 
+                        
+                        ),
+                      )
+                    ).toList(),
+                  ),
+                ),
+              )
+                : 
+              SizedBox(
+                width: double.infinity,
+                height: 200,
+                child: ScrollConfiguration(
+                  key: const PageStorageKey<String>('expensecategory'),
+                  behavior: const ScrollBehavior(),
+                  child: GridView(
+                    scrollDirection: Axis.vertical,
+                    physics: const PageScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisExtent: 60,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.3
                     ),
-                  );
-                }).toList(),
-              ),
+                    children: controller.expenseCategory.map(
+                      (item) => GestureDetector(
+                        onTap: () {
+                          controller.setSelectExpense(item.name);
+                        },
+                        child: Container(
+                          // height: 60,
+                          width: 400,
+                          decoration:  BoxDecoration(
+                            color: themeState.getDarkTheme ? 
+                            Colors.grey.shade900 : Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: controller.selectExpense.value == item.name ? 
+                              AppColor.expenseDarkColor : Colors.transparent,
+                              width: 2.5
+                            )
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/expense/${item.image}',
+                                height: 20,
+                                width: 20,
+                              ),
+
+                              const SizedBox(height: 5),
+
+                              Text(
+                                item.name,
+                                style: TextStyle(
+                                  color: color,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11
+                                ),
+                              )
+                            ],
+                          ) 
+                        
+                        ),
+                      )
+                    ).toList(),
+                  ),
+                ),
+              )
           ),
         ),
 
