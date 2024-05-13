@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/application/application_controller.dart';
 
 class CreateTranController extends GetxController {
 
@@ -13,6 +14,19 @@ class CreateTranController extends GetxController {
 
   var categoryicon = FontAwesomeIcons.solidCircleQuestion.obs;
   var categoryname = 'Select category'.obs;
+
+  var trantype = 'income'.obs;
+
+  var incomeCategory = Get.find<ApplicationController>().incomeCategory;
+
+
+  void toggleTranType() {
+    if (trantype.value == 'income') {
+      trantype.value = 'expense';
+    } else if (trantype.value == 'expense') {
+      trantype.value = 'income';
+    }
+  }
   
   void showDateTimePicker(BuildContext context, Color textColor) async {
     var dateTime = await showBoardDateTimePicker(

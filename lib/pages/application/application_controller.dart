@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pedfi/model/category_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
@@ -8,13 +9,13 @@ class ApplicationController extends GetxController {
 
   final state = 0.obs;
   final position = ''.obs;
+  List<Category> incomeCategory = [];
 
   var userEmail = ''.obs;
   var joinDate = ''.obs;
   var isLoggedin = false.obs;
 
   late final PageController pageController;
-  // late final List<NavigationDestination> bottomNavDes;
 
   final bottomNavBar = const [
     BottomNavigationBarItem(
@@ -39,36 +40,7 @@ class ApplicationController extends GetxController {
   void onInit() {
     super.onInit();
     getProfile();
-
-    // bottomNavDes = const [
-    //   NavigationDestination(
-    //     selectedIcon: Icon(
-    //       CupertinoIcons.square_list_fill,
-    //       size: 25,
-    //       color: Colors.white,
-    //     ),
-    //     icon: Icon(CupertinoIcons.square_list, size: 25),
-    //     label: 'Home'
-    //   ),
-    //   NavigationDestination(
-    //     selectedIcon: Icon(
-    //       CupertinoIcons.add_circled_solid,
-    //       size: 25,
-    //       color: Colors.white,
-    //     ),
-    //     icon: Icon(CupertinoIcons.add_circled, size: 25),
-    //     label: 'Add'
-    //   ),
-    //   NavigationDestination(
-    //     selectedIcon: Icon(
-    //       CupertinoIcons.person_fill,
-    //        size: 25,
-    //        color: Colors.white,
-    //     ),
-    //     icon: Icon(CupertinoIcons.person, size: 25),
-    //     label: 'Profile',
-    //   ),
-    // ];
+    getIncomeCategory();
 
     pageController = PageController(initialPage: state.value);
   }
@@ -77,6 +49,12 @@ class ApplicationController extends GetxController {
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  Future<void> getIncomeCategory() async {
+    final res = await supabase.from('Categories').select('*');
+    print(res);
+    // incomeCategory[1] = res;
   }
 
   Future<void> getProfile() async {
