@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pedfi/pages/application/application_controller.dart';
 
 
 class CategoryController extends GetxController {
@@ -12,21 +13,8 @@ class CategoryController extends GetxController {
   var categoryIcon = FontAwesomeIcons.solidCircleQuestion.obs;
   var categoryName = 'Select category'.obs;
 
-  final List incomeList = [
-    {
-      'icon': FontAwesomeIcons.handHoldingDollar,
-      'name' : 'Donate'
-    },
-    {
-      'icon': FontAwesomeIcons.dollarSign,
-      'name' : 'Salary'
-    },
-    {
-      'icon': FontAwesomeIcons.parachuteBox,
-      'name': 'Other'
-    },
-    
-  ].obs;
+  var incomeCategory = Get.find<ApplicationController>().incomeCategory;
+  var expenseCategory = Get.find<ApplicationController>().expenseCategory;
 
   final List expenseList = [
     {

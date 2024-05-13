@@ -2,14 +2,14 @@ class Category {
   String type;
   String name;
   String description;
-  int priovity;
+  int priority;
   String image;
 
   Category({
     required this.type,
     required this.name,
     required this.description,
-    required this.priovity,
+    required this.priority,
     required this.image
   });
 
@@ -18,8 +18,12 @@ class Category {
       type: json['type'], 
       name: json['name'], 
       description: json['description'], 
-      priovity: json['priovity'], 
-      image: json['image']
+      priority: json['priority'] ?? 0, 
+      image: json['image'] ?? ''
     );
   }
+}
+
+List<Category> categoryFromJson(List<Map<String, dynamic>> jsondata) {
+  return List.from(jsondata.map((item) => Category.fromJson(item)));
 }

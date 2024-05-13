@@ -20,55 +20,54 @@ class IncomeCategory extends GetView<CategoryController> {
     // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        child: ListView.builder(
-          itemCount: controller.incomeList.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                controller.setCategory(
-                  controller.incomeList[index]['icon'], 
-                  controller.incomeList[index]['name']
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 0.2,
-                      color: Colors.grey
-                    )
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      child: ListView.builder(
+        itemCount: controller.incomeCategory.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              // controller.setCategory(
+              //   controller.incomeList[index]['icon'], 
+              //   controller.incomeList[index]['name']
+              // );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                border: Border(
+                  bottom: BorderSide(
+                    width: 0.5,
+                    color: Colors.grey
                   )
-              
-                ),
-                child: Obx(() =>
-                  Row(
-                    children: [
-                      Icon(
-                        controller.incomeList[index]['icon'],
-                        color: Colors.grey,
-                      ),
-              
-                      const SizedBox(width: 20),
-              
-                      Text(
-                        controller.incomeList[index]['name'],
-                        style: TextStyle(
-                          color: color,
-                          fontWeight: FontWeight.w500
-                        ),
-                      )
-              
-                    ],
-                  ),
-                ),
+                )
+            
               ),
-            );
-          }
-        ),
-      
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/income/${controller.incomeCategory[index].image}',
+                    height: 30,
+                    width: 30,
+                  ),
+          
+                  const SizedBox(width: 10),
+          
+                  Text(
+                    controller.incomeCategory[index].name,
+                    style: TextStyle(
+                      color: color,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  )
+          
+                ],
+              ),
+            ),
+          );
+        }
+      ),
     );
   }
 }

@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/amount_input.dart';
@@ -24,13 +21,13 @@ class CreateTransactionPage extends GetView<CreateTranController> {
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
-    // final Color bgcolor = themeState.getDarkTheme ? 
-    // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+    final Color bgcolor = themeState.getDarkTheme ? 
+    AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: themeState.getDarkTheme ? 
-        Colors.black12 : Colors.grey.shade200,
+        scrolledUnderElevation: 0.0,
+        backgroundColor: bgcolor,
         centerTitle: true,
         title: Text(
           'Create transaction',

@@ -49,29 +49,34 @@ class AmountInput extends GetView<CreateTranController> {
           Expanded(
             child: Column(
               children: [
-                TextField(
-                  textAlignVertical: TextAlignVertical.top,
-                  controller: controller.amountController,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: AppColor.commonColor,
-                    fontSize: 25
-                  ),
-                  inputFormatters: [
-                    CurrencyTextInputFormatter.currency(
-                      symbol: '',
-                      decimalDigits: 0,
-                    )
-                  ],
-                  keyboardType: TextInputType.number,
-                  cursorColor: AppColor.commonColor,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '0', 
-                    hintStyle: TextStyle(
-                      color: AppColor.commonColor,
-                      fontWeight: FontWeight.w500
-                    )
+                Obx(() =>
+                  TextField(
+                    textAlignVertical: TextAlignVertical.top,
+                    controller: controller.amountController,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: controller.trantype.value == 'income' ? 
+                      AppColor.incomeDarkColor : AppColor.commonColor,
+                      fontSize: 25
+                    ),
+                    inputFormatters: [
+                      CurrencyTextInputFormatter.currency(
+                        symbol: '',
+                        decimalDigits: 0,
+                      )
+                    ],
+                    keyboardType: TextInputType.number,
+                    cursorColor: controller.trantype.value == 'income' ? 
+                      AppColor.incomeDarkColor : AppColor.commonColor,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: '0', 
+                      hintStyle: TextStyle(
+                        color: controller.trantype.value == 'income' ? 
+                      AppColor.incomeDarkColor : AppColor.commonColor,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
                   ),
                 ),
                 const SizedBox(height: 5)
