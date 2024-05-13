@@ -16,9 +16,13 @@ class CreateTranController extends GetxController {
   var categoryname = 'Select category'.obs;
 
   var trantype = 'income'.obs;
+  var selectIncome = ''.obs;
 
   var incomeCategory = Get.find<ApplicationController>().incomeCategory;
 
+  void setSelectIncome(String select) {
+    selectIncome.value = select;
+  }
 
   void toggleTranType() {
     if (trantype.value == 'income') {

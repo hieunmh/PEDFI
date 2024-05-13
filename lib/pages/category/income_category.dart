@@ -22,14 +22,14 @@ class IncomeCategory extends GetView<CategoryController> {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         child: ListView.builder(
-          itemCount: controller.incomeList.length,
+          itemCount: controller.incomeCategory.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                controller.setCategory(
-                  controller.incomeList[index]['icon'], 
-                  controller.incomeList[index]['name']
-                );
+                // controller.setCategory(
+                //   controller.incomeList[index]['icon'], 
+                //   controller.incomeList[index]['name']
+                // );
               },
               child: Container(
                 padding: const EdgeInsets.all(20),
@@ -43,27 +43,28 @@ class IncomeCategory extends GetView<CategoryController> {
                   )
               
                 ),
-                child: Obx(() =>
+                child:
                   Row(
                     children: [
-                      Icon(
-                        controller.incomeList[index]['icon'],
-                        color: Colors.grey,
+                      Image.asset(
+                        'assets/income/${controller.incomeCategory[index].image}',
+                        height: 40,
                       ),
               
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 10),
               
                       Text(
-                        controller.incomeList[index]['name'],
+                        controller.incomeCategory[index].name,
                         style: TextStyle(
                           color: color,
-                          fontWeight: FontWeight.w500
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
                         ),
                       )
               
                     ],
                   ),
-                ),
+                
               ),
             );
           }

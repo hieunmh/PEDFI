@@ -54,7 +54,9 @@ class ApplicationController extends GetxController {
   Future<void> getIncomeCategory() async {
     final res = await supabase.from('Categories').select('*');
     print(res);
-    // incomeCategory[1] = res;
+
+    incomeCategory = categoryFromJson(res);
+    
   }
 
   Future<void> getProfile() async {

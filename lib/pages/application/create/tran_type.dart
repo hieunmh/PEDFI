@@ -45,14 +45,15 @@ class TranType extends GetView<CreateTranController> {
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       decoration: BoxDecoration(
                         color: themeState.getDarkTheme ? 
-                        controller.trantype.value == 'income'? 
+                        controller.trantype.value == 'income' ? 
                         AppColor.bgDarkThemeColor : Colors.grey.shade900 
                         : controller.trantype.value == 'income' ? 
                         Colors.white : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                           color: controller.trantype.value == 'income' ?
-                          AppColor.incomeDarkColor : Colors.transparent
+                          AppColor.incomeDarkColor : Colors.transparent,
+                          width: 2.5
                         )
                         // border: BoxBorder()
                       ),
@@ -79,14 +80,15 @@ class TranType extends GetView<CreateTranController> {
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       decoration: BoxDecoration(
                         color: themeState.getDarkTheme ? 
-                        controller.trantype.value == 'expense'? 
+                        controller.trantype.value == 'expense' ? 
                         AppColor.bgDarkThemeColor : Colors.grey.shade900 
                         : controller.trantype.value == 'expense' ? 
                         Colors.white : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                           color: controller.trantype.value == 'expense' ? 
-                          AppColor.expenseDarkColor :Colors.transparent 
+                          AppColor.expenseDarkColor :Colors.transparent,
+                          width: 2.5
                         )
                       ),
                       child: Center(
