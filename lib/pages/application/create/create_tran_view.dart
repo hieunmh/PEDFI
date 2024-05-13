@@ -9,6 +9,7 @@ import 'package:pedfi/pages/application/create/create_tran_controller.dart';
 import 'package:pedfi/pages/application/create/date_input.dart';
 import 'package:pedfi/pages/application/create/note_input.dart';
 import 'package:pedfi/pages/application/create/tran_category.dart';
+import 'package:pedfi/pages/application/create/tran_type.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +44,9 @@ class CreateTransactionPage extends GetView<CreateTranController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+
+            const TranType(),
+
             const DateInput(),
         
             const AmountInput(),
