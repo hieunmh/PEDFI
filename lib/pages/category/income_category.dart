@@ -46,7 +46,7 @@ class IncomeCategory extends GetView<CategoryController> {
               child: Row(
                 children: [
                   Image.asset(
-                    'assets/income/${controller.incomeCategory[index].image}',
+                    'assets/categoryicon/${controller.incomeCategory[index].image}',
                     height: 30,
                     width: 30,
                   ),
