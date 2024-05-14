@@ -14,5 +14,5 @@ class AppRoutes {
 
   static const CATEGORY = '/category';
 
-
+  static const CUSTOMCATEGORY = '/customcategory';
 }
