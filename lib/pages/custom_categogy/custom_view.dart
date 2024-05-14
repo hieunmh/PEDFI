@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/consts/category_icon.dart';
+import 'package:pedfi/pages/custom_categogy/category_type.dart';
 import 'package:pedfi/pages/custom_categogy/custom_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -24,13 +25,9 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
     return Scaffold(
       backgroundColor: bgcolor,
       appBar: AppBar(
+        toolbarHeight: 40,
+        scrolledUnderElevation: 0.0,
         backgroundColor: bgcolor,
-        shape: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade500,
-            width: 0.5
-          )
-        ),
         title: Text(
           'Custom',
           style: TextStyle(
@@ -50,42 +47,125 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
             color: color,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Icon(
+              FontAwesomeIcons.check,
+              color: color,
+            ),
+          )
+        ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: AppColor.incomeDarkColor
-                      ),
-                    ),
-                  ),
+      body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              const CategoryType(),
 
-                  const SizedBox(width: 10),
-                  
-                  Expanded(
-                    child: Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: AppColor.incomeDarkColor
+              Obx(() =>
+                Center(
+                  child: Image.asset(
+                    'assets/categoryicon/${controller.selectIcon.value}',
+                    height: 50,
+                    width: 50,
+                  ),
+                ),
+              ),
+          
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey.shade500
+                      )
+                    )
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      cursorColor: color,
+                      controller: controller.newCategory,
+                      style: TextStyle(
+                        color: color,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600
+                      ),
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Enter category name',
+                        hintStyle:  TextStyle(
+                          color: themeState.getDarkTheme ? 
+                          const Color.fromRGBO(255, 255, 255, 0.3)
+                          : const Color.fromRGBO(0, 0, 0, 0.3),
+                          fontWeight: FontWeight.w500
+                        ),
+                        
                       ),
                     ),
                   ),
-                
-                ],
+                ),
               ),
-            )
-          ],
+
+              const SizedBox(height: 20),
+
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 300,
+                  child: Obx(() =>
+                    ScrollConfiguration(
+                      key: const PageStorageKey<String>('iconcategory'),
+                      behavior: const ScrollBehavior(),
+                      child: GridView(
+                        scrollDirection: Axis.vertical,
+                        physics: const ScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          mainAxisExtent: (Get.width - 90) / 4,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 0.3
+                        ),
+                        children: categoryIcon.map(
+                          (item) => GestureDetector(
+                            onTap: () {
+                              controller.selectIcon.value = item;
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: themeState.getDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100,
+                                border: Border.all(
+                                  color: controller.selectIcon.value == item ? 
+                                  themeState.getDarkTheme ? Colors.grey.shade700 : Colors.grey.shade400 : 
+                                  Colors.transparent,
+                                  width: 2.5
+                                ),
+                                borderRadius: BorderRadius.circular(5)
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  'assets/categoryicon/$item',
+                                  height: 30,
+                                  width: 30,
+                                ),
+                              ),
+                            ),
+                          )
+                        ).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+    
     );
   }
-
-  
 }

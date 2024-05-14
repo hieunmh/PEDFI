@@ -43,7 +43,7 @@ class ExpenseCategory extends GetView<CategoryController> {
                 child: Row(
                   children: [
                     Image.asset(
-                      'assets/expense/${controller.expenseCategory[index].image}',
+                      'assets/categoryicon/${controller.expenseCategory[index].image}',
                       height: 30,
                       width: 30,
                     ),

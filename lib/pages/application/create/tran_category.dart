@@ -90,7 +90,6 @@ class TranCatergory extends GetView<CreateTranController> {
                         },
                         child: Container(
                           // height: 60,
-                          width: 400,
                           decoration:  BoxDecoration(
                             color: themeState.getDarkTheme ? 
                             Colors.grey.shade900 : Colors.grey.shade100,
@@ -105,7 +104,7 @@ class TranCatergory extends GetView<CreateTranController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/income/${item.image}',
+                                'assets/categoryicon/${item.image}',
                                 height: 20,
                                 width: 20,
                               ),
@@ -168,7 +167,7 @@ class TranCatergory extends GetView<CreateTranController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/expense/${item.image}',
+                                'assets/categoryicon/${item.image}',
                                 height: 20,
                                 width: 20,
                               ),
