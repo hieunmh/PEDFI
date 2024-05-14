@@ -3,6 +3,8 @@
 import 'package:get/get.dart';
 import 'package:pedfi/pages/category/category_bindings.dart';
 import 'package:pedfi/pages/category/category_view.dart';
+import 'package:pedfi/pages/custom_categogy/custom_bindings.dart';
+import 'package:pedfi/pages/custom_categogy/custom_view.dart';
 import 'package:pedfi/pages/profile_detail/profiledetail_bindings.dart';
 import 'package:pedfi/pages/profile_detail/profiledetail_view.dart';
 import 'package:pedfi/pages/application/application_bindings.dart';
@@ -44,6 +46,12 @@ class AppPages {
       name: AppRoutes.CATEGORY, 
       page: () => CategoryPage(),
       binding: CategoryBindings()
+    ),
+
+    GetPage(
+      name: AppRoutes.CUSTOMCATEGORY, 
+      page: () => CustomCategoryPage(),
+      binding: CustomCategoryBindings()
     ),
   ];
 }

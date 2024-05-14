@@ -17,12 +17,17 @@ class CreateTranController extends GetxController {
 
   var trantype = 'income'.obs;
   var selectIncome = ''.obs;
+  var selectExpense = ''.obs;
 
   var incomeCategory = Get.find<ApplicationController>().incomeCategory;
   var expenseCategory = Get.find<ApplicationController>().expenseCategory;
 
   void setSelectIncome(String select) {
     selectIncome.value = select;
+  }
+
+  void setSelectExpense(String select) {
+    selectExpense.value = select;
   }
 
   void toggleTranType() {
@@ -38,7 +43,7 @@ class CreateTranController extends GetxController {
       context: context, 
       pickerType: DateTimePickerType.date,
       minimumDate: DateTime(1000),
-      maximumDate: DateTime(3000),
+      maximumDate: DateTime.now(),
       initialDate: pickedDateTime.value.isEmpty ? 
       DateTime.now() : DateTime.parse(pickedDateTime.value),
       radius: 0,

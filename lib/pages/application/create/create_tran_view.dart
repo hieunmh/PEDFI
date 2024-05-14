@@ -27,6 +27,7 @@ class CreateTransactionPage extends GetView<CreateTranController> {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
+        toolbarHeight: 0,
         backgroundColor: bgcolor,
         centerTitle: true,
         title: Text(

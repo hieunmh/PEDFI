@@ -6,10 +6,6 @@ import 'package:pedfi/pages/application/application_controller.dart';
 
 class CategoryController extends GetxController {
 
-  var showInputSearch = false.obs;
-
-  var searchController = TextEditingController();
-
   var categoryIcon = FontAwesomeIcons.solidCircleQuestion.obs;
   var categoryName = 'Select category'.obs;
 
@@ -86,10 +82,6 @@ class CategoryController extends GetxController {
       'name': 'Other'
     },
   ].obs;
-
-  void setShowInputSearch(bool show) {
-    showInputSearch.value = show;
-  }
 
   void setCategory(IconData categoryicon, String categoryname) {
     categoryIcon.value = categoryicon;

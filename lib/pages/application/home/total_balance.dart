@@ -96,7 +96,7 @@ class TotalBalance extends GetView<HomeController> {
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(10)
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -141,7 +141,7 @@ class TotalBalance extends GetView<HomeController> {
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(10)
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
