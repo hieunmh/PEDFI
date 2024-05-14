@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:pedfi/pages/category/category_controller.dart';
 import 'package:pedfi/pages/category/expense_category.dart';
 import 'package:pedfi/pages/category/income_category.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
+import 'package:pedfi/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPage extends GetView<CategoryController> {
@@ -39,75 +41,50 @@ class CategoryPage extends GetView<CategoryController> {
                 )
               )
             ),
-            child: Obx(() =>
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      if (controller.showInputSearch.value) {
-                        controller.setShowInputSearch(false);
-                        return;
-                      }
-                      Get.back();
-                    },
-                    child: Icon(
-                      FontAwesomeIcons.chevronLeft,
-                      size: 20,
-                      color: color,
-                    ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () {                     
+                    Get.back();
+                  },
+                  child: Icon(
+                    FontAwesomeIcons.chevronLeft,
+                    size: 20,
+                    color: color,
                   ),
+                ),
 
-                  const SizedBox(width: 10),
-              
-                  controller.showInputSearch.value ? Expanded(
-                    child: SizedBox(
-                      height: 20,
-                      child: TextField(
-                        autofocus: true,
-                        controller: controller.searchController,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: color,
-                          fontSize: 14
-                        ),
-                        keyboardType: TextInputType.text,
-                        cursorColor: color,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(7.5),
-                          border: InputBorder.none,
-                          hintText: 'Search category . . .', 
-                          hintStyle:  TextStyle(
-                            color: Colors.grey.shade500,
-                            fontWeight: FontWeight.w500,
-                          )
-                        ),
-                      ),
-                    ),
-                  )
-              
-                  : Text(
-                    'Select category',
+                const SizedBox(width: 10),
+            
+                Text(
+                  'Category',
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+            
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.CUSTOMCATEGORY);
+                  },
+                  child: Text(
+                    String.fromCharCode(CupertinoIcons.plus_app.codePoint),
                     style: TextStyle(
+                      inherit: false,
                       color: color,
-                      fontWeight: FontWeight.w700
+                      fontSize: 24,
+                      fontWeight: FontWeight.w900,
+                      fontFamily: CupertinoIcons.exclamationmark_circle.fontFamily,
+                      package: CupertinoIcons.exclamationmark_circle.fontPackage,
                     ),
                   ),
-
-                  const SizedBox(width: 10),
-              
-                  GestureDetector(
-                    onTap: () {
-                      controller.setShowInputSearch(true);
-                    },
-                    child: Icon(
-                      FontAwesomeIcons.magnifyingGlass,
-                      color: color,
-                      size: 20,
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
 
@@ -121,9 +98,6 @@ class CategoryPage extends GetView<CategoryController> {
                     TabBar(
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicatorColor: AppColor.commonColor,
-                      // indicator: const BoxDecoration(
-                      //   color: AppColor.commonColor
-                      // ),
                       splashFactory: NoSplash.splashFactory,
                       overlayColor: const MaterialStatePropertyAll(Colors.transparent),
                       labelColor: AppColor.commonColor,
