@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
@@ -19,6 +20,11 @@ class TotalBalance extends GetView<HomeController> {
 
     // final Color bgcolor = themeState.getDarkTheme ? 
     // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+
+    final currencyFormat = NumberFormat.currency(
+      decimalDigits: 0,
+      symbol: ''
+    );
 
     return Container(
       width: double.infinity,
@@ -74,7 +80,7 @@ class TotalBalance extends GetView<HomeController> {
                     )
                   ),
                   Text(
-                    '\$1234.56',
+                    currencyFormat.format(controller.incomeValue() + controller.expenseValue()),
                     style: TextStyle(
                       color: color,
                       fontSize: 24,
@@ -111,7 +117,7 @@ class TotalBalance extends GetView<HomeController> {
                               ),
                             ),
                             Text(
-                              '+\$2600.10',
+                              currencyFormat.format(controller.incomeValue()),
                               style: TextStyle(
                                 color: themeState.getDarkTheme ? 
                                 AppColor.incomeDarkColor : AppColor.incomeLightColor,
@@ -156,7 +162,7 @@ class TotalBalance extends GetView<HomeController> {
                               ),
                             ),
                             Text(
-                              '-\$1000.25',
+                              currencyFormat.format(controller.expenseValue().abs()), 
                               style: TextStyle(
                                 color: themeState.getDarkTheme ? 
                                 AppColor.expenseDarkColor : AppColor.expenseLightColor,

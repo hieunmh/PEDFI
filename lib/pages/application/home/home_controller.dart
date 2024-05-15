@@ -1,15 +1,15 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
 
-
-  
-  var userEmail = ''.obs;
+  final supabase = Supabase.instance.client;
 
   var currentMonth = DateFormat('MM-y').format(DateTime.now()).obs;
 
@@ -18,72 +18,19 @@ class HomeController extends GetxController {
   var firstDay = DateFormat('dd MMMM, y').format(DateTime(DateTime.now().year, DateTime.now().month, 1)).toString().obs;
   var lastDay = DateFormat('dd MMMM, y').format(DateTime(DateTime.now().year, DateTime.now().month + 1, 0)).toString().obs;
 
-  final List transactionsData = [
-    {
-      'icon': FontAwesomeIcons.burger,
-      'iconcolor': AppColor.expenseDarkColor,
-      'name': 'Food',
-      'detail': 'Dookki',
-      'totalAmount': '-\$45.00',
-      'date': 'Today',
-      'color': AppColor.expenseDarkColor
-    },
-    {
-      'icon': FontAwesomeIcons.dollarSign,
-      'iconcolor': AppColor.incomeDarkColor,
-      'name': 'Work',
-      'detail': 'Salary',
-      'totalAmount': '+\$2000.00',
-      'date': 'Today',
-      'color': AppColor.incomeDarkColor
-    },
-    {
-      'icon': FontAwesomeIcons.burger,
-      'iconcolor': AppColor.expenseDarkColor,
-      'name': 'Food',
-      'detail': 'Dookki',
-      'totalAmount': '-\$45.00',
-      'date': 'Today',
-      'color': AppColor.expenseDarkColor
-    },
-    {
-      'icon': FontAwesomeIcons.dollarSign,
-      'iconcolor': AppColor.incomeDarkColor,
-      'name': 'Work',
-      'detail': 'Salary',
-      'totalAmount': '+\$2000.00',
-      'date': 'Today',
-      'color': AppColor.incomeDarkColor
-    },
-    {
-      'icon':FontAwesomeIcons.heartCircleBolt,
-      'iconcolor': AppColor.expenseDarkColor,
-      'name': 'Health',
-      'detail': 'Hospital',
-      'totalAmount': '-\$79.00',
-      'date': 'Yesterday',
-      'color': AppColor.expenseDarkColor
-    },
-    {
-      'icon': FontAwesomeIcons.planeUp,
-      'iconcolor': AppColor.expenseDarkColor,
-      'name': 'Travel',
-      'detail': 'Hai Phong food tour',
-      'totalAmount': '-\$350.00',
-      'date': 'Yesterday',
-      'color': AppColor.expenseDarkColor
-    },
-  ].obs;
-
   final scrollController = ScrollController();
 
   var appController = Get.find<ApplicationController>();
 
+  var allTransaction = <Transaction>[].obs;
+
+  var incomeTransaction = <Transaction>[].obs;
+  var expenseTransaction = <Transaction>[].obs;
+
   @override
   void onInit() {
     super.onInit();
-    userEmail.value = appController.userEmail.value;
-
+    getAllTransaction();
     DateTime now = DateTime.now();
 
     for (int i = -23; i <= 0; i++) {
@@ -92,13 +39,35 @@ class HomeController extends GetxController {
 
     Future.delayed(const Duration(milliseconds: 100), () {
       scrollToLast();
-    });
+    }); 
 
   }
 
-  void deleteItem(index) {
-    transactionsData.removeAt(index);
-    update();
+  int incomeValue() {
+    int res = 0;
+    for (int i = 0; i < incomeTransaction.value.length; i++) {
+      res += incomeTransaction.value[i].value;
+    }
+    return res;
+  }
+
+  int expenseValue() {
+    int res = 0;
+    for (int i = 0; i < expenseTransaction.value.length; i++) {
+      res += expenseTransaction.value[i].value;
+    }
+    return res;
+  }
+  
+
+  Future<void> getAllTransaction() async {
+    final res = await supabase.from('Transactions')
+    .select('*,  Categories!category_id!inner(name, image)')
+    .eq('user_id', appController.userId.value);
+    allTransaction.value = TransactionFromJson(res); 
+
+    incomeTransaction.value = allTransaction.value.where((i) => i.value > 0).toList();
+    expenseTransaction.value = allTransaction.value.where((i) => i.value < 0).toList();
   }
 
   void setCurrentMonth(String month) {
@@ -115,6 +84,7 @@ class HomeController extends GetxController {
     firstDay.value = DateFormat('dd MMMM, y').format(DateTime(intYear, intMonth, 1)).toString();
     lastDay.value = DateFormat('dd MMMM, y').format(DateTime(intYear, intMonth + 1, 0)).toString();
   }
+
 
   void scrollToCurrentMonth() {
 
@@ -153,8 +123,4 @@ class HomeController extends GetxController {
     scrollController.jumpTo(scrollController.position.maxScrollExtent);
   }
 
-
-  void setUserEmail(String name) {
-    userEmail.value = name;
-  }
 }

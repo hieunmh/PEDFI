@@ -63,47 +63,7 @@ class ApplicationPage extends GetView<ApplicationController> {
             ),
           ),
         ),
-      )),
-
-      
-      // bottomNavigationBar: Obx(() => Container(
-      //   decoration: const BoxDecoration(
-      //     border: Border(
-      //       top: BorderSide(
-      //         color: Colors.grey,
-      //         width: 0.5
-      //       )
-      //     )
-      //   ),
-      //   child: NavigationBarTheme(
-      //     data: NavigationBarThemeData(
-      //       labelTextStyle: MaterialStateProperty.all(
-      //         TextStyle(
-      //           fontSize: 0,
-      //           color: color,
-      //           fontWeight: FontWeight.w500
-      //         ),
-      //       ),
-      //       iconTheme: MaterialStateProperty.all(
-      //         IconThemeData(
-      //           color: color
-      //         )
-      //       )
-      //     ),
-      //     child: NavigationBar(
-      //       height: 50,
-      //       elevation: 0,
-      //       destinations: controller.bottomNavDes,
-      //       selectedIndex: controller.state.value,
-      //       onDestinationSelected: (index) => controller.handleNavBarTap(index),
-      //       // shadowColor: Colors.transparent,
-      //       indicatorColor: AppColor.commonColor,
-      //       surfaceTintColor: Colors.transparent,
-      //       backgroundColor: bgcolor,
-      //     ),
-      //   ),
-      // )),
-      
+      )),      
     );
   }
 }
