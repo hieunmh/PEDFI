@@ -131,6 +131,7 @@ class ProfileAvatar extends GetView<ProfileController> {
                   controller.isLoggedin.value = data['isLoggedIn'];
                   controller.userEmail.value = data['userEmail'] ?? '';
                   controller.joinDate.value = data['joinDate'] ?? '';
+                  controller.userId.value = data['userId'] ?? '';
                 }
               )
             ],

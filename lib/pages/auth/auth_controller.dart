@@ -60,6 +60,7 @@ class AuthController extends GetxController {
 
     var email = supabase.auth.currentUser?.email.toString();
     var createdAt = supabase.auth.currentUser?.createdAt.toString();
+    var id = supabase.auth.currentUser?.id.toString();
 
     if (email == null || createdAt == null) {
       return;
@@ -67,6 +68,7 @@ class AuthController extends GetxController {
       homeController.setUserEmail(email);
       Get.back(
         result: {
+          'userId': id,
           'isLoggedIn': true,
           'userEmail': email,
           'joinDate': createdAt

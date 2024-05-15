@@ -13,6 +13,7 @@ class ApplicationController extends GetxController {
   List<Category> expenseCategory = [];
 
   var userEmail = ''.obs;
+  var userId = ''.obs;
   var joinDate = ''.obs;
   var isLoggedin = false.obs;
 
@@ -70,11 +71,13 @@ class ApplicationController extends GetxController {
   Future<void> getProfile() async {
     var email = supabase.auth.currentUser?.email.toString();
     var createdAt = supabase.auth.currentUser?.createdAt.toString();
+    var id = supabase.auth.currentUser?.id.toString();
 
-    if (email == null || createdAt == null) {
+    if (email == null || createdAt == null || id == null) {
       return;
     } else {
       userEmail.value = email;
+      userId.value = id;
       joinDate.value = createdAt;
       isLoggedin.value = true;
     }

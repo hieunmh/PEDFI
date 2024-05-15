@@ -86,7 +86,7 @@ class TranCatergory extends GetView<CreateTranController> {
                     children: controller.incomeCategory.map(
                       (item) => GestureDetector(
                         onTap: () {
-                          controller.setSelectIncome(item.name);
+                          controller.setSelectCategory(item.name, item.id);
                         },
                         child: Container(
                           // height: 60,
@@ -95,7 +95,7 @@ class TranCatergory extends GetView<CreateTranController> {
                             Colors.grey.shade900 : Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(
-                              color: controller.selectIncome.value == item.name ? 
+                              color: controller.selectCategory.value == item.name ? 
                               AppColor.incomeDarkColor : Colors.transparent,
                               width: 2.5
                             )
@@ -148,7 +148,7 @@ class TranCatergory extends GetView<CreateTranController> {
                     children: controller.expenseCategory.map(
                       (item) => GestureDetector(
                         onTap: () {
-                          controller.setSelectExpense(item.name);
+                          controller.setSelectCategory(item.name, item.id);
                         },
                         child: Container(
                           // height: 60,
@@ -158,7 +158,7 @@ class TranCatergory extends GetView<CreateTranController> {
                             Colors.grey.shade900 : Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(
-                              color: controller.selectExpense.value == item.name ? 
+                              color: controller.selectCategory.value == item.name ? 
                               AppColor.expenseDarkColor : Colors.transparent,
                               width: 2.5
                             )
