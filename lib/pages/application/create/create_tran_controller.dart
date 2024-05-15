@@ -22,8 +22,8 @@ class CreateTranController extends GetxController {
   var selectCategory = ''.obs;
   var selectCateId = ''.obs;
 
-  var incomeCategory = Get.find<ApplicationController>().incomeCategory;
-  var expenseCategory = Get.find<ApplicationController>().expenseCategory;
+  var incomeCategory = Get.find<ApplicationController>().allCategory.where((item) => item.type == 'income').toList();
+  var expenseCategory = Get.find<ApplicationController>().allCategory.where((item) => item.type == 'expense').toList();
 
   var userId = Get.find<ProfileController>().userId;
   

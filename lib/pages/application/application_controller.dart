@@ -9,8 +9,7 @@ class ApplicationController extends GetxController {
 
   final state = 0.obs;
   final position = ''.obs;
-  List<Category> incomeCategory = [];
-  List<Category> expenseCategory = [];
+  List<Category> allCategory = [];
 
   var userEmail = ''.obs;
   var userId = ''.obs;
@@ -42,8 +41,7 @@ class ApplicationController extends GetxController {
   void onInit() {
     super.onInit();
     getProfile();
-    getIncomeCategory();
-    getExpenseCategory();
+    getAllCategory();
 
     pageController = PageController(initialPage: state.value);
   }
@@ -54,18 +52,10 @@ class ApplicationController extends GetxController {
     super.dispose();
   }
 
-  Future<void> getIncomeCategory() async {
-    final res = await supabase.from('Categories').select('*').eq('type', 'income');
-    print(res);
 
-    incomeCategory = categoryFromJson(res);
-  }
-
-  Future<void> getExpenseCategory() async {
-    final res = await supabase.from('Categories').select('*').eq('type', 'expense');
-    print(res);
-
-    expenseCategory = categoryFromJson(res);
+  Future<void> getAllCategory() async {
+    final res = await supabase.from('Categories').select('*');
+    allCategory = categoryFromJson(res);
   }
 
   Future<void> getProfile() async {
