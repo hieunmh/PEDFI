@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/amount_input.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -56,21 +57,29 @@ class CreateTransactionPage extends GetView<CreateTranController> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: GestureDetector(
-
+                onTap: () {
+                  controller.createTransaction();
+                },
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: AppColor.commonColor,
                     borderRadius: BorderRadius.circular(5)
                   ),
-                  child: const Center(
-                    child: Text(
-                      'Create',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16
-                      ),
+                  child: Obx(() =>
+                    Center(
+                      child: controller.isLoading.value ? 
+                        LoadingAnimationWidget.fallingDot(
+                          color: Colors.white, 
+                          size: 26
+                        ) : const Text(
+                        'Create',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18
+                        ),
+                      ) ,
                     ),
                   ),
                 )

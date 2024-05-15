@@ -6,19 +6,12 @@ class ProfileController extends GetxController {
 
   var supabase = Supabase.instance.client;
   
-  var userEmail = ''.obs;
-  var joinDate = ''.obs;
-  var isLoggedin = false.obs;
 
   var appController = Get.find<ApplicationController>();
 
-  @override
-  void onInit() {
-    super.onInit();
-    
-    userEmail.value = appController.userEmail.value;
-    joinDate.value = appController.joinDate.value;
-    isLoggedin.value = appController.isLoggedin.value;
-  }
+  var userEmail = Get.find<ApplicationController>().userEmail;
+  var joinDate = Get.find<ApplicationController>().joinDate;
+  var userId = Get.find<ApplicationController>().userId;
+  var isLoggedin = Get.find<ApplicationController>().isLoggedin;
 
 }

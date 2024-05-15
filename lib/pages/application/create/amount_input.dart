@@ -63,7 +63,7 @@ class AmountInput extends GetView<CreateTranController> {
                       CurrencyTextInputFormatter.currency(
                         symbol: '',
                         decimalDigits: 0,
-                      )
+                      ),
                     ],
                     keyboardType: TextInputType.number,
                     cursorColor: controller.trantype.value == 'income' ? 

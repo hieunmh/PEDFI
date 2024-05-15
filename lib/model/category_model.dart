@@ -1,4 +1,5 @@
 class Category {
+  String id;
   String type;
   String name;
   String description;
@@ -6,6 +7,7 @@ class Category {
   String image;
 
   Category({
+    required this.id,
     required this.type,
     required this.name,
     required this.description,
@@ -15,6 +17,7 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
+      id: json['id'],
       type: json['type'], 
       name: json['name'], 
       description: json['description'], 
