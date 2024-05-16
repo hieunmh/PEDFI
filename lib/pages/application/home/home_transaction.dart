@@ -27,8 +27,8 @@ class HomeTransaction extends GetView<HomeController> {
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         child: Obx(() =>
           ListView.builder(
-            reverse: true,
             key: const PageStorageKey<String>('transaction'),
+            controller: controller.tranScroll,
             itemCount: controller.allTransaction.length,
             itemBuilder: (context, index) {
               return Container(
@@ -39,6 +39,7 @@ class HomeTransaction extends GetView<HomeController> {
                 child:
                   Slidable(
                     startActionPane: ActionPane(
+                      extentRatio: 0.25,
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
@@ -47,12 +48,13 @@ class HomeTransaction extends GetView<HomeController> {
                           backgroundColor: AppColor.incomeDarkColor,
                           foregroundColor: Colors.white,
                           onPressed: (BuildContext context) {
-          
+                            
                           },
                         )
                       ],
                     ),
                     endActionPane: ActionPane(
+                      extentRatio: 0.25,
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
@@ -61,7 +63,7 @@ class HomeTransaction extends GetView<HomeController> {
                           backgroundColor: AppColor.commonColor,
                           foregroundColor: Colors.white,
                           onPressed: (BuildContext context) {
-          
+                            controller.deleteTransaction(controller.allTransaction[index].id);
                           },
                         )
                       ],
@@ -98,7 +100,6 @@ class HomeTransaction extends GetView<HomeController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // controller.appController.allTransaction[index].category_id
                                     Text(
                                       controller.allTransaction[index].category['name'],
                                       style: TextStyle(

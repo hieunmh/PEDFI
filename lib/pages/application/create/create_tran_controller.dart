@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/pages/application/profile/profile_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -10,7 +11,7 @@ class CreateTranController extends GetxController {
 
   final supabase = Supabase.instance.client;
 
-  var pickedDateTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).toString().obs;
+  var pickedDateTime = DateTime.now().toString().obs;
 
   var amountController = TextEditingController();
   var noteController = TextEditingController();
@@ -26,6 +27,9 @@ class CreateTranController extends GetxController {
   var expenseCategory = Get.find<ApplicationController>().allCategory.where((item) => item.type == 'expense').toList();
 
   var userId = Get.find<ProfileController>().userId;
+
+  var homeController = Get.find<HomeController>();
+  var appController= Get.find<ApplicationController>();
   
   Future<void> createTransaction() async {
     if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty || userId.isEmpty) {
@@ -61,6 +65,10 @@ class CreateTranController extends GetxController {
     });
 
     isLoading.value = false;
+    
+    await homeController.getAllTransaction();
+    
+    appController.handleNavBarTap(0);
 
     resetForm();
 
@@ -126,7 +134,10 @@ class CreateTranController extends GetxController {
       pickedDateTime.value = DateTime(
         DateTime.now().year, 
         DateTime.now().month, 
-        DateTime.now().day - 1
+        DateTime.now().day - 1,
+        DateTime.now().hour,
+        DateTime.now().minute,
+        DateTime.now().second,
       ).toString();
 
     } else {
@@ -134,7 +145,10 @@ class CreateTranController extends GetxController {
       pickedDateTime.value = DateTime(
         dt.year, 
         dt.month , 
-        dt.day - 1
+        dt.day - 1,
+        dt.hour,
+        dt.minute,
+        dt.second
       ).toString();
     }
 
@@ -145,7 +159,10 @@ class CreateTranController extends GetxController {
       pickedDateTime.value = DateTime(
         DateTime.now().year, 
         DateTime.now().month, 
-        DateTime.now().day + 1
+        DateTime.now().day + 1,
+        DateTime.now().hour,
+        DateTime.now().minute,
+        DateTime.now().second,
       ).toString();
 
     } else {
@@ -153,7 +170,10 @@ class CreateTranController extends GetxController {
       pickedDateTime.value = DateTime(
         dt.year, 
         dt.month , 
-        dt.day + 1
+        dt.day + 1,
+        dt.hour,
+        dt.minute,
+        dt.second
       ).toString();
     }
   }

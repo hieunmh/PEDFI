@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   var lastDay = DateFormat('dd MMMM, y').format(DateTime(DateTime.now().year, DateTime.now().month + 1, 0)).toString().obs;
 
   final scrollController = ScrollController();
+  final tranScroll = ScrollController();
 
   var appController = Get.find<ApplicationController>();
 
@@ -38,7 +39,7 @@ class HomeController extends GetxController {
     }
 
     Future.delayed(const Duration(milliseconds: 100), () {
-      scrollToLast();
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
     }); 
 
   }
@@ -63,11 +64,16 @@ class HomeController extends GetxController {
   Future<void> getAllTransaction() async {
     final res = await supabase.from('Transactions')
     .select('*,  Categories!category_id!inner(name, image)')
-    .eq('user_id', appController.userId.value);
+    .eq('user_id', appController.userId.value).order('date', ascending: false);
     allTransaction.value = TransactionFromJson(res); 
 
     incomeTransaction.value = allTransaction.value.where((i) => i.value > 0).toList();
     expenseTransaction.value = allTransaction.value.where((i) => i.value < 0).toList();
+  }
+
+  Future<void> deleteTransaction(String id) async {
+    await supabase.from('Transactions').delete().eq('id', id);
+    await getAllTransaction();
   }
 
   void setCurrentMonth(String month) {
@@ -118,9 +124,4 @@ class HomeController extends GetxController {
       );
     }
   }
-
-  void scrollToLast() {
-    scrollController.jumpTo(scrollController.position.maxScrollExtent);
-  }
-
 }
