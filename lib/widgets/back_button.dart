@@ -20,7 +20,7 @@ class MyBackButton extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color: themeState.getDarkTheme ? Colors.white10 : Colors.black12,
+        color: themeState.getDarkTheme ? Colors.black12 : Colors.grey.shade100,
         borderRadius: BorderRadius.circular(10)
       ),
       child: Center(

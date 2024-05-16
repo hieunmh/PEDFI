@@ -21,7 +21,7 @@ class TranCatergory extends GetView<CreateTranController> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -62,7 +62,7 @@ class TranCatergory extends GetView<CreateTranController> {
             child: controller.trantype.value == 'income' ? 
               SizedBox(
                 width: double.infinity,
-                height: 200,
+                height: 250,
                 child: ScrollConfiguration(
                   key: const PageStorageKey<String>('incomecategory'),
                   behavior: const ScrollBehavior(),
@@ -71,10 +71,9 @@ class TranCatergory extends GetView<CreateTranController> {
                     physics: const PageScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      mainAxisExtent: 60,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 0.3
+                      childAspectRatio: 1
                     ),
                     children: controller.incomeCategory.map(
                       (item) => GestureDetector(
@@ -97,8 +96,8 @@ class TranCatergory extends GetView<CreateTranController> {
                             children: [
                               Image.asset(
                                 'assets/categoryicon/${item.image}',
-                                height: 20,
-                                width: 20,
+                                height: 30,
+                                width: 30,
                               ),
 
                               const SizedBox(height: 5),
@@ -109,8 +108,8 @@ class TranCatergory extends GetView<CreateTranController> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: color,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 11
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12
                                   ),
                                 ),
                               )
@@ -126,7 +125,7 @@ class TranCatergory extends GetView<CreateTranController> {
                 : 
               SizedBox(
                 width: double.infinity,
-                height: 200,
+                height: 250,
                 child: ScrollConfiguration(
                   key: const PageStorageKey<String>('expensecategory'),
                   behavior: const ScrollBehavior(),
@@ -135,10 +134,9 @@ class TranCatergory extends GetView<CreateTranController> {
                     physics: const PageScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      mainAxisExtent: 60,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 0.3
+                      childAspectRatio: 1
                     ),
                     children: controller.expenseCategory.map(
                       (item) => GestureDetector(
@@ -163,8 +161,8 @@ class TranCatergory extends GetView<CreateTranController> {
                             children: [
                               Image.asset(
                                 'assets/categoryicon/${item.image}',
-                                height: 20,
-                                width: 20,
+                                height: 30,
+                                width: 30,
                               ),
 
                               const SizedBox(height: 5),
@@ -175,8 +173,8 @@ class TranCatergory extends GetView<CreateTranController> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: color,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 11
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12
                                   ),
                                 ),
                               )

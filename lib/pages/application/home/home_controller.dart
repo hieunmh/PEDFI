@@ -24,9 +24,13 @@ class HomeController extends GetxController {
   var appController = Get.find<ApplicationController>();
 
   var allTransaction = <Transaction>[].obs;
+  var filterTransaction = <Transaction>[].obs;
 
   var incomeTransaction = <Transaction>[].obs;
   var expenseTransaction = <Transaction>[].obs;
+
+  var incomeAllTran = <Transaction>[].obs;
+  var expenseAllTran = <Transaction>[].obs;
 
   @override
   void onInit() {
@@ -44,7 +48,7 @@ class HomeController extends GetxController {
 
   }
 
-  int incomeValue() {
+  int incomeMonthValue() {
     int res = 0;
     for (int i = 0; i < incomeTransaction.value.length; i++) {
       res += incomeTransaction.value[i].value;
@@ -52,10 +56,26 @@ class HomeController extends GetxController {
     return res;
   }
 
-  int expenseValue() {
+  int incomeAllValue() {
+    int res = 0;
+    for (int i = 0; i < incomeAllTran.value.length; i++) {
+      res += incomeAllTran.value[i].value;
+    }
+    return res;
+  }
+
+  int expenseMonthValue() {
     int res = 0;
     for (int i = 0; i < expenseTransaction.value.length; i++) {
       res += expenseTransaction.value[i].value;
+    }
+    return res;
+  }
+
+  int expenseAllValue() {
+    int res = 0;
+    for (int i = 0; i < expenseAllTran.value.length; i++) {
+      res += expenseAllTran.value[i].value;
     }
     return res;
   }
@@ -65,10 +85,28 @@ class HomeController extends GetxController {
     final res = await supabase.from('Transactions')
     .select('*,  Categories!category_id!inner(name, image)')
     .eq('user_id', appController.userId.value).order('date', ascending: false);
+
     allTransaction.value = TransactionFromJson(res); 
 
-    incomeTransaction.value = allTransaction.value.where((i) => i.value > 0).toList();
-    expenseTransaction.value = allTransaction.value.where((i) => i.value < 0).toList();
+    incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
+    expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
+    
+    transactionByMonthYear(currentMonth.value);
+
+  }
+
+  void transactionByMonthYear(String monthyear) {
+    final splitted = monthyear.split('-');
+
+    var intYear = int.parse(splitted[1]);
+    var intMonth = int.parse(splitted[0]);
+
+    filterTransaction.value = allTransaction.value.where((e) {
+      return DateTime.parse(e.date).year == intYear && DateTime.parse(e.date).month == intMonth;
+    }).toList();
+
+    incomeTransaction.value = filterTransaction.value.where((i) => i.value > 0).toList();
+    expenseTransaction.value = filterTransaction.value.where((i) => i.value < 0).toList();
   }
 
   Future<void> deleteTransaction(String id) async {
@@ -78,6 +116,7 @@ class HomeController extends GetxController {
 
   void setCurrentMonth(String month) {
     currentMonth.value = month;
+    transactionByMonthYear(month);
   }
 
   void setFirstLastDay(String current) {
