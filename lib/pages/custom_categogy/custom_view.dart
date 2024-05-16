@@ -125,12 +125,11 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
                         child: GridView(
                           scrollDirection: Axis.vertical,
                           physics: const ScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            mainAxisExtent: (Get.width - 60) / 3,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
-                            childAspectRatio: 0.3
+                            childAspectRatio: 1
                           ),
                           children: categoryIcon.map(
                             (item) => GestureDetector(

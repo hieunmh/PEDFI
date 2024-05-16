@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
@@ -22,17 +23,17 @@ class HomeTransaction extends GetView<HomeController> {
       symbol: ''
     );
 
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        child: Obx(() =>
-          ListView.builder(
+    return Obx(() =>
+      Expanded(
+        child: controller.filterTransaction.isNotEmpty ? Container(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          child: ListView.builder(
             key: const PageStorageKey<String>('transaction'),
             controller: controller.tranScroll,
-            itemCount: controller.allTransaction.length,
+            itemCount: controller.filterTransaction.length,
             itemBuilder: (context, index) {
               return Container(
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsets.symmetric(horizontal: 0),
                 decoration: const BoxDecoration(
                   color: Colors.transparent
                 ),
@@ -63,22 +64,22 @@ class HomeTransaction extends GetView<HomeController> {
                           backgroundColor: AppColor.commonColor,
                           foregroundColor: Colors.white,
                           onPressed: (BuildContext context) {
-                            controller.deleteTransaction(controller.allTransaction[index].id);
+                            controller.deleteTransaction(controller.filterTransaction[index].id);
                           },
                         )
                       ],
                     ),
                     child: Container(
                       height: 80,
-                      margin: const EdgeInsets.symmetric(vertical: 0),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(
-                            width: 0.2,
-                            color: color
-                          )
-                        )
-                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                      // decoration: BoxDecoration(
+                      //   border: Border(
+                      //     top: BorderSide(
+                      //       width: 0.2,
+                      //       color: color
+                      //     )
+                      //   )
+                      // ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                         child: Row(
@@ -89,7 +90,7 @@ class HomeTransaction extends GetView<HomeController> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  'assets/categoryicon/${controller.allTransaction[index].category['image']}',
+                                  'assets/categoryicon/${controller.filterTransaction[index].category['image']}',
                                   height: 30,
                                   width: 30,
                                 ),
@@ -101,7 +102,7 @@ class HomeTransaction extends GetView<HomeController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      controller.allTransaction[index].category['name'],
+                                      controller.filterTransaction[index].category['name'],
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: color,
@@ -110,7 +111,7 @@ class HomeTransaction extends GetView<HomeController> {
                                     ),
                     
                                     Text(
-                                      GetUtils.capitalizeFirst(controller.allTransaction[index].description).toString(),
+                                      GetUtils.capitalizeFirst(controller.filterTransaction[index].description).toString(),
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey.shade500,
@@ -127,17 +128,19 @@ class HomeTransaction extends GetView<HomeController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  currencyFormat.format(controller.allTransaction[index].value),
+                                  controller.filterTransaction[index].value > 0 ?
+                                  '+${currencyFormat.format(controller.filterTransaction[index].value)}'
+                                  : currencyFormat.format(controller.filterTransaction[index].value),
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: controller.allTransaction[index].value > 0 ? 
+                                    color: controller.filterTransaction[index].value > 0 ? 
                                     AppColor.incomeDarkColor : AppColor.expenseDarkColor,
                                     fontWeight: FontWeight.w700
                                   ),
                                 ),
                                 Text(
-                                  DateFormat('dd/MM/yyyy')
-                                  .format(DateTime.parse(controller.allTransaction[index].date))
+                                  DateFormat('EEE dd/MM')
+                                  .format(DateTime.parse(controller.filterTransaction[index].date))
                                   .toString(),
                                   style: TextStyle(
                                     fontSize: 12,
@@ -156,8 +159,34 @@ class HomeTransaction extends GetView<HomeController> {
               );
             }
           ),
+        ) : Container(
+          padding: const EdgeInsets.all(0),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  FontAwesomeIcons.faceFrown,
+                  color: color,
+                  size: 60,
+                ),
+
+                const SizedBox(height: 10),
+
+                Text(
+                  'No transaction found',
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+              ],
+            )
+          ),
         ),
-      )
+      ),
     );
   }
 }

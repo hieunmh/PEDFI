@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/application/home/wallet_total.dart';
 import 'package:pedfi/pages/application/profile/profile_avatar.dart';
 import 'package:pedfi/pages/application/profile/profile_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
@@ -52,11 +53,14 @@ class ProfilePage extends GetView<ProfileController> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
                 
                 const ProfileAvatar(),
                 
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
+
+                const WalletTotal(),
+
+                const SizedBox(height: 20),
                 
                 Text(
                   'Settings',

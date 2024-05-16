@@ -1,5 +1,6 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -29,7 +30,7 @@ class AmountInput extends GetView<CreateTranController> {
       //   )
       // ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
@@ -84,16 +85,15 @@ class AmountInput extends GetView<CreateTranController> {
             ),
           ),
 
-          const SizedBox(width: 10),
 
-          Text(
-            'VND',
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.w700
+          Obx(() =>
+            Icon(
+              FontAwesomeIcons.dongSign, 
+              color: controller.trantype.value == 'income' ? 
+              AppColor.incomeDarkColor : AppColor.expenseDarkColor, 
+              size: 24
             ),
-          )
-        
+          ),
         ],
       ),
     );

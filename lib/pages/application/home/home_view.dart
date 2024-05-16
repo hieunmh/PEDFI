@@ -33,6 +33,8 @@ class HomePage extends GetView<HomeController>  {
       body: Column(
           children: [
             
+            // WalletTotal(),
+            
             TimeLineMonth(),
 
             TotalBalance(),

@@ -23,7 +23,7 @@ class TotalBalance extends GetView<HomeController> {
 
     final currencyFormat = NumberFormat.currency(
       decimalDigits: 0,
-      symbol: ''
+      symbol: '',
     );
 
     return Container(
@@ -31,7 +31,7 @@ class TotalBalance extends GetView<HomeController> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(0),
-        color: themeState.getDarkTheme ? Colors.black26 : Colors.grey.shade200
+        color: themeState.getDarkTheme ? Colors.black12 : Colors.grey.shade100
       ),
       
       child: Obx(() =>
@@ -65,122 +65,185 @@ class TotalBalance extends GetView<HomeController> {
                 )
               ],
             ),
-
-            const SizedBox(height: 10),
         
-            Center(
-              child: Column(
-                children: [
-                  Text(
-                    'Total balance',
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600
-                    )
-                  ),
-                  Text(
-                    currencyFormat.format(controller.incomeValue() + controller.expenseValue()),
-                    style: TextStyle(
-                      color: color,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800
-                    )
-                  ),
-                ],
-              ),
-            ),
+            // Center(
+            //   child: Column(
+            //     children: [
+            //       Text(
+            //         'Total balance',
+            //         style: TextStyle(
+            //           color: Colors.grey.shade500,
+            //           fontSize: 14,
+            //           fontWeight: FontWeight.w600
+            //         )
+            //       ),
+            //       Text(
+            //         currencyFormat.format(controller.incomeMonthValue() + controller.expenseMonthValue()),
+            //         style: TextStyle(
+            //           color: color,
+            //           fontSize: 24,
+            //           fontWeight: FontWeight.w800
+            //         )
+            //       ),
+            //     ],
+            //   ),
+            // ),
             
-            // const SizedBox(height: 10),
+            const SizedBox(height: 10),
         
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Incoming',
-                              style: TextStyle(
-                                color: themeState.getDarkTheme ? 
-                                AppColor.incomeDarkColor : AppColor.incomeLightColor,
-                                fontWeight: FontWeight.w500
-                              ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          Icon(
+                            FontAwesomeIcons.arrowDown, 
+                            color: themeState.getDarkTheme ? 
+                            AppColor.incomeDarkColor : AppColor.incomeLightColor, 
+                            size: 12
+                          ),
+                          Text(
+                            'Income',
+                            style: TextStyle(
+                              color: themeState.getDarkTheme ? 
+                              AppColor.incomeDarkColor : AppColor.incomeLightColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12
                             ),
-                            Text(
-                              currencyFormat.format(controller.incomeValue()),
-                              style: TextStyle(
-                                color: themeState.getDarkTheme ? 
-                                AppColor.incomeDarkColor : AppColor.incomeLightColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(width: 10),
-                        Icon(
-                          FontAwesomeIcons.arrowTrendUp, 
-                          color: themeState.getDarkTheme ? 
-                          AppColor.incomeDarkColor : AppColor.incomeLightColor, 
-                          size: 20
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 10),
+
+                      Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.dongSign, 
+                            color: themeState.getDarkTheme ? 
+                            AppColor.incomeDarkColor : AppColor.incomeLightColor, 
+                            size: 12
+                          ),
+                          Text(
+                            currencyFormat.format(controller.incomeMonthValue()),
+                            style: TextStyle(
+                              color: themeState.getDarkTheme ? 
+                              AppColor.incomeDarkColor : AppColor.incomeLightColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700
+                            ),
+                          )
+                        ],
+                      ),
+                      
+                    ],
                   ),
                 ),
             
-                const SizedBox(width: 10),
-            
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Expense',
-                              style: TextStyle(
-                                color: themeState.getDarkTheme ? 
-                                AppColor.expenseDarkColor : AppColor.expenseLightColor,
-                                fontWeight: FontWeight.w500
-                              ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.arrowUp, 
+                            color: themeState.getDarkTheme ? 
+                            AppColor.expenseDarkColor : AppColor.expenseLightColor, 
+                            size: 12
+                          ),
+                          Text(
+                            'Expense',
+                            style: TextStyle(
+                              color: themeState.getDarkTheme ? 
+                              AppColor.expenseDarkColor : AppColor.expenseLightColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12
                             ),
-                            Text(
-                              currencyFormat.format(controller.expenseValue().abs()), 
-                              style: TextStyle(
-                                color: themeState.getDarkTheme ? 
-                                AppColor.expenseDarkColor : AppColor.expenseLightColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(width: 10),
-                        Icon(
-                          FontAwesomeIcons.arrowTrendDown, 
-                          color: themeState.getDarkTheme ? 
-                          AppColor.expenseDarkColor : AppColor.expenseLightColor, 
-                          size: 20
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+
+                      Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.dongSign,
+                            color: themeState.getDarkTheme ? 
+                              AppColor.expenseDarkColor : AppColor.expenseLightColor,
+                            size: 12,
+                          ),
+                          Text(
+                            currencyFormat.format(controller.expenseMonthValue().abs()), 
+                            style: TextStyle(
+                              color: themeState.getDarkTheme ? 
+                              AppColor.expenseDarkColor : AppColor.expenseLightColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Balance',
+                            style: TextStyle(
+                              color: color,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.dongSign,
+                            color: color,
+                            size: 12,
+                          ),
+                          Text(
+                            currencyFormat.format(controller.incomeMonthValue() + controller.expenseMonthValue()), 
+                            style: TextStyle(
+                              color: color,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ],
