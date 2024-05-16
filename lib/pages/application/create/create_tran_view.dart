@@ -25,67 +25,70 @@ class CreateTransactionPage extends GetView<CreateTranController> {
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
-    return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        toolbarHeight: 0,
-        backgroundColor: bgcolor,
-        centerTitle: true,
-        title: Text(
-          'Create transaction',
-          style: TextStyle(
-            color: color,
-            fontWeight: FontWeight.w700,
-            fontSize: 20
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          toolbarHeight: 0,
+          backgroundColor: bgcolor,
+          centerTitle: true,
+          title: Text(
+            'Create transaction',
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.w700,
+              fontSize: 20
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-
-            const TranType(),
-
-            const DateInput(),
-        
-            const AmountInput(),
-        
-            const NoteInput(),
-        
-            const TranCatergory(),
-
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: GestureDetector(
-                onTap: () {
-                  controller.createTransaction();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: AppColor.commonColor,
-                    borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: Obx(() =>
-                    Center(
-                      child: controller.isLoading.value ? 
-                        LoadingAnimationWidget.fallingDot(
-                          color: Colors.white, 
-                          size: 26
-                        ) : const Text(
-                        'Create',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18
-                        ),
-                      ) ,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+      
+              const TranType(),
+      
+              const DateInput(),
+          
+              const AmountInput(),
+          
+              const NoteInput(),
+          
+              const TranCatergory(),
+      
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: GestureDetector(
+                  onTap: () {
+                    controller.createTransaction();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: AppColor.commonColor,
+                      borderRadius: BorderRadius.circular(5)
                     ),
-                  ),
-                )
-              ),
-            )
-          ],
+                    child: Obx(() =>
+                      Center(
+                        child: controller.isLoading.value ? 
+                          LoadingAnimationWidget.fallingDot(
+                            color: Colors.white, 
+                            size: 26
+                          ) : const Text(
+                          'Create',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18
+                          ),
+                        ) ,
+                      ),
+                    ),
+                  )
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

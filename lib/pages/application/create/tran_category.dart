@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -21,14 +22,6 @@ class TranCatergory extends GetView<CreateTranController> {
       children: [
         Container(
           padding: const EdgeInsets.all(20),
-          // decoration: BoxDecoration(
-          //   border: Border(
-          //     bottom: BorderSide(
-          //       color: color,
-          //       width: 0.2
-          //     )
-          //   )
-          // ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -89,7 +82,6 @@ class TranCatergory extends GetView<CreateTranController> {
                           controller.setSelectCategory(item.name, item.id);
                         },
                         child: Container(
-                          // height: 60,
                           decoration:  BoxDecoration(
                             color: themeState.getDarkTheme ? 
                             Colors.grey.shade900 : Colors.grey.shade100,
@@ -111,12 +103,15 @@ class TranCatergory extends GetView<CreateTranController> {
 
                               const SizedBox(height: 5),
 
-                              Text(
-                                item.name,
-                                style: TextStyle(
-                                  color: color,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 11
+                              Flexible(
+                                child: Text(
+                                  item.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: color,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 11
+                                  ),
                                 ),
                               )
                             ],
@@ -151,7 +146,7 @@ class TranCatergory extends GetView<CreateTranController> {
                           controller.setSelectCategory(item.name, item.id);
                         },
                         child: Container(
-                          // height: 60,
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           width: 400,
                           decoration:  BoxDecoration(
                             color: themeState.getDarkTheme ? 
@@ -174,12 +169,15 @@ class TranCatergory extends GetView<CreateTranController> {
 
                               const SizedBox(height: 5),
 
-                              Text(
-                                item.name,
-                                style: TextStyle(
-                                  color: color,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 11
+                              Flexible(
+                                child: Text(
+                                  item.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: color,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 11
+                                  ),
                                 ),
                               )
                             ],
