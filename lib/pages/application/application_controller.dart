@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:pedfi/model/category_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
@@ -9,7 +8,6 @@ class ApplicationController extends GetxController {
 
   final state = 0.obs;
   final position = ''.obs;
-  List<Category> allCategory = [];
 
   var userEmail = ''.obs;
   var userId = ''.obs;
@@ -42,8 +40,6 @@ class ApplicationController extends GetxController {
   void onInit() {
     super.onInit();
     getProfile();
-    getAllCategory();
-
     pageController = PageController(initialPage: state.value);
   }
 
@@ -54,10 +50,6 @@ class ApplicationController extends GetxController {
   }
 
 
-  Future<void> getAllCategory() async {
-    final res = await supabase.from('Categories').select('*');
-    allCategory = categoryFromJson(res);
-  }
 
   Future<void> getProfile() async {
     var email = supabase.auth.currentUser?.email.toString();

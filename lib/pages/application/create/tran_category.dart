@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -26,7 +28,6 @@ class TranCatergory extends GetView<CreateTranController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 70,
                 child: Text(
                   'Category',
                   style: TextStyle(
@@ -41,14 +42,17 @@ class TranCatergory extends GetView<CreateTranController> {
               
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(AppRoutes.CATEGORY);
+                  Get.toNamed(AppRoutes.CUSTOMCATEGORY);
                 },
                 child: Text(
-                  'Add / Edit',
+                  String.fromCharCode(CupertinoIcons.plus_app.codePoint),
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    decoration: TextDecoration.underline,
-                    color: Colors.grey.shade500
+                    inherit: false,
+                    color: color,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: CupertinoIcons.exclamationmark_circle.fontFamily,
+                    package: CupertinoIcons.exclamationmark_circle.fontPackage,
                   ),
                 ),
               )
@@ -59,7 +63,7 @@ class TranCatergory extends GetView<CreateTranController> {
         Obx(() =>
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: controller.trantype.value == 'income' ? 
               SizedBox(
                 width: double.infinity,
