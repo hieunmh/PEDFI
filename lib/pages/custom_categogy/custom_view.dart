@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
@@ -50,11 +51,16 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
             ),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Icon(
-                FontAwesomeIcons.check,
-                color: color,
+            GestureDetector(
+              onTap: () {
+                controller.createCategory();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Icon(
+                  FontAwesomeIcons.check,
+                  color: color,
+                ),
               ),
             )
           ],
