@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:pedfi/pages/application/calendar/calendar_view.dart';
 import 'package:pedfi/pages/application/create/create_tran_view.dart';
 import 'package:pedfi/pages/application/home/home_view.dart';
 import 'package:pedfi/pages/application/profile/proflie_view.dart';
@@ -30,6 +31,7 @@ class ApplicationPage extends GetView<ApplicationController> {
         children: const [
           HomePage(),
           CreateTransactionPage(),
+          CalendarPage(),
           ProfilePage(),
         ],
       ),
@@ -49,6 +51,7 @@ class ApplicationPage extends GetView<ApplicationController> {
             highlightColor: Colors.transparent,
           ),
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             backgroundColor: bgcolor,
             items: controller.bottomNavBar,
             currentIndex: controller.state.value,
@@ -56,10 +59,12 @@ class ApplicationPage extends GetView<ApplicationController> {
             unselectedItemColor: themeState.getDarkTheme ? Colors.white : Colors.grey.shade500,
             selectedItemColor: AppColor.commonColor,
             unselectedLabelStyle: const TextStyle(
-              fontWeight: FontWeight.w700
+              fontWeight: FontWeight.w700,
+              fontSize: 12
             ),
             selectedLabelStyle: const TextStyle(
-              fontWeight: FontWeight.w700
+              fontWeight: FontWeight.w700,
+              fontSize: 12
             ),
           ),
         ),
