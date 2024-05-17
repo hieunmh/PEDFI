@@ -20,19 +20,20 @@ class ApplicationController extends GetxController {
 
   final bottomNavBar = const [
     BottomNavigationBarItem(
-      activeIcon: Icon(FontAwesomeIcons.chartPie),
       label: 'Home',
-      icon: Icon(FontAwesomeIcons.chartPie)
+      icon: Icon(FontAwesomeIcons.list, size: 18)
     ),
     BottomNavigationBarItem(
-      activeIcon: Icon(FontAwesomeIcons.penToSquare),
       label: 'Create',
-      icon: Icon(FontAwesomeIcons.penToSquare)
+      icon: Icon(FontAwesomeIcons.penToSquare, size: 18)
     ),
     BottomNavigationBarItem(
-      activeIcon: Icon(FontAwesomeIcons.userAstronaut),
+      label: 'Calendar',
+      icon: Icon(FontAwesomeIcons.calendar, size: 18)
+    ),
+    BottomNavigationBarItem(
       label: 'Profile',
-      icon: Icon(FontAwesomeIcons.userAstronaut)
+      icon: Icon(FontAwesomeIcons.userAstronaut, size: 18)
     )
 
   ];
