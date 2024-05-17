@@ -39,7 +39,8 @@ class DateInput extends GetView<CreateTranController> {
               'Date',
               style: TextStyle(
                 color: color,
-                fontWeight: FontWeight.w700
+                fontWeight: FontWeight.w700,
+                fontSize: 16
               ),
             ),
           ),

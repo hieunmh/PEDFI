@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:pedfi/pages/application/calendar/calendar_controller.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/pages/application/profile/profile_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -30,6 +31,7 @@ class CreateTranController extends GetxController {
 
   var homeController = Get.find<HomeController>();
   var appController= Get.find<ApplicationController>();
+  var calendarController = Get.find<CalendarController>();
   
   Future<void> createTransaction() async {
     if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty || userId.isEmpty) {
@@ -69,6 +71,7 @@ class CreateTranController extends GetxController {
     await homeController.getAllTransaction();
     
     appController.handleNavBarTap(0);
+    calendarController.filterTranFunc();
 
     resetForm();
 

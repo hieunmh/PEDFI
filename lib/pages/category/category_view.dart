@@ -61,7 +61,7 @@ class CategoryPage extends GetView<CategoryController> {
                   'Category',
                   style: TextStyle(
                     color: color,
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.w700
                   ),
                 ),

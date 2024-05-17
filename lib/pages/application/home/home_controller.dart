@@ -82,6 +82,10 @@ class HomeController extends GetxController {
   
 
   Future<void> getAllTransaction() async {
+    if (appController.userId.isEmpty) {
+      return;
+    }
+
     final res = await supabase.from('Transactions')
     .select('*,  Categories!category_id!inner(name, image)')
     .eq('user_id', appController.userId.value).order('date', ascending: false);

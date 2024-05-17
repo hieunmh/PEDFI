@@ -126,7 +126,7 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
                           scrollDirection: Axis.vertical,
                           physics: const ScrollPhysics(),
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
+                            crossAxisCount: 4,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
                             childAspectRatio: 1
@@ -145,7 +145,7 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
                                     Colors.transparent,
                                     width: 2.5
                                   ),
-                                  borderRadius: BorderRadius.circular(5)
+                                  borderRadius: BorderRadius.circular(10)
                                 ),
                                 child: Center(
                                   child: Image.asset(

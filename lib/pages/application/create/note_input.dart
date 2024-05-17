@@ -36,7 +36,8 @@ class NoteInput extends GetView<CreateTranController> {
               'Note',
               style: TextStyle(
                 color: color,
-                fontWeight: FontWeight.w700
+                fontWeight: FontWeight.w700,
+                fontSize: 16
               ),
             ),
           ),
