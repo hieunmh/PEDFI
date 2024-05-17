@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/create/create_tran_controller.dart';
@@ -41,8 +39,13 @@ class TranCatergory extends GetView<CreateTranController> {
               const SizedBox(width: 20),
               
               GestureDetector(
-                onTap: () {
-                  Get.toNamed(AppRoutes.CUSTOMCATEGORY);
+                onTap: () async {
+                  var data = await Get.toNamed(AppRoutes.CUSTOMCATEGORY);
+                  if (data == null) {
+                    return;
+                  }
+                  controller.selectCategory.value = data['name'] ?? '';
+                  controller.selectCateId.value = data['id'] ?? '';
                 },
                 child: Text(
                   String.fromCharCode(CupertinoIcons.plus_app.codePoint),
@@ -105,22 +108,17 @@ class TranCatergory extends GetView<CreateTranController> {
                                 width: 30,
                               ),
 
-                              const SizedBox(height: 5),
-
-                              Flexible(
-                                child: Text(
-                                  item.name,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: color,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12
-                                  ),
+                              Text(
+                                item.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: color,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11
                                 ),
-                              )
+                              ),
                             ],
                           ) 
-                        
                         ),
                       )
                     ).toList(),
@@ -170,19 +168,15 @@ class TranCatergory extends GetView<CreateTranController> {
                                 width: 30,
                               ),
 
-                              const SizedBox(height: 5),
-
-                              Flexible(
-                                child: Text(
-                                  item.name,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: color,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12
-                                  ),
+                              Text(
+                                item.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: color,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 11
                                 ),
-                              )
+                              ),
                             ],
                           ) 
                         

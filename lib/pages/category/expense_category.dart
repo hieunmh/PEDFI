@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/category/category_controller.dart';
@@ -15,38 +16,80 @@ class ExpenseCategory extends GetView<CategoryController> {
 
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+    
+    // final Color bgcolor = themeState.getDarkTheme ? 
+    // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        child: ListView.builder(
-          itemCount: controller.expenseCategory.length,
-          itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.all(20),
-              child: Row(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Obx(() =>
+        ScrollConfiguration(
+          key: const PageStorageKey<String>('incomecategory'),
+          behavior: const ScrollBehavior(),
+          child: GridView(
+            scrollDirection: Axis.vertical,
+            physics: const ScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              childAspectRatio: 1
+            ),
+            children: controller.createTranController.expenseCategory.map(
+              (element) => Stack(
+                clipBehavior: Clip.none,
                 children: [
-                  Image.asset(
-                    'assets/categoryicon/${controller.expenseCategory[index].image}',
-                    height: 30,
-                    width: 30,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: themeState.getDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100,
+                      border: Border.all(
+                        color: Colors.transparent,
+                        width: 2.5
+                      ),
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/categoryicon/${element.image}',
+                            height: 30,
+                            width: 30,
+                          ),
+                          Text(
+                            element.name,
+                            style: TextStyle(
+                              color: color,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 11
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-          
-                  const SizedBox(width: 10),
-          
-                  Text(
-                    controller.expenseCategory[index].name,
-                    style: TextStyle(
-                      color: color,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                  Positioned(
+                    right: -8,
+                    top: -8,
+                    child: GestureDetector(
+                      onTap: () {
+                        controller.deleteCategory(element.id);
+                      },
+                      child: const Icon(
+                        FontAwesomeIcons.solidCircleXmark,
+                        color: AppColor.commonColor,
+                        size: 20,
+                      ),
                     ),
                   )
                 ],
               ),
-            );
-          }
+            ).toList(),
+          ),
         ),
-      
+      )
     );
   }
 }
