@@ -22,16 +22,22 @@ class CustomCategoryController extends GetxController {
       return;
     }
 
-    await supabase.from('Categories').upsert({
+    var res = await supabase.from('Categories').upsert({
       'type': typecategory.value,
       'name': newCategory.text,
       'description': '',
       'priority': null,
       'image': selectIcon.value
-    });
+    }).select().single();
 
     await createTranController.getAllCategory();
+    print(res);
 
-    Get.back();
+    Get.back(
+      result: {
+        'name': res['name'],
+        'id': res['id']
+      }
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/calendar/calendar_controller.dart';
@@ -29,9 +30,11 @@ class CalendarTable extends GetView<CalendarController> {
           lastDay: DateTime(3000),
           startingDayOfWeek: StartingDayOfWeek.monday,
           headerStyle: HeaderStyle(
+            leftChevronIcon: Icon(FontAwesomeIcons.chevronLeft, color: color, size: 18),
+            rightChevronIcon: Icon(FontAwesomeIcons.chevronRight, color: color, size: 18),
             titleTextStyle: TextStyle(
               color: color,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w700
             ),
             formatButtonTextStyle: TextStyle(
