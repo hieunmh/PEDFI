@@ -26,7 +26,8 @@ class TranType extends GetView<CreateTranController> {
               'Type',
               style:  TextStyle(
                 color:  color,
-                fontWeight: FontWeight.w700
+                fontWeight: FontWeight.w700,
+                fontSize: 16
               ),
             ),
           ),
@@ -64,7 +65,7 @@ class TranType extends GetView<CreateTranController> {
                             style: TextStyle(
                               color: controller.trantype.value == 'income' ? 
                               AppColor.incomeDarkColor : color,
-                              fontWeight: FontWeight.w500
+                              fontWeight: FontWeight.w600
                             ),
                           ),
                         ),
@@ -100,7 +101,7 @@ class TranType extends GetView<CreateTranController> {
                             style: TextStyle(
                               color: controller.trantype.value == 'expense'
                               ? AppColor.expenseDarkColor : color,
-                              fontWeight: FontWeight.w500
+                              fontWeight: FontWeight.w600
                             ),
                           ),
                         ),

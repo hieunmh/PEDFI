@@ -31,7 +31,8 @@ class TranCatergory extends GetView<CreateTranController> {
                   'Category',
                   style: TextStyle(
                     color: color,
-                    fontWeight: FontWeight.w700  
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16
                   )
                 ),
               ),
@@ -70,7 +71,7 @@ class TranCatergory extends GetView<CreateTranController> {
                     scrollDirection: Axis.vertical,
                     physics: const PageScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                      crossAxisCount: 4,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                       childAspectRatio: 1
@@ -84,7 +85,7 @@ class TranCatergory extends GetView<CreateTranController> {
                           decoration:  BoxDecoration(
                             color: themeState.getDarkTheme ? 
                             Colors.grey.shade900 : Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: controller.selectCategory.value == item.name ? 
                               AppColor.incomeDarkColor : Colors.transparent,
@@ -108,7 +109,7 @@ class TranCatergory extends GetView<CreateTranController> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: color,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 12
                                   ),
                                 ),
@@ -133,7 +134,7 @@ class TranCatergory extends GetView<CreateTranController> {
                     scrollDirection: Axis.vertical,
                     physics: const PageScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                      crossAxisCount: 4,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                       childAspectRatio: 1
@@ -149,7 +150,7 @@ class TranCatergory extends GetView<CreateTranController> {
                           decoration:  BoxDecoration(
                             color: themeState.getDarkTheme ? 
                             Colors.grey.shade900 : Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(5),
+                            borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                               color: controller.selectCategory.value == item.name ? 
                               AppColor.expenseDarkColor : Colors.transparent,
@@ -173,7 +174,7 @@ class TranCatergory extends GetView<CreateTranController> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: color,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 12
                                   ),
                                 ),

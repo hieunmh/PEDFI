@@ -21,45 +21,27 @@ class ExpenseCategory extends GetView<CategoryController> {
         child: ListView.builder(
           itemCount: controller.expenseCategory.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                // controller.setCategory(
-                //   controller.expenseList[index]['icon'], 
-                //   controller.expenseList[index]['name']
-                // );
-              },
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                  border: Border(
-                    bottom: BorderSide(
-                      width: 0.5,
-                      color: Colors.grey
-                    )
-                  )
-              
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/categoryicon/${controller.expenseCategory[index].image}',
-                      height: 30,
-                      width: 30,
+            return Container(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/categoryicon/${controller.expenseCategory[index].image}',
+                    height: 30,
+                    width: 30,
+                  ),
+          
+                  const SizedBox(width: 10),
+          
+                  Text(
+                    controller.expenseCategory[index].name,
+                    style: TextStyle(
+                      color: color,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
                     ),
-            
-                    const SizedBox(width: 10),
-            
-                    Text(
-                      controller.expenseCategory[index].name,
-                      style: TextStyle(
-                        color: color,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             );
           }

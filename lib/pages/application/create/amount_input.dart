@@ -40,7 +40,7 @@ class AmountInput extends GetView<CreateTranController> {
               style: TextStyle(
                 color: color,
                 fontWeight: FontWeight.w700,
-                fontSize: 14
+                fontSize: 16
               ),
             ),
           ),
