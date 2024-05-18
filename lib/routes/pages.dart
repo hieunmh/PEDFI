@@ -3,6 +3,8 @@
 import 'package:get/get.dart';
 import 'package:pedfi/pages/category/category_bindings.dart';
 import 'package:pedfi/pages/category/category_view.dart';
+import 'package:pedfi/pages/create/create_tran_bindings.dart';
+import 'package:pedfi/pages/create/create_tran_view.dart';
 import 'package:pedfi/pages/custom_categogy/custom_bindings.dart';
 import 'package:pedfi/pages/custom_categogy/custom_view.dart';
 import 'package:pedfi/pages/profile_detail/profiledetail_bindings.dart';
@@ -52,6 +54,12 @@ class AppPages {
       name: AppRoutes.CUSTOMCATEGORY, 
       page: () => CustomCategoryPage(),
       binding: CustomCategoryBindings()
+    ),
+
+    GetPage(
+      name: AppRoutes.CREATE_TRANSACTION, 
+      page: () => CreateTransactionPage(),
+      binding: CreateTranBidings()
     ),
   ];
 }

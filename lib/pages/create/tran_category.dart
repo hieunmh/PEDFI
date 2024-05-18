@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
-import 'package:pedfi/pages/application/create/create_tran_controller.dart';
+import 'package:pedfi/pages/create/create_tran_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/routes/routes.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +66,7 @@ class TranCatergory extends GetView<CreateTranController> {
         Obx(() =>
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             child: controller.trantype.value == 'income' ? 
               SizedBox(
                 width: double.infinity,
@@ -83,7 +83,7 @@ class TranCatergory extends GetView<CreateTranController> {
                       mainAxisSpacing: 10,
                       childAspectRatio: 1
                     ),
-                    children: controller.incomeCategory.map(
+                    children: controller.appController.incomeCategory.map(
                       (item) => GestureDetector(
                         onTap: () {
                           controller.setSelectCategory(item.name, item.id);
@@ -141,7 +141,7 @@ class TranCatergory extends GetView<CreateTranController> {
                       mainAxisSpacing: 10,
                       childAspectRatio: 1
                     ),
-                    children: controller.expenseCategory.map(
+                    children: controller.appController.expenseCategory.map(
                       (item) => GestureDetector(
                         onTap: () {
                           controller.setSelectCategory(item.name, item.id);

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
@@ -45,6 +46,7 @@ class HomePage extends GetView<HomeController>  {
                 color:Colors.transparent
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Transaction',
@@ -53,13 +55,26 @@ class HomePage extends GetView<HomeController>  {
                       fontWeight: FontWeight.w700,
                       fontSize: 20
                     ),
-                  )
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      // Get.toNamed(page)
+                    },
+                    child: Text(
+                      'Detail',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
 
             HomeTransaction()
-
           ],
         )
       

@@ -35,7 +35,7 @@ class ExpenseCategory extends GetView<CategoryController> {
               mainAxisSpacing: 20,
               childAspectRatio: 1
             ),
-            children: controller.createTranController.expenseCategory.map(
+            children: controller.appController.expenseCategory.map(
               (element) => Stack(
                 clipBehavior: Clip.none,
                 children: [
