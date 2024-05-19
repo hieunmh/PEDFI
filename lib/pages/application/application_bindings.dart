@@ -2,9 +2,9 @@
 import 'package:get/get.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:pedfi/pages/application/calendar/calendar_controller.dart';
-import 'package:pedfi/pages/create/create_tran_controller.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/pages/application/profile/profile_controller.dart';
+import 'package:pedfi/pages/application/report/report_controller.dart';
 
 class ApplicationBindings extends Bindings {
 
@@ -13,7 +13,7 @@ class ApplicationBindings extends Bindings {
     Get.lazyPut(() => ApplicationController()); 
     Get.lazyPut(() => ProfileController());
     Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => CreateTranController());
     Get.lazyPut(() => CalendarController());
+    Get.lazyPut(() => ReportController());
   }
 }

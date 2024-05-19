@@ -6,6 +6,7 @@ import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:pedfi/pages/application/calendar/calendar_view.dart';
 import 'package:pedfi/pages/application/home/home_view.dart';
 import 'package:pedfi/pages/application/profile/proflie_view.dart';
+import 'package:pedfi/pages/application/report/report_view.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:pedfi/routes/routes.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,7 @@ class ApplicationPage extends GetView<ApplicationController> {
           children: const [
             HomePage(),
             // CreateTransactionPage(),
+            ReportPage(),
             CalendarPage(),
             ProfilePage(),
           ],

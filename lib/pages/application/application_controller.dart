@@ -25,10 +25,10 @@ class ApplicationController extends GetxController {
       label: 'Home',
       icon: Icon(FontAwesomeIcons.list, size: 18)
     ),
-    // BottomNavigationBarItem(
-    //   label: 'Create',
-    //   icon: Icon(FontAwesomeIcons.penToSquare, size: 18)
-    // ),
+    BottomNavigationBarItem(
+      label: 'Report',
+      icon: Icon(FontAwesomeIcons.chartSimple, size: 18)
+    ),
     BottomNavigationBarItem(
       label: 'Calendar',
       icon: Icon(FontAwesomeIcons.calendar, size: 18)
