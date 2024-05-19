@@ -33,7 +33,9 @@ class HomeTransaction extends GetView<HomeController> {
             itemCount: controller.filterTransaction.length,
             itemBuilder: (context, index) {
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
+                padding: index == controller.filterTransaction.length - 1 ? 
+                const EdgeInsets.fromLTRB(0, 0, 0, 50) :
+                const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                 decoration: const BoxDecoration(
                   color: Colors.transparent
                 ),
@@ -72,14 +74,6 @@ class HomeTransaction extends GetView<HomeController> {
                     child: Container(
                       height: 80,
                       margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                      // decoration: BoxDecoration(
-                      //   border: Border(
-                      //     top: BorderSide(
-                      //       width: 0.2,
-                      //       color: color
-                      //     )
-                      //   )
-                      // ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                         child: Row(
@@ -127,16 +121,27 @@ class HomeTransaction extends GetView<HomeController> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  controller.filterTransaction[index].value > 0 ?
-                                  '+${currencyFormat.format(controller.filterTransaction[index].value)}'
-                                  : currencyFormat.format(controller.filterTransaction[index].value),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: controller.filterTransaction[index].value > 0 ? 
-                                    AppColor.incomeDarkColor : AppColor.expenseDarkColor,
-                                    fontWeight: FontWeight.w700
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      controller.filterTransaction[index].value > 0 ?
+                                      '+${currencyFormat.format(controller.filterTransaction[index].value)}'
+                                      : currencyFormat.format(controller.filterTransaction[index].value),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: controller.filterTransaction[index].value > 0 ? 
+                                        AppColor.incomeDarkColor : AppColor.expenseDarkColor,
+                                        fontWeight: FontWeight.w700
+                                      ),
+                                    ),
+
+                                    Icon(
+                                      FontAwesomeIcons.dongSign,
+                                      size: 14,
+                                      color: controller.filterTransaction[index].value > 0 ? 
+                                      AppColor.incomeDarkColor : AppColor.expenseDarkColor,
+                                    )
+                                  ],
                                 ),
                                 Text(
                                   DateFormat('EEE dd/MM')

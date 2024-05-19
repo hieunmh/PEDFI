@@ -1,18 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pedfi/model/category_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
   final supabase = Supabase.instance.client;
 
   final state = 0.obs;
-  final position = ''.obs;
 
   var userEmail = ''.obs;
   var userId = ''.obs;
   var joinDate = ''.obs;
   var isLoggedin = false.obs;
+  var allCategory = <Category>[].obs;
+
+  var incomeCategory = <Category>[].obs;
+  var expenseCategory = <Category>[].obs;
 
   late final PageController pageController;
 
@@ -22,8 +26,8 @@ class ApplicationController extends GetxController {
       icon: Icon(FontAwesomeIcons.list, size: 18)
     ),
     BottomNavigationBarItem(
-      label: 'Create',
-      icon: Icon(FontAwesomeIcons.penToSquare, size: 18)
+      label: 'Report',
+      icon: Icon(FontAwesomeIcons.chartSimple, size: 18)
     ),
     BottomNavigationBarItem(
       label: 'Calendar',
@@ -40,6 +44,7 @@ class ApplicationController extends GetxController {
   void onInit() {
     super.onInit();
     getProfile();
+    getAllCategory();
     pageController = PageController(initialPage: state.value);
   }
 
@@ -49,6 +54,12 @@ class ApplicationController extends GetxController {
     super.dispose();
   }
 
+  Future<void> getAllCategory() async {
+    final res = await supabase.from('Categories').select('*');
+    allCategory.value = categoryFromJson(res);
+    incomeCategory.value = allCategory.where((item) => item.type == 'income').toList();
+    expenseCategory.value = allCategory.where((item) => item.type == 'expense').toList();
+  }
 
 
   Future<void> getProfile() async {

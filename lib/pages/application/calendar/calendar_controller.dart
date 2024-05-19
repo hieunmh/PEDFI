@@ -9,7 +9,7 @@ class CalendarController extends GetxController {
 
   var calendarFormat = CalendarFormat.month.obs;
 
-  var allTransaction = Get.find<HomeController>().allTransaction;
+  var homeController = Get.find<HomeController>();
 
   var filterTransaction = <Transaction>[].obs;
 
@@ -24,12 +24,20 @@ class CalendarController extends GetxController {
     int month = selectedDay.value.month;
     int year = selectedDay.value.year;
 
-    filterTransaction.value = allTransaction.where((e) {
+    filterTransaction.value = homeController.allTransaction.where((e) {
       return DateTime.parse(e.date).year == year 
       && DateTime.parse(e.date).month == month
       && DateTime.parse(e.date).day == day;
     }).toList();
 
+  }
+
+  int eventLength(DateTime day) {
+    return filterTransaction.where(
+      (e) => DateTime.parse(e.date).day == day.day 
+          && DateTime.parse(e.date).month == day.month 
+          && DateTime.parse(e.date).year == day.year
+    ).length;
   }
 
   void setSelectedDay(DateTime day) {

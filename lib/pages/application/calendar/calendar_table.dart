@@ -25,6 +25,7 @@ class CalendarTable extends GetView<CalendarController> {
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 0),
       child: Obx(() =>
         TableCalendar(
+          rowHeight: 40,
           focusedDay: controller.selectedDay.value, 
           firstDay: DateTime(1000), 
           lastDay: DateTime(3000),
@@ -59,6 +60,7 @@ class CalendarTable extends GetView<CalendarController> {
             )
           ),
           calendarStyle: CalendarStyle(
+            rangeHighlightScale: 0.5,
             cellMargin: const EdgeInsets.all(0),
             tableBorder: const TableBorder(
               horizontalInside: BorderSide(width: 0.5, color: Colors.grey),

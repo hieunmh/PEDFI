@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:pedfi/pages/application/create/create_tran_controller.dart';
+import 'package:pedfi/pages/create/create_tran_controller.dart';
 
-class CreateBidings extends Bindings {
+class CreateTranBidings extends Bindings {
   
   @override
   void dependencies() {

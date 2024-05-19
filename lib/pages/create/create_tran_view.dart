@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
-import 'package:pedfi/pages/application/create/amount_input.dart';
-import 'package:pedfi/pages/application/create/create_tran_controller.dart';
-import 'package:pedfi/pages/application/create/date_input.dart';
-import 'package:pedfi/pages/application/create/note_input.dart';
-import 'package:pedfi/pages/application/create/tran_category.dart';
-import 'package:pedfi/pages/application/create/tran_type.dart';
+import 'package:pedfi/pages/create/amount_input.dart';
+import 'package:pedfi/pages/create/create_tran_controller.dart';
+import 'package:pedfi/pages/create/date_input.dart';
+import 'package:pedfi/pages/create/note_input.dart';
+import 'package:pedfi/pages/create/tran_category.dart';
+import 'package:pedfi/pages/create/tran_type.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -30,9 +31,22 @@ class CreateTransactionPage extends GetView<CreateTranController> {
       child: Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
-          toolbarHeight: 0,
+          toolbarHeight: 35,
           backgroundColor: bgcolor,
           centerTitle: true,
+          leading: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Padding(
+              padding:  const EdgeInsets.symmetric(horizontal: 20),
+              child: Icon(
+                FontAwesomeIcons.chevronLeft,
+                color: color,
+                size: 20,
+              )
+            ),
+          ),
           title: Text(
             'Create transaction',
             style: TextStyle(
@@ -44,8 +58,7 @@ class CreateTransactionPage extends GetView<CreateTranController> {
         ),
         body: SingleChildScrollView(
           child: Column(
-            children: [
-      
+            children: [      
               const TranType(),
       
               const DateInput(),

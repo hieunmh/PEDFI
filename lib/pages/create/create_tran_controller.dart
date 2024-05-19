@@ -2,11 +2,8 @@ import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
-import 'package:pedfi/model/category_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
-import 'package:pedfi/pages/application/calendar/calendar_controller.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
-import 'package:pedfi/pages/application/profile/profile_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CreateTranController extends GetxController {
@@ -18,37 +15,16 @@ class CreateTranController extends GetxController {
   var amountController = TextEditingController();
   var noteController = TextEditingController();
 
-
   var trantype = 'income'.obs;
   var isLoading = false.obs;
 
   var selectCategory = ''.obs;
   var selectCateId = ''.obs;
 
-  var allCategory = <Category>[].obs;
-
-  var incomeCategory = <Category>[].obs;
-  var expenseCategory = <Category>[].obs;
-
-
-  var userId = Get.find<ProfileController>().userId;
+  var userId = Get.find<ApplicationController>().userId;
 
   var homeController = Get.find<HomeController>();
   var appController= Get.find<ApplicationController>();
-  var calendarController = Get.find<CalendarController>();
-
-  @override
-  void onInit() {
-    super.onInit();
-    getAllCategory();
-  }
-
-  Future<void> getAllCategory() async {
-    final res = await supabase.from('Categories').select('*');
-    allCategory.value = categoryFromJson(res);
-    incomeCategory.value = allCategory.where((item) => item.type == 'income').toList();
-    expenseCategory.value = allCategory.where((item) => item.type == 'expense').toList();
-  }
   
   Future<void> createTransaction() async {
     if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty || userId.isEmpty) {
@@ -87,8 +63,7 @@ class CreateTranController extends GetxController {
     
     await homeController.getAllTransaction();
     
-    appController.handleNavBarTap(0);
-    calendarController.filterTranFunc();
+    Get.back();
 
     resetForm();
 

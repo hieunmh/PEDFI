@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pedfi/pages/application/create/create_tran_controller.dart';
+import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CustomCategoryController extends GetxController {
@@ -13,7 +13,7 @@ class CustomCategoryController extends GetxController {
 
   var selectIcon = 'beach.png'.obs;
 
-  var createTranController = Get.find<CreateTranController>();
+  var appController = Get.find<ApplicationController>();
 
 
   Future<void> createCategory() async {
@@ -30,7 +30,7 @@ class CustomCategoryController extends GetxController {
       'image': selectIcon.value
     }).select().single();
 
-    await createTranController.getAllCategory();
+    await appController.getAllCategory();
     print(res);
 
     Get.back(

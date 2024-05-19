@@ -15,4 +15,6 @@ class AppRoutes {
   static const CATEGORY = '/category';
 
   static const CUSTOMCATEGORY = '/customcategory';
+
+  static const CREATE_TRANSACTION = '/createtran';
 }

@@ -45,6 +45,7 @@ class HomePage extends GetView<HomeController>  {
                 color:Colors.transparent
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Transaction',
@@ -53,13 +54,26 @@ class HomePage extends GetView<HomeController>  {
                       fontWeight: FontWeight.w700,
                       fontSize: 20
                     ),
-                  )
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      // Get.toNamed(page)
+                    },
+                    child: Text(
+                      'Detail',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
 
             HomeTransaction()
-
           ],
         )
       
