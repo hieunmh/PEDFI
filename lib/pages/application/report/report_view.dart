@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/report/report_chart.dart';
 import 'package:pedfi/pages/application/report/report_controller.dart';
+import 'package:pedfi/pages/application/report/report_type.dart';
+import 'package:pedfi/pages/application/report/report_week.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -24,13 +26,16 @@ class ReportPage extends GetView<ReportController> {
       backgroundColor: bgcolor,
       appBar: AppBar(
         backgroundColor: bgcolor,
+        toolbarHeight: 0,
       ),
       body: const SingleChildScrollView(
         child: Column(
           children: [
+            ReportType(),
+
+            ReportWeek(),
+
             ReportChart()
-
-
           ],
         ),
       ),
