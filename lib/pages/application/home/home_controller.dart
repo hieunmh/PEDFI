@@ -96,7 +96,6 @@ class HomeController extends GetxController {
     expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
     
     transactionByMonthYear(currentMonth.value);
-
   }
 
   void transactionByMonthYear(String monthyear) {

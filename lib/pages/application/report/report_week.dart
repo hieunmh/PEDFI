@@ -35,6 +35,11 @@ class ReportWeek extends GetView<ReportController> {
             GestureDetector(
               onTap: () {
                 controller.setPreviousWeek();
+                if (controller.reporttype.value == 'income') {
+                  controller.setIncomeCategoryByDay(controller.startOfWeek.value);
+                } else {
+                  controller.setExpenseCategoryByDay(controller.startOfWeek.value);
+                }
               },
               child: Icon(
                 FontAwesomeIcons.chevronLeft,
@@ -78,6 +83,11 @@ class ReportWeek extends GetView<ReportController> {
             GestureDetector(
               onTap: () {
                 controller.setNextWeek();
+                if (controller.reporttype.value == 'income') {
+                  controller.setIncomeCategoryByDay(controller.startOfWeek.value);
+                } else {
+                  controller.setExpenseCategoryByDay(controller.startOfWeek.value);
+                }
               },
               child: Icon(
                 FontAwesomeIcons.chevronRight,
