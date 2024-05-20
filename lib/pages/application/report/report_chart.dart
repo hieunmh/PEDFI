@@ -6,6 +6,7 @@ import 'package:pedfi/pages/application/report/report_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 class ReportChart extends GetView<ReportController> {
   const ReportChart({super.key});
@@ -13,28 +14,30 @@ class ReportChart extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
 
-    final lineBarData = [
-      LineChartBarData(
-        isCurved: false,
-        dotData: const FlDotData(show: true),
-        spots: controller.pricePoint.map((p) => FlSpot(p.x, p.y)).toList()
-      )
-    ];
+    // final lineBarData = [
+    //   LineChartBarData(
+    //     isCurved: false,
+    //     dotData: const FlDotData(show: true),
+    //     spots: controller.pricePoint.map((p) => FlSpot(p.x, p.y)).toList()
+    //   )
+    // ];
 
     final themeState = Provider.of<DarkThemeProvider>(context);
 
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+
+    final format = DateFormat('dd');
   
     return Obx(() =>
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 0),
-        height: 380,
+        height: 300,
         child: LineChart(
           LineChartData(
             maxX: 6,
             minX: 0,
-            maxY: 20,
+            maxY: controller.data.reduce(max),
             minY: 0,
             borderData: FlBorderData(
               show: true,
@@ -43,17 +46,17 @@ class ReportChart extends GetView<ReportController> {
                 bottom: BorderSide(width: 1, color: color)
               )
             ),
-            showingTooltipIndicators: controller.pricePoint.map(
-              (element) {
-                return ShowingTooltipIndicators([
-                  LineBarSpot(
-                    lineBarData[0], 
-                    lineBarData.indexOf(lineBarData[0]), 
-                    lineBarData[0].spots[element.x.toInt()]
-                  )
-                ]);
-              }
-            ).toList(),
+            // showingTooltipIndicators: controller.pricePoint.map(
+            //   (element) {
+            //     return ShowingTooltipIndicators([
+            //       LineBarSpot(
+            //         lineBarData[0], 
+            //         lineBarData.indexOf(lineBarData[0]), 
+            //         lineBarData[0].spots[element.x.toInt()]
+            //       )
+            //     ]);
+            //   }
+            // ).toList(),
             lineTouchData: const LineTouchData(
               enabled: true,
             ),
@@ -72,13 +75,11 @@ class ReportChart extends GetView<ReportController> {
                 sideTitles: SideTitles(
                   showTitles: true,
                   reservedSize: 44,
-                  interval: 1,
+                  interval: controller.data.reduce(max) / 5.0 > 0 ? controller.data.reduce(max) / 5 : 10,
                   getTitlesWidget: (value, meta) {
                     return SideTitleWidget(
                       axisSide: meta.axisSide,
-                      child: value.toInt() % 4 == 0  ? 
-                      Text(value.toInt().toString(), style: TextStyle(color: color)) 
-                      : const Text(''),
+                      child: Text(value.toInt().toString(), style: TextStyle(color: color)),
                     );
                   },
                 )
@@ -88,13 +89,11 @@ class ReportChart extends GetView<ReportController> {
                 sideTitles: SideTitles(
                   showTitles: true,
                   reservedSize: 44,
-                  interval: 1,
+                  interval: controller.data.reduce(max) / 5 > 0 ? controller.data.reduce(max) / 5 : 10,
                   getTitlesWidget: (value, meta) {
                     return SideTitleWidget(
                       axisSide: meta.axisSide,
-                      child: value.toInt() % 4 == 0  ? 
-                      Text(value.toInt().toString(), style: TextStyle(color: color)) 
-                      : const Text(''),
+                      child: Text(value.toInt().toString(), style: TextStyle(color: color)),
                     );
                   },
                 )
@@ -106,7 +105,7 @@ class ReportChart extends GetView<ReportController> {
                   interval: 1,
                   getTitlesWidget: (value, meta) {
                     var style = TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       fontSize: 11,
                       color: color
                     );
@@ -119,7 +118,7 @@ class ReportChart extends GetView<ReportController> {
                             Text('Mon', style: style), 
                             Obx(() =>
                               Text(
-                                DateFormat('dd/MM').format(controller.startOfWeek.value), 
+                                format.format(controller.startOfWeek.value), 
                                 style: style
                               ),
                             )
@@ -132,7 +131,7 @@ class ReportChart extends GetView<ReportController> {
                             Text('Tue', style: style), 
                             Obx(() =>
                               Text(
-                                DateFormat('dd/MM').format(
+                                format.format(
                                   DateTime(
                                     controller.startOfWeek.value.year,
                                     controller.startOfWeek.value.month,
@@ -151,7 +150,7 @@ class ReportChart extends GetView<ReportController> {
                             Text('Wed', style: style), 
                             Obx(() =>
                               Text(
-                                DateFormat('dd/MM').format(
+                                format.format(
                                   DateTime(
                                     controller.startOfWeek.value.year,
                                     controller.startOfWeek.value.month,
@@ -170,7 +169,7 @@ class ReportChart extends GetView<ReportController> {
                             Text('Thu', style: style), 
                             Obx(() =>
                               Text(
-                                DateFormat('dd/MM').format(
+                                format.format(
                                   DateTime(
                                     controller.startOfWeek.value.year,
                                     controller.startOfWeek.value.month,
@@ -189,7 +188,7 @@ class ReportChart extends GetView<ReportController> {
                             Text('Fri', style: style), 
                             Obx(() =>
                               Text(
-                                DateFormat('dd/MM').format(
+                                format.format(
                                   DateTime(
                                     controller.startOfWeek.value.year,
                                     controller.startOfWeek.value.month,
@@ -208,7 +207,7 @@ class ReportChart extends GetView<ReportController> {
                             Text('Sat', style: style), 
                             Obx(() =>
                               Text(
-                                DateFormat('dd/MM').format(
+                                format.format(
                                   DateTime(
                                     controller.startOfWeek.value.year,
                                     controller.startOfWeek.value.month,
@@ -227,7 +226,7 @@ class ReportChart extends GetView<ReportController> {
                             Text('Sun', style: style), 
                             Obx(() =>
                               Text(
-                                DateFormat('dd/MM').format(
+                                format.format(
                                   DateTime(
                                     controller.startOfWeek.value.year,
                                     controller.startOfWeek.value.month,
@@ -256,6 +255,7 @@ class ReportChart extends GetView<ReportController> {
             gridData: FlGridData(
               drawVerticalLine: false,
               verticalInterval: 1,
+              horizontalInterval: controller.data.reduce(max) / 5 > 0 ? controller.data.reduce(max) / 5 : 10,
               getDrawingHorizontalLine: (value) => FlLine(
                 color: color,
                 strokeWidth: 0.5,

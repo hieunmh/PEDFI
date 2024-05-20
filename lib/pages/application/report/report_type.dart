@@ -28,6 +28,7 @@ class ReportType extends GetView<ReportController> {
                     child: GestureDetector(
                       onTap: () {
                         controller.reporttype.value = 'income';
+                        controller.setIncomeCategoryByDay(controller.startOfWeek.value);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -65,6 +66,7 @@ class ReportType extends GetView<ReportController> {
                     child: GestureDetector(
                       onTap: () {
                         controller.reporttype.value = 'expense';
+                        controller.setExpenseCategoryByDay(controller.startOfWeek.value);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
