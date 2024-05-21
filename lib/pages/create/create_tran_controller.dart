@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
+import 'package:pedfi/pages/application/report/report_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CreateTranController extends GetxController {
@@ -25,6 +26,7 @@ class CreateTranController extends GetxController {
 
   var homeController = Get.find<HomeController>();
   var appController= Get.find<ApplicationController>();
+  var reportController = Get.find<ReportController>();
   
   Future<void> createTransaction() async {
     if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty || userId.isEmpty) {
@@ -63,6 +65,12 @@ class CreateTranController extends GetxController {
     
     await homeController.getAllTransaction();
     
+    if (reportController.reporttype.value == 'income') {
+      reportController.setIncomeTransactionByDay(reportController.firstDay.value);
+    } else {
+      reportController.setExpenseTransactionByDay(reportController.firstDay.value);
+    }
+    
     Get.back();
 
     resetForm();
@@ -94,7 +102,7 @@ class CreateTranController extends GetxController {
   void showDateTimePicker(BuildContext context, Color textColor) async {
     var dateTime = await showBoardDateTimePicker(
       context: context, 
-      pickerType: DateTimePickerType.date,
+      pickerType: DateTimePickerType.datetime,
       minimumDate: DateTime(1000),
       maximumDate: DateTime.now(),
       initialDate: pickedDateTime.value.isEmpty ? 
@@ -107,9 +115,11 @@ class CreateTranController extends GetxController {
         startDayOfWeek: DateTime.monday,
         boardTitle: 'Choose date',
         pickerSubTitles: const BoardDateTimeItemTitles(
-          year: 'Year',
-          month: 'Month',
-          day: 'Day',
+          year: 'year',
+          month: 'month',
+          day: 'day',
+          hour: 'hour',
+          minute: 'min'
         ),
       )
     );

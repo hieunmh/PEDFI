@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/report/report_chart.dart';
 import 'package:pedfi/pages/application/report/report_controller.dart';
+import 'package:pedfi/pages/application/report/report_ranking.dart';
 import 'package:pedfi/pages/application/report/report_type.dart';
 import 'package:pedfi/pages/application/report/report_week.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
@@ -16,8 +18,8 @@ class ReportPage extends GetView<ReportController> {
     
     final themeState = Provider.of<DarkThemeProvider>(context);
 
-    // final Color color = themeState.getDarkTheme ? 
-    // AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+    final Color color = themeState.getDarkTheme ? 
+    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
     final Color bgcolor = themeState.getDarkTheme ? 
     AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
@@ -27,16 +29,53 @@ class ReportPage extends GetView<ReportController> {
       appBar: AppBar(
         backgroundColor: bgcolor,
         toolbarHeight: 0,
+        scrolledUnderElevation: 0.0,
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            ReportType(),
+      body: SingleChildScrollView(
+        child: Obx(() =>
+          Column(
+            children: [
+              const ReportType(),
 
-            ReportWeek(),
+              const ReportWeek(),
+          
+              controller.rankingTransaction.isNotEmpty ? const Column(
+                children: [
+          
+                  ReportChart(),
+          
+                  ReportRanking()
+                ],
+              ) : Container(
+                height: 400,
+                padding: const EdgeInsets.all(0),
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.faceFrown,
+                        color: color,
+                        size: 60,
+                      ),
 
-            ReportChart()
-          ],
+                      const SizedBox(height: 10),
+
+                      Text(
+                        'No transaction found',
+                        style: TextStyle(
+                          color: color,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ],
+                  )
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

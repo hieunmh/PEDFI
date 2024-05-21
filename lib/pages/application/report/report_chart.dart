@@ -1,4 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
@@ -14,266 +16,148 @@ class ReportChart extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
 
-    // final lineBarData = [
-    //   LineChartBarData(
-    //     isCurved: false,
-    //     dotData: const FlDotData(show: true),
-    //     spots: controller.pricePoint.map((p) => FlSpot(p.x, p.y)).toList()
-    //   )
-    // ];
-
     final themeState = Provider.of<DarkThemeProvider>(context);
 
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
-    final format = DateFormat('dd');
+    final currencyFormat = NumberFormat.currency(
+      decimalDigits: 0,
+      symbol: ''
+    );
   
     return Obx(() =>
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0),
-        height: 300,
-        child: LineChart(
-          LineChartData(
-            maxX: 6,
-            minX: 0,
-            maxY: controller.data.reduce(max),
-            minY: 0,
-            borderData: FlBorderData(
-              show: true,
-              border: Border(
-                left: BorderSide(width: 1, color: color),
-                bottom: BorderSide(width: 1, color: color)
-              )
-            ),
-            // showingTooltipIndicators: controller.pricePoint.map(
-            //   (element) {
-            //     return ShowingTooltipIndicators([
-            //       LineBarSpot(
-            //         lineBarData[0], 
-            //         lineBarData.indexOf(lineBarData[0]), 
-            //         lineBarData[0].spots[element.x.toInt()]
-            //       )
-            //     ]);
-            //   }
-            // ).toList(),
-            lineTouchData: const LineTouchData(
-              enabled: true,
-            ),
-            titlesData: FlTitlesData(
-              topTitles: const AxisTitles(
-                axisNameSize: 30,
-                drawBelowEverything: true,
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 10,
-                  interval: 1,
-                )
-              ),
-              leftTitles: AxisTitles(
-                drawBelowEverything: true,
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 44,
-                  interval: controller.data.reduce(max) / 5.0 > 0 ? controller.data.reduce(max) / 5 : 10,
-                  getTitlesWidget: (value, meta) {
-                    return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      child: Text(value.toInt().toString(), style: TextStyle(color: color)),
-                    );
-                  },
-                )
-              ),
-              rightTitles: AxisTitles(
-                drawBelowEverything: true,
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 44,
-                  interval: controller.data.reduce(max) / 5 > 0 ? controller.data.reduce(max) / 5 : 10,
-                  getTitlesWidget: (value, meta) {
-                    return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      child: Text(value.toInt().toString(), style: TextStyle(color: color)),
-                    );
-                  },
-                )
-              ),
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 40,
-                  interval: 1,
-                  getTitlesWidget: (value, meta) {
-                    var style = TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 11,
-                      color: color
-                    );
+      Row(
+        children: [
+          SizedBox(
+            width: 80,
+            height: 270,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              reverse: true,
+              itemCount: 6,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: SizedBox(
+                    height: 45,
+                    child: Text(
+                        currencyFormat.format((controller.data.max / 5 * index).toInt()),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: color
+                        ),
+                    ),
+                  ),
+                );
+              },
+            )
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              key: const PageStorageKey<String>('report'),
+              scrollDirection: Axis.horizontal,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                height: 270,
+                width: controller.dateInMonth.value * 35,
+                child: LineChart(
+                  LineChartData(
+                    maxX: controller.dateInMonth.value.toDouble() - 1,
+                    minX: 0,
+                    maxY: controller.data.reduce(max) + 1,
+                    minY: 0,
+                    borderData: FlBorderData(
+                      show: true,
+                      border: Border(
+                        // left: BorderSide(width: 1, color: color),
+                        bottom: BorderSide(width: 1, color: color)
+                      )
+                    ),
+                    lineTouchData: const LineTouchData(
+                      enabled: true,
+                    ),
+                    titlesData: FlTitlesData(
+                      topTitles: const AxisTitles(
+                        drawBelowEverything: true,
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 10,
+                          interval: 1,
+                        )
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: false,
+                          reservedSize: 75,
+                          interval: controller.data.reduce(max) / 5.0 > 0 ? controller.data.reduce(max) / 5 : 10,
+                          getTitlesWidget: (value, meta) {
+                            return SideTitleWidget(
+                              axisSide: meta.axisSide,
+                              child: Text(value.toInt().toString(), style: TextStyle(color: color)),
+                            );
+                          },
+                        )
+                      ),
+                      rightTitles: AxisTitles(
+                        drawBelowEverything: true,
+                        sideTitles: SideTitles(
+                          showTitles: false,
+                          reservedSize: 50,
+                          interval: controller.data.reduce(max) / 5 > 0 ? controller.data.reduce(max) / 5 : 10,
+                          getTitlesWidget: (value, meta) {
+                            return SideTitleWidget(
+                              axisSide: meta.axisSide,
+                              child: Text(value.toInt().toString(), style: TextStyle(color: color)),
+                            );
+                          },
+                        )
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 40,
+                          interval: 1,
+                          getTitlesWidget: (value, meta) {
+                            return SideTitleWidget(
+                              axisSide: meta.axisSide,
+                              child: Text(
+                                '${value.toInt() + 1}',
+                                style: TextStyle(
+                                  color: color
+                                ),
+                              )
+                            );
+                          }
 
-                    Widget text;
-                    switch (value.toInt()) {
-                      case 0:
-                        text = Column(
-                          children: [
-                            Text('Mon', style: style), 
-                            Obx(() =>
-                              Text(
-                                format.format(controller.startOfWeek.value), 
-                                style: style
-                              ),
-                            )
-                          ]
-                        );
-                        break;
-                      case 1:
-                        text = Column(
-                          children: [
-                            Text('Tue', style: style), 
-                            Obx(() =>
-                              Text(
-                                format.format(
-                                  DateTime(
-                                    controller.startOfWeek.value.year,
-                                    controller.startOfWeek.value.month,
-                                    controller.startOfWeek.value.day + 1
-                                  )
-                                ), 
-                                style: style
-                              ),
-                            )
-                          ]
-                        );
-                        break;
-                      case 2:
-                        text = Column(
-                          children: [
-                            Text('Wed', style: style), 
-                            Obx(() =>
-                              Text(
-                                format.format(
-                                  DateTime(
-                                    controller.startOfWeek.value.year,
-                                    controller.startOfWeek.value.month,
-                                    controller.startOfWeek.value.day + 2
-                                  )
-                                ), 
-                                style: style
-                              ),
-                            )
-                          ]
-                        );
-                        break;
-                      case 3:
-                        text = Column(
-                          children: [
-                            Text('Thu', style: style), 
-                            Obx(() =>
-                              Text(
-                                format.format(
-                                  DateTime(
-                                    controller.startOfWeek.value.year,
-                                    controller.startOfWeek.value.month,
-                                    controller.startOfWeek.value.day + 3
-                                  )
-                                ), 
-                                style: style
-                              ),
-                            )
-                          ]
-                        );
-                        break;
-                      case 4:
-                        text = Column(
-                          children: [
-                            Text('Fri', style: style), 
-                            Obx(() =>
-                              Text(
-                                format.format(
-                                  DateTime(
-                                    controller.startOfWeek.value.year,
-                                    controller.startOfWeek.value.month,
-                                    controller.startOfWeek.value.day + 4
-                                  )
-                                ), 
-                                style: style
-                              ),
-                            )
-                          ]
-                        );
-                        break;
-                      case 5:
-                        text = Column(
-                          children: [
-                            Text('Sat', style: style), 
-                            Obx(() =>
-                              Text(
-                                format.format(
-                                  DateTime(
-                                    controller.startOfWeek.value.year,
-                                    controller.startOfWeek.value.month,
-                                    controller.startOfWeek.value.day + 5
-                                  )
-                                ), 
-                                style: style
-                              ),
-                            )
-                          ]
-                        );
-                        break;
-                      case 6:
-                        text = Column(
-                          children: [
-                            Text('Sun', style: style), 
-                            Obx(() =>
-                              Text(
-                                format.format(
-                                  DateTime(
-                                    controller.startOfWeek.value.year,
-                                    controller.startOfWeek.value.month,
-                                    controller.startOfWeek.value.day + 6
-                                  )
-                                ), 
-                                style: style
-                              ),
-                            )
-                          ]
-                        );
-                        break;
-                      default:
-                        text = Text('', style: style);
-                        break;
-                    }
-
-                    return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      child: text,
-                    );
-                  }
-                 )
-              )
-            ),
-            gridData: FlGridData(
-              drawVerticalLine: false,
-              verticalInterval: 1,
-              horizontalInterval: controller.data.reduce(max) / 5 > 0 ? controller.data.reduce(max) / 5 : 10,
-              getDrawingHorizontalLine: (value) => FlLine(
-                color: color,
-                strokeWidth: 0.5,
-                dashArray: [4, 4]
+                        )
+                      )
+                    ),
+                    gridData: FlGridData(
+                      drawVerticalLine: false,
+                      verticalInterval: 1,
+                      horizontalInterval: controller.data.reduce(max) / 5 > 0 ? controller.data.reduce(max) / 5 : 10,
+                      getDrawingHorizontalLine: (value) => FlLine(
+                        color: color,
+                        strokeWidth: 0.5,
+                        dashArray: [4, 4]
+                      ),
+                      // horizontalInterval: 2
+                    ),
+                    lineBarsData:  [
+                      LineChartBarData(
+                        color: controller.reporttype.value == 'income' ? 
+                        AppColor.incomeDarkColor : AppColor.commonColor,
+                        isCurved: false,
+                        dotData: const FlDotData(show: true),
+                        spots: controller.pricePoint.map((p) => FlSpot(p.x, p.y)).toList()
+                      )
+                    ]
+                  )
+                ),
               ),
-              // horizontalInterval: 2
             ),
-            lineBarsData:  [
-              LineChartBarData(
-                color: controller.reporttype.value == 'income' ? 
-                AppColor.incomeDarkColor : AppColor.commonColor,
-                isCurved: false,
-                dotData: const FlDotData(show: true),
-                spots: controller.pricePoint.map((p) => FlSpot(p.x, p.y)).toList()
-              )
-            ]
           )
-        ),
+        ],
       ),
     );
   }
