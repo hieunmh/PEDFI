@@ -17,7 +17,7 @@ class ReportType extends GetView<ReportController> {
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       child: Row(
         children: [
           Expanded(
@@ -28,10 +28,10 @@ class ReportType extends GetView<ReportController> {
                     child: GestureDetector(
                       onTap: () {
                         controller.reporttype.value = 'income';
-                        controller.setIncomeCategoryByDay(controller.startOfWeek.value);
+                        controller.setIncomeTransactionByDay(controller.firstDay.value);
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           color: themeState.getDarkTheme ? 
                           controller.reporttype.value == 'income' ? 
@@ -66,10 +66,10 @@ class ReportType extends GetView<ReportController> {
                     child: GestureDetector(
                       onTap: () {
                         controller.reporttype.value = 'expense';
-                        controller.setExpenseCategoryByDay(controller.startOfWeek.value);
+                        controller.setExpenseTransactionByDay(controller.firstDay.value);
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           color: themeState.getDarkTheme ? 
                           controller.reporttype.value == 'expense' ? 

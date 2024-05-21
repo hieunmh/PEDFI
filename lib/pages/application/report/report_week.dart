@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/report/report_controller.dart';
@@ -25,7 +26,7 @@ class ReportWeek extends GetView<ReportController> {
     // final Color bgcolor = themeState.getDarkTheme ? 
     // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
-    return Obx(() =>
+    return
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Row(
@@ -34,11 +35,11 @@ class ReportWeek extends GetView<ReportController> {
           children: [
             GestureDetector(
               onTap: () {
-                controller.setPreviousWeek();
+                controller.setPreviousMonth();
                 if (controller.reporttype.value == 'income') {
-                  controller.setIncomeCategoryByDay(controller.startOfWeek.value);
+                  controller.setIncomeTransactionByDay(controller.firstDay.value);
                 } else {
-                  controller.setExpenseCategoryByDay(controller.startOfWeek.value);
+                  controller.setExpenseTransactionByDay(controller.firstDay.value);
                 }
               },
               child: Icon(
@@ -47,46 +48,30 @@ class ReportWeek extends GetView<ReportController> {
                 size: 18,
               ),
             ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  DateFormat('dd/MM').format(controller.startOfWeek.value).toString(),
+            
+            Obx(() =>
+              GestureDetector(
+                onTap: () {
+                  controller.showDateTimePicker(context, color);
+                },
+                child: Text(
+                  DateFormat('MMMM yyyy').format(controller.firstDay.value).toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 20,
                     color: color
                   ),
                 ),
-                  
-                Text(
-                  ' - ',
-                  style: TextStyle(
-                    color: color,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700
-                  ),
-                ),
-                  
-                Text(
-                  DateFormat('dd/MM').format(controller.endOfWeek.value).toString(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    color: color
-                  ),
-                )
-              ],
+              ),
             ),
 
             GestureDetector(
               onTap: () {
-                controller.setNextWeek();
+                controller.setNextMonth();
                 if (controller.reporttype.value == 'income') {
-                  controller.setIncomeCategoryByDay(controller.startOfWeek.value);
+                  controller.setIncomeTransactionByDay(controller.firstDay.value);
                 } else {
-                  controller.setExpenseCategoryByDay(controller.startOfWeek.value);
+                  controller.setExpenseTransactionByDay(controller.firstDay.value);
                 }
               },
               child: Icon(
@@ -97,7 +82,6 @@ class ReportWeek extends GetView<ReportController> {
             ),
           ]
         ),
-      ),
     );
   }
 }
