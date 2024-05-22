@@ -98,8 +98,6 @@ class ReportController extends GetxController {
       (index, element) => PricePoint(x: index.toDouble(), y: element)
     ).toList();
 
-    print(rankingTransaction.length);
-
   }
 
   void setIncomeTransactionByDay(DateTime dt) {
@@ -130,7 +128,6 @@ class ReportController extends GetxController {
       (index, element) => PricePoint(x: index.toDouble(), y: element)
     ).toList();
 
-    print(rankingTransaction.length);
   }
 
   void setRankingTransaction(DateTime dt) {
