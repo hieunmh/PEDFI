@@ -52,6 +52,7 @@ class ReportChart extends GetView<ReportController> {
               },
             )
           ),
+          
           Expanded(
             child: SingleChildScrollView(
               key: const PageStorageKey<String>('report'),

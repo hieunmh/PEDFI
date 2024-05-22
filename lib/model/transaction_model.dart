@@ -24,6 +24,18 @@ class Transaction {
     required this.category
   });
 
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'description': description,
+    'date': date,
+    'value': value,
+    'category_id': category_id,
+    'is_notified': is_notified,
+    'user_id': user_id,
+    'wallet_id': wallet_id
+  };
+
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],

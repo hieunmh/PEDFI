@@ -3,7 +3,7 @@ class Category {
   String type;
   String name;
   String description;
-  int priority;
+  int? priority;
   String image;
 
   Category({
@@ -11,7 +11,7 @@ class Category {
     required this.type,
     required this.name,
     required this.description,
-    required this.priority,
+    this.priority,
     required this.image
   });
 
@@ -25,6 +25,31 @@ class Category {
       image: json['image'] ?? ''
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'type': type,
+    'name': name,
+    'description': description,
+    'priority': priority,
+    'image': image
+  };
+
+  Category copyWith({
+    String? id,
+    String? type,
+    String? name,
+    String? description,
+    int? priority,
+    String? image
+  }) => Category(
+    id: this.id, 
+    type: this.type, 
+    name: this.name, 
+    description: this.description, 
+    priority: this.priority, 
+    image: this.image
+  );
 }
 
 List<Category> categoryFromJson(List<Map<String, dynamic>> jsondata) {
