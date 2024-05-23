@@ -21,10 +21,21 @@ class CustomCategoryController extends GetxController {
 
   void createOfflineCategory() async {
 
+    // var category = Category(
+    //   id: '8a433084-09e4-4cfe-b4a6-9b911a15df5f', 
+    //   type: 'expense', 
+    //   name: 'Beauty', 
+    //   description: 'lam dep', 
+    //   image: 'lipstick.png'
+    // );
+
+    // databaseService.createCategory(category);
+
     var res = await databaseService.getAllCategory();
     for (int i = 0; i < res.length; i++) {
       print(res[i].id);
       print(res[i].name);
+      print(res[i].image);
     }
   }  
 

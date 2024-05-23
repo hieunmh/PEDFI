@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:pedfi/model/category_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-const String fileName = 'database.db';
+const String fileName = 'pedfidatabase.db';
 const String categories = 'categories';
 const String transactions = 'transactions';
 const String wallets = 'wallets';
@@ -37,43 +37,44 @@ class DatabaseService {
   Future _createDB(Database db, int version) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS $categories (
-        "id" TEXT PRIMARY KEY NOT NULL,
-        "type" TEXT NOT NULL,
-        "name" TEXT NOT NULL,
-        "description" TEXT,
-        "priority" INTEGER,
-        "created_at" DATETIME DEFAULT (DATETIME('now')),
-        "image" TEXT NOT NULL
+        id TEXT PRIMARY KEY NOT NULL,
+        type TEXT NOT NULL,
+        name TEXT NOT NULL,
+        description TEXT,
+        priority INTEGER,
+        created_at DATETIME DEFAULT (DATETIME('now')),
+        image TEXT NOT NULL
       )
-
     ''');
 
     await db.execute('''
       CREATE TABLE IF NOT EXISTS $transactions (
-        "id" TEXT PRIMARY KEY NOT NULL,
-        "description" TEXT NOT NULL,
-        "date" DATETIME DEFAULT (DATETIME('now')),
-        "value" INTEGER,
-        "category_id" TEXT NOT NULL,
-        "is_notified" BOOLEAN NOT NULL CHECK ("is_notified" IN (0, 1)),
-        "user_id" TEXT,
-        "wallet_id" TEXT
+        id TEXT PRIMARY KEY NOT NULL,
+        description TEXT NOT NULL,
+        date DATETIME DEFAULT (DATETIME('now')),
+        value INTEGER,
+        category_id TEXT NOT NULL,
+        is_notified BOOLEAN NOT NULL CHECK (is_notified IN (0, 1)),
+        user_id TEXT,
+        wallet_id TEXT,
+        FOREIGN KEY (category_id) REFERENCES $categories (id),
+        FOREIGN KEY (wallet_id) REFERENCES $wallets (id)
       )
     ''');
 
     await db.execute('''
       CREATE TABLE IF NOT EXISTS $wallets (
-        "id" TEXT PRIMARY KEY NOT NULL,
-        "name" TEXT NOT NULL,
-        "value" INTEGER NOT NULL,
-        "created_at" DATETIME DEFAULT (DATETIME('now'))
+        id TEXT PRIMARY KEY NOT NULL,
+        name TEXT NOT NULL,
+        value INTEGER NOT NULL,
+        created_at DATETIME DEFAULT (DATETIME('now'))
       )
     ''');
   }
 
-  Future<int> createCategory(Category task) async {
+  Future<int> createCategory(Category category) async {
     final db = await instance.database;
-    final id = await db.insert(categories, task.toJson());
+    final id = await db.insert(categories, category.toJson());
 
     return id;
   }
