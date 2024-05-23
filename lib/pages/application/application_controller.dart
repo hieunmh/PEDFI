@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/category_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApplicationController extends GetxController {
   final supabase = Supabase.instance.client;
+
+  final DatabaseService databaseService = DatabaseService.instance;
 
   final state = 0.obs;
 
@@ -55,10 +58,29 @@ class ApplicationController extends GetxController {
   }
 
   Future<void> getAllCategory() async {
-    final res = await supabase.from('Categories').select('*');
-    allCategory.value = categoryFromJson(res);
-    incomeCategory.value = allCategory.where((item) => item.type == 'income').toList();
-    expenseCategory.value = allCategory.where((item) => item.type == 'expense').toList();
+    var x = 1;
+    
+    if (x > 0) {
+      var res = await databaseService.getAllCategory();
+      allCategory.value = res;
+
+      incomeCategory.value = allCategory.where((item) => item.type == 'income').toList();
+      expenseCategory.value = allCategory.where((item) => item.type == 'expense').toList();
+
+      for (int i = 0; i < allCategory.length; i++) {
+        print(allCategory[i].id);
+        
+        print(allCategory[i].name);
+        print(allCategory[i].image);
+      }
+
+    } else {
+      final res = await supabase.from('Categories').select('*');
+      allCategory.value = categoryFromJson(res);
+      incomeCategory.value = allCategory.where((item) => item.type == 'income').toList();
+      expenseCategory.value = allCategory.where((item) => item.type == 'expense').toList();
+    }
+
   }
 
 
