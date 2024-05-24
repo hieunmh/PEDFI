@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/database/database_service.dart';
+import 'package:pedfi/model/category_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class CustomCategoryController extends GetxController {
 
@@ -21,22 +23,19 @@ class CustomCategoryController extends GetxController {
 
   void createOfflineCategory() async {
 
-    // var category = Category(
-    //   id: '8a433084-09e4-4cfe-b4a6-9b911a15df5f', 
-    //   type: 'expense', 
-    //   name: 'Beauty', 
-    //   description: 'lam dep', 
-    //   image: 'lipstick.png'
-    // );
+    var uuid = const Uuid().v4();
 
-    // databaseService.createCategory(category);
+    var category = Category(
+      id: uuid, 
+      type: typecategory.value, 
+      name: newCategory.text, 
+      description: '', 
+      image: selectIcon.value
+    );
 
-    var res = await databaseService.getAllCategory();
-    for (int i = 0; i < res.length; i++) {
-      print(res[i].id);
-      print(res[i].name);
-      print(res[i].image);
-    }
+    databaseService.createCategory(category);
+
+    await appController.getAllCategory();
   }  
 
 

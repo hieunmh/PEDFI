@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:pedfi/model/category_model.dart';
+import 'package:pedfi/model/transaction_model.dart' as transactionmodel;
 import 'package:sqflite/sqflite.dart';
 
 const String fileName = 'pedfidatabase.db';
@@ -72,26 +73,38 @@ class DatabaseService {
     ''');
   }
 
-  Future<int> createCategory(Category category) async {
+  Future<void> createCategory(Category category) async {
     final db = await instance.database;
-    final id = await db.insert(categories, category.toJson());
-
-    return id;
+    await db.insert(categories, category.toJson());
   }
 
   Future<List<Category>> getAllCategory() async {
     final db = await instance.database;
     final result = await db.query(categories);
 
-    final dbpath = await getDatabasesPath();
-    print(dbpath);
-
     return  result.map((json) => Category.fromJson(json)).toList();
+  }
+
+  Future<void> deleteCategoryById(String id) async {
+    final db = await instance.database;
+    
+    await db.delete(
+      categories,
+      where: 'id = ?',
+      whereArgs: [id]
+    );
+  }
+
+  Future<void> createTransaction(transactionmodel.Transaction transaction) async {
+    // final db = await instance.database;
+
   }
 
   Future<void> close() async {
     final db = await instance.database;
     return db.close();
   }
+
+
 
 }

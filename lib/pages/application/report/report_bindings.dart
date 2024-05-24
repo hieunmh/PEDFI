@@ -7,6 +7,4 @@ class ReportBidings extends Bindings {
   void dependencies() {
     Get.lazyPut(() => ReportController());
   }
-
-  
 }
