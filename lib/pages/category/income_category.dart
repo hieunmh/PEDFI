@@ -17,11 +17,11 @@ class IncomeCategory extends GetView<CategoryController> {
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
     
-    // final Color bgcolor = themeState.getDarkTheme ? 
-    // AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
+    final Color bgcolor = themeState.getDarkTheme ? 
+    AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Obx(() =>
         ScrollConfiguration(
           key: const PageStorageKey<String>('incomecategory'),
@@ -30,61 +30,116 @@ class IncomeCategory extends GetView<CategoryController> {
             scrollDirection: Axis.vertical,
             physics: const ScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              childAspectRatio: 1
+              crossAxisCount: 1,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1,
+              mainAxisExtent: 70
             ),
             children: controller.appController.incomeCategory.map(
               (element) => Stack(
                 clipBehavior: Clip.none,
                 children: [
                   Container(
+                    padding: const EdgeInsets.only(left: 15),
                     decoration: BoxDecoration(
                       color: themeState.getDarkTheme ? Colors.grey.shade900 : Colors.grey.shade100,
-                      border: Border.all(
-                        color: Colors.transparent,
-                        width: 2.5
-                      ),
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(5)
                     ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/categoryicon/${element.image}',
-                            height: 30,
-                            width: 30,
-                          ),
-                          Text(
-                            element.name,
-                            style: TextStyle(
-                              color: color,
-                              overflow: TextOverflow.ellipsis,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 11
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/categoryicon/${element.image}',
+                              height: 30,
+                              width: 30,
                             ),
-                          )
-                        ],
-                      ),
+                            const SizedBox(width: 10),
+                            Text(
+                              element.name,
+                              style: TextStyle(
+                                color: color,
+                                overflow: TextOverflow.ellipsis,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14
+                              ),
+                            )
+                          ],
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context, 
+                              builder: (_) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  backgroundColor: bgcolor,
+                                  content: Text(
+                                    'Are you sure to delete this item?',
+                                    style: TextStyle(
+                                      color: color
+                                    ),
+                                  ),
+                                  contentTextStyle: const TextStyle(
+                                    fontWeight: FontWeight.w700
+                                  ),
+                                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                                  actions: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        controller.deleteCategory(element.id);
+                                      },
+                                      child: const Text(
+                                        'Delete',
+                                        style: TextStyle(
+                                          color: AppColor.commonColor,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.back(closeOverlays: true);
+                                      },
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          color: color,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                            );
+                          },
+                          child: Container(
+                            height: 70,
+                            width: 70,
+                            decoration: const BoxDecoration(
+                              // color: AppColor.commonColor,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10)
+                              )
+                            ),
+                            child: const Icon(
+                              FontAwesomeIcons.trash,
+                              color: AppColor.commonColor,
+                              size: 20,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Positioned(
-                    right: -8,
-                    top: -8,
-                    child: GestureDetector(
-                      onTap: () {
-                        print(element.id);
-                        controller.deleteCategory(element.id);
-                      },
-                      child: const Icon(
-                        FontAwesomeIcons.solidCircleXmark,
-                        color: AppColor.commonColor,
-                        size: 20,
-                      ),
-                    ),
-                  )
                 ],
               ),
             ).toList(),

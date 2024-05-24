@@ -53,7 +53,7 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
           actions: [
             GestureDetector(
               onTap: () {
-                // controller.createCategory();
+                controller.createCategory();
                 controller.createOfflineCategory();
               },
               child: Padding(
