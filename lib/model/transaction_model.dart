@@ -39,6 +39,8 @@ class Transaction {
     'is_notified': is_notified,
     'user_id': user_id,
     'wallet_id': wallet_id,
+    'name': name,
+    'image': image
   };
 
   factory Transaction.fromJson(Map<String, dynamic> json) {

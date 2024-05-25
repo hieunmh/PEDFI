@@ -38,7 +38,6 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getAllTransaction();
-    getOfflineTransaction();
     DateTime now = DateTime.now();
 
     for (int i = -23; i <= 0; i++) {
@@ -83,34 +82,38 @@ class HomeController extends GetxController {
     return res;
   }
 
-  Future<void> getOfflineTransaction() async {
-    var res = await databaseService.getAllTransaction();
-
-    allTransaction.value = res;
-
-    incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
-    expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
-    
-    transactionByMonthYear(currentMonth.value);
-  }
   
 
   Future<void> getAllTransaction() async {
-    if (appController.userId.isEmpty) {
-      return;
+
+    var x = 1;
+
+    if (x > 0) {
+      var res = await databaseService.getAllTransaction();
+
+      allTransaction.value = res;
+
+      incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
+      expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
+      
+      transactionByMonthYear(currentMonth.value);
+    } else {
+      if (appController.userId.isEmpty) {
+        return;
+      }
+
+      final res = await supabase.from('Transactions')
+      .select('*,  Categories(image, name)')
+      .eq('user_id', appController.userId.value).order('date', ascending: false);
+
+
+      allTransaction.value = TransactionFromJson(res); 
+
+      incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
+      expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
+      
+      transactionByMonthYear(currentMonth.value);
     }
-
-    // final res = await supabase.from('Transactions')
-    // .select('*,  Categories(image, name)')
-    // .eq('user_id', appController.userId.value).order('date', ascending: false);
-
-
-    // allTransaction.value = TransactionFromJson(res); 
-
-    // incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
-    // expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
-    
-    // transactionByMonthYear(currentMonth.value);
   }
 
   void transactionByMonthYear(String monthyear) {
@@ -127,8 +130,15 @@ class HomeController extends GetxController {
     expenseTransaction.value = filterTransaction.value.where((i) => i.value < 0).toList();
   }
 
+
   Future<void> deleteTransaction(String id) async {
-    await supabase.from('Transactions').delete().eq('id', id);
+    var x = 1; 
+    if (x > 0) {
+      await databaseService.deleteTransactionById(id);
+    } else {
+      await supabase.from('Transactions').delete().eq('id', id);
+    }
+
     await getAllTransaction();
   }
 

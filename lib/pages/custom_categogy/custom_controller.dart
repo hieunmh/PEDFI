@@ -21,6 +21,11 @@ class CustomCategoryController extends GetxController {
 
 
   void createOfflineCategory(String id) async {    
+    if (newCategory.text.isEmpty) {
+      print('Please fill all!');
+      return;
+    }
+
     var category = Category(
       id: id, 
       type: typecategory.value, 
@@ -31,6 +36,8 @@ class CustomCategoryController extends GetxController {
     databaseService.createCategory(category);
 
     await appController.getAllCategory();
+
+    Get.back();
   }  
 
 

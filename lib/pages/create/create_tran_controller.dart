@@ -24,6 +24,7 @@ class CreateTranController extends GetxController {
 
   var selectCategory = ''.obs;
   var selectCateId = ''.obs;
+  var selectCateImage = ''.obs;
 
   var userId = Get.find<ApplicationController>().userId;
 
@@ -31,6 +32,10 @@ class CreateTranController extends GetxController {
   var appController= Get.find<ApplicationController>();
 
   Future<void> createOfflineTransaction() async {
+    print(selectCateId.value);
+    print(selectCateImage.value);
+    print(selectCategory.value);
+
     if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty) {
       print('Please fill all!');
       return;
@@ -52,13 +57,15 @@ class CreateTranController extends GetxController {
       is_notified: false, 
       user_id: userId.value.isNotEmpty ? userId.value : 'nouserid', 
       wallet_id: '', 
+      name: selectCategory.value,
+      image: selectCateImage.value
     );
 
     await databaseService.createTransaction(transaction);
 
     isLoading.value = false;
 
-    homeController.getOfflineTransaction();
+    homeController.getAllTransaction();
     
     Get.back();
 
@@ -118,9 +125,10 @@ class CreateTranController extends GetxController {
     selectCateId.value = '';
   }
 
-  void setSelectCategory(String select, String id) {
+  void setSelectCategory(String select, String id, String image) {
     selectCategory.value = select;
     selectCateId.value = id;
+    selectCateImage.value = image;
   }
 
   void toggleTranType() {

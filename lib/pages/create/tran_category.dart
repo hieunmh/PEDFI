@@ -86,7 +86,7 @@ class TranCatergory extends GetView<CreateTranController> {
                     children: controller.appController.incomeCategory.map(
                       (item) => GestureDetector(
                         onTap: () {
-                          controller.setSelectCategory(item.name, item.id);
+                          controller.setSelectCategory(item.name, item.id, item.image);
                         },
                         child: Container(
                           decoration:  BoxDecoration(
@@ -144,7 +144,7 @@ class TranCatergory extends GetView<CreateTranController> {
                     children: controller.appController.expenseCategory.map(
                       (item) => GestureDetector(
                         onTap: () {
-                          controller.setSelectCategory(item.name, item.id);
+                          controller.setSelectCategory(item.name, item.id, item.image);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5),

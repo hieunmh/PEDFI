@@ -3,7 +3,7 @@ import 'package:pedfi/model/category_model.dart';
 import 'package:pedfi/model/transaction_model.dart' as transactionmodel;
 import 'package:sqflite/sqflite.dart';
 
-const String fileName = 'pedfidatabase.db';
+const String fileName = 'database.db';
 const String categories = 'categories';
 const String transactions = 'transactions';
 const String wallets = 'wallets';
@@ -57,8 +57,8 @@ class DatabaseService {
         is_notified BOOLEAN NOT NULL CHECK (is_notified IN (0, 1)),
         user_id TEXT,
         wallet_id TEXT,
-        FOREIGN KEY (category_id) REFERENCES $categories (id),
-        FOREIGN KEY (wallet_id) REFERENCES $wallets (id)
+        name TEXT,
+        image TEXT
       )
     ''');
 
@@ -101,13 +101,21 @@ class DatabaseService {
 
   Future<List<transactionmodel.Transaction>> getAllTransaction() async {
     final db = await instance.database;
-    final res = await db.rawQuery('SELECT * FROM $transactions JOIN $categories ON $transactions.category_id = $categories.id ORDER BY date DESC');
-
+    final res = await db.rawQuery('SELECT * FROM $transactions ORDER BY date DESC');
+    print(res);
     return res.map((json) => transactionmodel.Transaction.fromJson(json)).toList();
   }
 
-  Future<void> deleteTransaction(String id) async {
+  Future<void> deleteTransactionById(String id) async {
+    final db = await instance.database;
 
+    var res = await db.delete(
+      transactions,
+      where: 'id = ?',
+      whereArgs: [id]
+    );
+
+    print(res);
   }
 
   Future<void> close() async {
