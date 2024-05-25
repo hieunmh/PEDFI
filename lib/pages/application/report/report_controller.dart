@@ -32,9 +32,9 @@ class ReportController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     setIncomeTransactionByDay(firstDay.value);
   }  
+
 
   void showDateTimePicker(BuildContext context, Color textColor) async {
     var dateTime = await showBoardDateTimePicker(

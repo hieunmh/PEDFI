@@ -2,7 +2,6 @@ class Category {
   String id;
   String type;
   String name;
-  String description;
   int? priority;
   String image;
 
@@ -10,7 +9,6 @@ class Category {
     required this.id,
     required this.type,
     required this.name,
-    required this.description,
     this.priority,
     required this.image
   });
@@ -20,7 +18,6 @@ class Category {
       id: json['id'],
       type: json['type'], 
       name: json['name'], 
-      description: json['description'], 
       priority: json['priority'] ?? 0, 
       image: json['image'] ?? ''
     );
@@ -30,7 +27,6 @@ class Category {
     'id': id,
     'type': type,
     'name': name,
-    'description': description,
     'priority': priority,
     'image': image
   };
@@ -39,14 +35,12 @@ class Category {
     String? id,
     String? type,
     String? name,
-    String? description,
     int? priority,
     String? image
   }) => Category(
     id: this.id, 
     type: this.type, 
-    name: this.name, 
-    description: this.description, 
+    name: this.name,  
     priority: this.priority, 
     image: this.image
   );

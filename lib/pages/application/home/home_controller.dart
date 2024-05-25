@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -10,6 +11,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class HomeController extends GetxController {
 
   final supabase = Supabase.instance.client;
+  final DatabaseService databaseService = DatabaseService.instance;
 
   var currentMonth = DateFormat('MM-y').format(DateTime.now()).obs;
 
@@ -36,6 +38,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getAllTransaction();
+    getOfflineTransaction();
     DateTime now = DateTime.now();
 
     for (int i = -23; i <= 0; i++) {
@@ -79,6 +82,17 @@ class HomeController extends GetxController {
     }
     return res;
   }
+
+  Future<void> getOfflineTransaction() async {
+    var res = await databaseService.getAllTransaction();
+
+    allTransaction.value = res;
+
+    incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
+    expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
+    
+    transactionByMonthYear(currentMonth.value);
+  }
   
 
   Future<void> getAllTransaction() async {
@@ -86,16 +100,17 @@ class HomeController extends GetxController {
       return;
     }
 
-    final res = await supabase.from('Transactions')
-    .select('*,  Categories!category_id!inner(name, image)')
-    .eq('user_id', appController.userId.value).order('date', ascending: false);
+    // final res = await supabase.from('Transactions')
+    // .select('*,  Categories(image, name)')
+    // .eq('user_id', appController.userId.value).order('date', ascending: false);
 
-    allTransaction.value = TransactionFromJson(res); 
 
-    incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
-    expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
+    // allTransaction.value = TransactionFromJson(res); 
+
+    // incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
+    // expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
     
-    transactionByMonthYear(currentMonth.value);
+    // transactionByMonthYear(currentMonth.value);
   }
 
   void transactionByMonthYear(String monthyear) {

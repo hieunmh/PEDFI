@@ -11,9 +11,9 @@ class ApplicationBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => ApplicationController()); 
+    Get.lazyPut(() => ReportController());
     Get.lazyPut(() => ProfileController());
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => CalendarController());
-    Get.lazyPut(() => ReportController());
   }
 }

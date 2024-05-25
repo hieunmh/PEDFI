@@ -33,7 +33,6 @@ class ApplicationPage extends GetView<ApplicationController> {
           },
           children: const [
             HomePage(),
-            // CreateTransactionPage(),
             ReportPage(),
             CalendarPage(),
             ProfilePage(),

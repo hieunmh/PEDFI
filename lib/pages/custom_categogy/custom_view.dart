@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
@@ -8,6 +7,7 @@ import 'package:pedfi/pages/custom_categogy/category_type.dart';
 import 'package:pedfi/pages/custom_categogy/custom_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class CustomCategoryPage extends GetView<CustomCategoryController> {
   const CustomCategoryPage({super.key});
@@ -53,8 +53,9 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
           actions: [
             GestureDetector(
               onTap: () {
-                controller.createCategory();
-                controller.createOfflineCategory();
+                var uuid = const Uuid().v4();
+                // controller.createCategory(uuid);
+                controller.createOfflineCategory(uuid);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
