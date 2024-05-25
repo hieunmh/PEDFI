@@ -10,7 +10,10 @@ class Transaction {
   String user_id;
   String wallet_id;
 
-  Map<String, dynamic> category;
+  String? name;
+  String? image;
+
+  Map<String, dynamic>? category;
 
   Transaction({
     required this.id,
@@ -21,7 +24,9 @@ class Transaction {
     required this.is_notified,
     required this.user_id,
     required this.wallet_id,
-    required this.category
+    this.category,
+    this.name,
+    this.image
   });
 
 
@@ -33,7 +38,7 @@ class Transaction {
     'category_id': category_id,
     'is_notified': is_notified,
     'user_id': user_id,
-    'wallet_id': wallet_id
+    'wallet_id': wallet_id,
   };
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
@@ -43,10 +48,12 @@ class Transaction {
       date: json['date'],
       value: json['value'],
       category_id: json['category_id'],
-      is_notified: json['is_notified'],
+      is_notified: json['is_notified'] == 0 ? false : true,
       user_id: json['user_id'],
       wallet_id: json['wallet_id'],
-      category: json['Categories']
+      category: json['Categories'],
+      name: json['name'],
+      image: json['image']
     );
   }
 }

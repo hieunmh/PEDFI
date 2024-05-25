@@ -63,7 +63,9 @@ class ReportRanking extends GetView<ReportController> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image.asset(
-                                'assets/categoryicon/${controller.rankingTransaction[index].category['image']}',
+                                controller.rankingTransaction[index].image!.isEmpty ?
+                                  'assets/categoryicon/${controller.rankingTransaction[index].category?['image']}'
+                                  : 'assets/categoryicon/${controller.rankingTransaction[index].image}',
                                 height: 30,
                                 width: 30,
                               ),
@@ -75,7 +77,9 @@ class ReportRanking extends GetView<ReportController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    controller.rankingTransaction[index].category['name'],
+                                    controller.rankingTransaction[index].name!.isEmpty ?
+                                    controller.rankingTransaction[index].category!['name'] 
+                                    : controller.rankingTransaction[index].name,
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: color,

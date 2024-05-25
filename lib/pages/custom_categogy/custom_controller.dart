@@ -4,7 +4,6 @@ import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/category_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 class CustomCategoryController extends GetxController {
 
@@ -21,15 +20,11 @@ class CustomCategoryController extends GetxController {
   var appController = Get.find<ApplicationController>();
 
 
-  void createOfflineCategory() async {
-
-    var uuid = const Uuid().v4();
-
+  void createOfflineCategory(String id) async {    
     var category = Category(
-      id: uuid, 
+      id: id, 
       type: typecategory.value, 
       name: newCategory.text, 
-      description: '', 
       image: selectIcon.value
     );
 
@@ -39,16 +34,16 @@ class CustomCategoryController extends GetxController {
   }  
 
 
-  Future<void> createCategory() async {
+  Future<void> createCategory(String id) async {    
     if (newCategory.text.isEmpty) {
       print('Please fill all!');
       return;
     }
 
     var res = await supabase.from('Categories').upsert({
+      'id': id,
       'type': typecategory.value,
       'name': newCategory.text,
-      'description': '',
       'priority': null,
       'image': selectIcon.value
     }).select().single();

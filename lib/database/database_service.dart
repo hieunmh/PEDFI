@@ -41,7 +41,6 @@ class DatabaseService {
         id TEXT PRIMARY KEY NOT NULL,
         type TEXT NOT NULL,
         name TEXT NOT NULL,
-        description TEXT,
         priority INTEGER,
         created_at DATETIME DEFAULT (DATETIME('now')),
         image TEXT NOT NULL
@@ -96,7 +95,18 @@ class DatabaseService {
   }
 
   Future<void> createTransaction(transactionmodel.Transaction transaction) async {
-    // final db = await instance.database;
+    final db = await instance.database;
+    await db.insert(transactions, transaction.toJson());
+  }
+
+  Future<List<transactionmodel.Transaction>> getAllTransaction() async {
+    final db = await instance.database;
+    final res = await db.rawQuery('SELECT * FROM $transactions JOIN $categories ON $transactions.category_id = $categories.id ORDER BY date DESC');
+
+    return res.map((json) => transactionmodel.Transaction.fromJson(json)).toList();
+  }
+
+  Future<void> deleteTransaction(String id) async {
 
   }
 

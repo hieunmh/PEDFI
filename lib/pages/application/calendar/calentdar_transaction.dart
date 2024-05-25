@@ -92,7 +92,9 @@ class CalendarTransaction extends GetView<CalendarController> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  'assets/categoryicon/${controller.filterTransaction[index].category['image']}',
+                                  controller.filterTransaction[index].image!.isEmpty ?
+                                  'assets/categoryicon/${controller.filterTransaction[index].category!['image']}'
+                                  : 'assets/categoryicon/${controller.filterTransaction[index].image}',
                                   height: 30,
                                   width: 30,
                                 ),
@@ -104,7 +106,9 @@ class CalendarTransaction extends GetView<CalendarController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      controller.filterTransaction[index].category['name'],
+                                      controller.filterTransaction[index].name!.isEmpty ?
+                                      controller.filterTransaction[index].category!['name']
+                                      : controller.filterTransaction[index].name,
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: color,

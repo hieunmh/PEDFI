@@ -67,12 +67,12 @@ class ApplicationController extends GetxController {
       incomeCategory.value = allCategory.where((item) => item.type == 'income').toList();
       expenseCategory.value = allCategory.where((item) => item.type == 'expense').toList();
 
-      for (int i = 0; i < allCategory.length; i++) {
-        print(allCategory[i].id);
+      // for (int i = 0; i < allCategory.length; i++) {
+      //   print(allCategory[i].id);
         
-        print(allCategory[i].name);
-        print(allCategory[i].image);
-      }
+      //   print(allCategory[i].name);
+      //   print(allCategory[i].image);
+      // }
 
     } else {
       final res = await supabase.from('Categories').select('*');

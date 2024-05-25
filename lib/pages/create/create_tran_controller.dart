@@ -2,14 +2,17 @@ import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/database/database_service.dart';
+import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
-import 'package:pedfi/pages/application/report/report_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class CreateTranController extends GetxController {
 
   final supabase = Supabase.instance.client;
+  final DatabaseService databaseService = DatabaseService.instance;
 
   var pickedDateTime = DateTime.now().toString().obs;
 
@@ -26,7 +29,41 @@ class CreateTranController extends GetxController {
 
   var homeController = Get.find<HomeController>();
   var appController= Get.find<ApplicationController>();
-  var reportController = Get.find<ReportController>();
+
+  Future<void> createOfflineTransaction() async {
+    if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty) {
+      print('Please fill all!');
+      return;
+    }
+
+    isLoading.value = true;
+
+    var uuid = const Uuid().v4();
+
+    var insertValue = trantype.value == 'income' ? int.parse(amountController.text.replaceAll(',', '')) : 
+      -1 * int.parse(amountController.text.replaceAll(',', ''));
+    
+    var transaction = Transaction(
+      id: uuid, 
+      description: noteController.text, 
+      date: pickedDateTime.value, 
+      value: insertValue, 
+      category_id: selectCateId.value, 
+      is_notified: false, 
+      user_id: userId.value.isNotEmpty ? userId.value : 'nouserid', 
+      wallet_id: '', 
+    );
+
+    await databaseService.createTransaction(transaction);
+
+    isLoading.value = false;
+
+    homeController.getOfflineTransaction();
+    
+    Get.back();
+
+    resetForm();
+  }
   
   Future<void> createTransaction() async {
     if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty || userId.isEmpty) {
@@ -64,12 +101,7 @@ class CreateTranController extends GetxController {
     isLoading.value = false;
     
     await homeController.getAllTransaction();
-    
-    if (reportController.reporttype.value == 'income') {
-      reportController.setIncomeTransactionByDay(reportController.firstDay.value);
-    } else {
-      reportController.setExpenseTransactionByDay(reportController.firstDay.value);
-    }
+  
     
     Get.back();
 
