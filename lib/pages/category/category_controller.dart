@@ -15,10 +15,8 @@ class CategoryController extends GetxController {
 
   var appController = Get.find<ApplicationController>();
 
-
   Future<void> deleteCategory(String id) async {
 
-    print(id);
     await supabase.from('Categories').delete().eq('id', id);
     await databaseService.deleteCategoryById(id);
 
