@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,8 @@ class ApplicationController extends GetxController {
 
   var incomeCategory = <Category>[].obs;
   var expenseCategory = <Category>[].obs;
+
+  var isConnnected = false.obs;
 
   late final PageController pageController;
 
@@ -45,17 +48,27 @@ class ApplicationController extends GetxController {
 
   @override
   void onInit() {
+    checkConnection();
     super.onInit();
     getProfile();
     getAllCategory();
     pageController = PageController(initialPage: state.value);
   }
 
+
+  Future<void> checkConnection() async {
+    var result = await Connectivity().checkConnectivity();
+    print(result);
+  }
+
+
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
   }
+
+  
 
   Future<void> getAllCategory() async {
     var x = 1;
@@ -66,13 +79,6 @@ class ApplicationController extends GetxController {
 
       incomeCategory.value = allCategory.where((item) => item.type == 'income').toList();
       expenseCategory.value = allCategory.where((item) => item.type == 'expense').toList();
-
-      // for (int i = 0; i < allCategory.length; i++) {
-      //   print(allCategory[i].id);
-        
-      //   print(allCategory[i].name);
-      //   print(allCategory[i].image);
-      // }
 
     } else {
       final res = await supabase.from('Categories').select('*');
