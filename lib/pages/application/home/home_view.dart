@@ -7,6 +7,7 @@ import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/pages/application/home/home_transaction.dart';
 import 'package:pedfi/pages/application/home/time_line_month.dart';
 import 'package:pedfi/pages/application/home/total_balance.dart';
+import 'package:pedfi/pages/application/home/wallet_total.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ class HomePage extends GetView<HomeController>  {
       body: Column(
           children: [
             
-            // WalletTotal(),
+            WalletTotal(),
             
             TimeLineMonth(),
 
