@@ -1,7 +1,7 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/category_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -22,7 +22,7 @@ class ApplicationController extends GetxController {
   var incomeCategory = <Category>[].obs;
   var expenseCategory = <Category>[].obs;
 
-  var isConnnected = false.obs;
+  var isOnline = false.obs;
 
   late final PageController pageController;
 
@@ -48,17 +48,30 @@ class ApplicationController extends GetxController {
 
   @override
   void onInit() {
-    checkConnection();
     super.onInit();
     getProfile();
     getAllCategory();
     pageController = PageController(initialPage: state.value);
-  }
 
-
-  Future<void> checkConnection() async {
-    var result = await Connectivity().checkConnectivity();
-    print(result);
+    InternetConnection().onStatusChange.listen((status) {
+      if (status == InternetStatus.connected) {
+        print('co mang');
+        isOnline.value = true;
+        Get.rawSnackbar(
+          message: 'Internet connected',
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(milliseconds: 1000)
+        );
+      } else if (status == InternetStatus.disconnected) {
+        print('khong co mang');
+        isOnline.value = false;
+        Get.rawSnackbar(
+          message: 'Please connect to the internet',
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(milliseconds: 1000)
+        );
+      }
+    });
   }
 
 
@@ -67,8 +80,6 @@ class ApplicationController extends GetxController {
     pageController.dispose();
     super.dispose();
   }
-
-  
 
   Future<void> getAllCategory() async {
     var x = 1;

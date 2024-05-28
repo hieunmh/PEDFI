@@ -102,7 +102,6 @@ class DatabaseService {
   Future<List<transactionmodel.Transaction>> getAllTransaction() async {
     final db = await instance.database;
     final res = await db.rawQuery('SELECT * FROM $transactions ORDER BY date DESC');
-    print(res);
     return res.map((json) => transactionmodel.Transaction.fromJson(json)).toList();
   }
 
