@@ -113,7 +113,7 @@ class ProfileAvatar extends GetView<ProfileController> {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Sign in to save your data',
+                    'Sign in to sync your data',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
