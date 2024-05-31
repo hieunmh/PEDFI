@@ -86,28 +86,36 @@ class HomeController extends GetxController {
 
   Future<void> getAllTransaction() async {
 
-    var x = 1;
+    if (appController.isOnline.value) {
 
-    if (x > 0) {
       var res = await databaseService.getAllTransaction();
 
-      allTransaction.value = res;
+      if (appController.userId.isEmpty) {
+        return;
+      }
+
+      final onlineres = await supabase.from('Transactions')
+      .select('*,  Categories(image, name)')
+      .eq('user_id', appController.userId.value).order('date', ascending: false);
+
+
+      allTransaction.value = TransactionFromJson(onlineres); 
 
       incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
       expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
       
       transactionByMonthYear(currentMonth.value);
-    } else {
-      if (appController.userId.isEmpty) {
+
+      if (onlineres.length == res.length) {
         return;
+      } else {
+        // async here
       }
+      
+    } else {
+      var res = await databaseService.getAllTransaction();
 
-      final res = await supabase.from('Transactions')
-      .select('*,  Categories(image, name)')
-      .eq('user_id', appController.userId.value).order('date', ascending: false);
-
-
-      allTransaction.value = TransactionFromJson(res); 
+      allTransaction.value = res;
 
       incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
       expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
