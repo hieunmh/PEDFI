@@ -5,7 +5,6 @@ import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
-import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
@@ -28,7 +27,6 @@ class CreateTranController extends GetxController {
 
   var userId = Get.find<ApplicationController>().userId;
 
-  var homeController = Get.find<HomeController>();
   var appController= Get.find<ApplicationController>();
 
   Future<void> createOfflineTransaction() async {
@@ -64,8 +62,6 @@ class CreateTranController extends GetxController {
     await databaseService.createTransaction(transaction);
 
     isLoading.value = false;
-
-    homeController.getAllTransaction();
     
     Get.back();
 
@@ -106,8 +102,6 @@ class CreateTranController extends GetxController {
     });
 
     isLoading.value = false;
-    
-    await homeController.getAllTransaction();
   
     
     Get.back();

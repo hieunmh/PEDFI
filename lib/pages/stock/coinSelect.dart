@@ -325,7 +325,7 @@ class _CoinSelectState extends State<CoinSelect> {
                                 return Center(
                                   child: Container(
                                     width: 200,
-                                    color: Theme.of(context).backgroundColor,
+                                    color: Theme.of(context).dialogBackgroundColor,
                                     child: Wrap(
                                       children: intervals
                                           .map((e) => Padding(
@@ -505,7 +505,7 @@ class _SymbolSearchModalState extends State<SymbolsSearchModal> {
         child: Container(
           width: 300,
           height: MediaQuery.of(context).size.height * 0.75,
-          color: Theme.of(context).backgroundColor.withOpacity(0.5),
+          color: Theme.of(context).dialogBackgroundColor.withOpacity(0.5),
           child: Column(
             children: [
               Padding(

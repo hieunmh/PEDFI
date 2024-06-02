@@ -37,7 +37,6 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getAllTransaction();
     DateTime now = DateTime.now();
 
     for (int i = -23; i <= 0; i++) {
@@ -49,6 +48,7 @@ class HomeController extends GetxController {
     }); 
 
   }
+  
 
   int incomeMonthValue() {
     int res = 0;
@@ -84,45 +84,6 @@ class HomeController extends GetxController {
 
   
 
-  Future<void> getAllTransaction() async {
-
-    if (appController.isOnline.value) {
-
-      var res = await databaseService.getAllTransaction();
-
-      if (appController.userId.isEmpty) {
-        return;
-      }
-
-      final onlineres = await supabase.from('Transactions')
-      .select('*,  Categories(image, name)')
-      .eq('user_id', appController.userId.value).order('date', ascending: false);
-
-
-      allTransaction.value = TransactionFromJson(onlineres); 
-
-      incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
-      expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
-      
-      transactionByMonthYear(currentMonth.value);
-
-      if (onlineres.length == res.length) {
-        return;
-      } else {
-        // async here
-      }
-      
-    } else {
-      var res = await databaseService.getAllTransaction();
-
-      allTransaction.value = res;
-
-      incomeAllTran.value = allTransaction.value.where((i) => i.value > 0).toList();
-      expenseAllTran.value = allTransaction.value.where((i) => i.value < 0).toList();
-      
-      transactionByMonthYear(currentMonth.value);
-    }
-  }
 
   void transactionByMonthYear(String monthyear) {
     final splitted = monthyear.split('-');
@@ -146,8 +107,6 @@ class HomeController extends GetxController {
     } else {
       await supabase.from('Transactions').delete().eq('id', id);
     }
-
-    await getAllTransaction();
   }
 
   void setCurrentMonth(String month) {
