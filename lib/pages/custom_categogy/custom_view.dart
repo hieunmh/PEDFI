@@ -54,7 +54,7 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
             GestureDetector(
               onTap: () {
                 var uuid = const Uuid().v4();
-                // controller.createCategory(uuid);
+                controller.createCategory(uuid);
                 controller.createOfflineCategory(uuid);
               },
               child: Padding(

@@ -46,7 +46,7 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],
-      description: json['description'], 
+      description: json['description'] ?? '', 
       date: json['date'],
       value: json['value'],
       category_id: json['category_id'],
@@ -54,8 +54,8 @@ class Transaction {
       user_id: json['user_id'],
       wallet_id: json['wallet_id'],
       category: json['Categories'],
-      name: json['name'],
-      image: json['image']
+      name: json['name'] ?? '',
+      image: json['image'] ?? ''
     );
   }
 }
