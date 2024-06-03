@@ -83,7 +83,7 @@ class HomeTransaction extends GetView<HomeController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image.asset(
+                                Image.asset( 
                                   controller.filterTransaction[index].image!.isEmpty ?
                                   'assets/categoryicon/${controller.filterTransaction[index].category?['image']}'
                                   : 'assets/categoryicon/${controller.filterTransaction[index].image}',

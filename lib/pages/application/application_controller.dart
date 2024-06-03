@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/category_model.dart';
@@ -59,28 +58,6 @@ class ApplicationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-    InternetConnection().onStatusChange.listen((status) {
-      if (status == InternetStatus.connected) {
-        isOnline.value = true;
-        getOnlineAllTransaction();
-        getOfflineAllTransaction();
-        Get.rawSnackbar(
-          message: 'Internet connected',
-          snackPosition: SnackPosition.TOP,
-          duration: const Duration(milliseconds: 1000)
-        );
-      } else if (status == InternetStatus.disconnected) {
-        isOnline.value = false;
-        getOfflineAllTransaction();
-        Get.rawSnackbar(
-          message: 'Please connect to the internet',
-          snackPosition: SnackPosition.TOP,
-          duration: const Duration(milliseconds: 1000)
-        );
-      }
-    });
-    
     getProfile();
     getAllCategory();
     pageController = PageController(initialPage: state.value);
@@ -93,46 +70,6 @@ class ApplicationController extends GetxController {
     pageController.dispose();
     super.dispose();
   }
-
-  Future<void> getOnlineAllTransaction() async {
-
-    print('get online');
-    if (userId.value.isEmpty) {
-      return;
-    }
-    
-    final onlineres = await supabase.from('Transactions')
-    .select('*,  Categories(image, name)')
-    .eq('user_id', userId.value).order('date', ascending: false);
-
-      allTransaction.value = TransactionFromJson(onlineres); 
-
-      incomeTransaction.value = filterTransaction.where((i) => i.value > 0).toList();
-      expenseTransaction.value = filterTransaction.where((i) => i.value < 0).toList();
-  }
-
-  Future<void> getOfflineAllTransaction() async {
-    print('get offline');
-    var res = await databaseService.getAllTransaction();
-
-    allTransaction.value = res;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   Future<void> getAllCategory() async {
     var x = 1;

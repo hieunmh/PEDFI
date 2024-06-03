@@ -5,6 +5,7 @@ import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
@@ -27,13 +28,10 @@ class CreateTranController extends GetxController {
 
   var userId = Get.find<ApplicationController>().userId;
 
-  var appController= Get.find<ApplicationController>();
+  var homeController = Get.find<HomeController>();
+  var appController = Get.find<ApplicationController>();
 
   Future<void> createOfflineTransaction() async {
-    print(selectCateId.value);
-    print(selectCateImage.value);
-    print(selectCategory.value);
-
     if (amountController.text.isEmpty || noteController.text.isEmpty || selectCategory.value.isEmpty) {
       print('Please fill all!');
       return;
@@ -61,6 +59,8 @@ class CreateTranController extends GetxController {
 
     await databaseService.createTransaction(transaction);
 
+    await homeController.getOfflineAllTransaction();
+
     isLoading.value = false;
     
     Get.back();
@@ -80,7 +80,6 @@ class CreateTranController extends GetxController {
       -1 * int.parse(amountController.text.replaceAll(',', ''));
 
     var financewallet = await supabase.from('Wallets').select('*').eq('user_id', userId.value).eq('name', 'finance');
-
 
     await supabase.from('Wallets').upsert({
       'id': userId.value,

@@ -7,6 +7,7 @@ import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class HomeController extends GetxController {
 
@@ -33,6 +34,7 @@ class HomeController extends GetxController {
 
   var incomeAllTran = <Transaction>[].obs;
   var expenseAllTran = <Transaction>[].obs;
+  var isOnline = false.obs;
 
   @override
   void onInit() {
@@ -46,6 +48,127 @@ class HomeController extends GetxController {
     Future.delayed(const Duration(milliseconds: 100), () {
       scrollController.jumpTo(scrollController.position.maxScrollExtent);
     }); 
+
+
+    InternetConnection().onStatusChange.listen((status) {
+      if (status == InternetStatus.connected) {
+        isOnline.value = true;
+        // getOnlineAllTransaction();
+        asyncData();
+        getOfflineAllTransaction();
+        Get.rawSnackbar(
+          message: 'Internet connected',
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(milliseconds: 1000)
+        );
+      } else if (status == InternetStatus.disconnected) {
+        isOnline.value = false;
+        getOfflineAllTransaction();
+        Get.rawSnackbar(
+          message: 'Please connect to the internet',
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(milliseconds: 1000)
+        );
+      }
+    });
+  }
+
+  Future<void> getOnlineAllTransaction() async {
+
+    if (appController.userId.value.isEmpty) {
+      return;
+    }
+    
+    final onlineres = await supabase.from('Transactions')
+    .select('*,  Categories(image, name)')
+    .eq('user_id', appController.userId.value).order('date', ascending: false);
+
+    allTransaction.value = TransactionFromJson(onlineres); 
+
+    incomeTransaction.value = filterTransaction.where((i) => i.value > 0).toList();
+    expenseTransaction.value = filterTransaction.where((i) => i.value < 0).toList();
+
+    transactionByMonthYear(currentMonth.value);
+  }
+
+  Future<void> getOfflineAllTransaction() async {
+
+    var res = await databaseService.getAllTransaction();
+
+    allTransaction.value = res;
+
+    incomeAllTran.value = filterTransaction.where((i) => i.value > 0).toList();
+    expenseAllTran.value = filterTransaction.where((i) => i.value < 0).toList();
+
+    transactionByMonthYear(currentMonth.value);
+  }
+
+  Future<void> asyncData() async {
+    if (appController.userId.value.isEmpty) {
+      return;
+    }
+
+    final offlineData = await databaseService.getAllTransaction();
+
+    final onlineData = await supabase.from('Transactions')
+    .select('*,  Categories(image, name)')
+    .eq('user_id', appController.userId.value).order('date', ascending: false);
+
+    final asyncDataLength = (offlineData.length - onlineData.length).abs();
+    print(asyncDataLength);
+
+    if (asyncDataLength == 0) {
+      return;
+    }
+
+    if (offlineData.isEmpty && onlineData.isNotEmpty) {
+      // async onl to offline
+    }
+
+    else if (offlineData.isNotEmpty && onlineData.isEmpty) {
+
+    }
+
+
+    if (offlineData.length > onlineData.length) {
+      // async off to onl
+      var arrayDataAsync = offlineData.sublist(offlineData.length - asyncDataLength, offlineData.length);
+
+
+
+      print(arrayDataAsync.length);
+      for (int i = 0; i < arrayDataAsync.length; i++) {
+        var financewallet = await supabase.from('Wallets').select('*').eq('user_id', appController.userId.value).eq('name', 'finance');
+
+        await supabase.from('Wallets').upsert({
+          'id': appController.userId.value,
+          'name': 'finance',
+          'user_id': appController.userId.value,
+          'value': financewallet.isNotEmpty ? financewallet[0]['value'] + arrayDataAsync[i].value
+            : arrayDataAsync[i].value,
+        });
+
+        await supabase.from('Transactions').insert({
+          'description': arrayDataAsync[i].description,
+          'date': arrayDataAsync[i].date,
+          'value': arrayDataAsync[i].value,
+          'is_notified': false,
+          'user_id': appController.userId.value,
+          'category_id': arrayDataAsync[i].category_id,
+          'wallet_id': appController.userId.value
+        });
+
+      }
+
+      print('Offline to online');
+    } 
+
+    
+    else if (offlineData.length < onlineData.length) {
+      // async onl to off
+      print('Online to offline');
+    }
+    
 
   }
   
@@ -82,8 +205,6 @@ class HomeController extends GetxController {
     return res;
   }
 
-  
-
 
   void transactionByMonthYear(String monthyear) {
     final splitted = monthyear.split('-');
@@ -104,9 +225,12 @@ class HomeController extends GetxController {
     var x = 1; 
     if (x > 0) {
       await databaseService.deleteTransactionById(id);
+
+      await getOfflineAllTransaction();
     } else {
       await supabase.from('Transactions').delete().eq('id', id);
     }
+    
   }
 
   void setCurrentMonth(String month) {
