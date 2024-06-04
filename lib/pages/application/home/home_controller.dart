@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
@@ -50,12 +51,11 @@ class HomeController extends GetxController {
     }); 
 
 
-    InternetConnection().onStatusChange.listen((status) {
+    InternetConnection().onStatusChange.listen((status) async {
       if (status == InternetStatus.connected) {
         isOnline.value = true;
-        // getOnlineAllTransaction();
-        asyncData();
-        getOfflineAllTransaction();
+        await asyncData();
+        await getOnlineAllTransaction();
         Get.rawSnackbar(
           message: 'Internet connected',
           snackPosition: SnackPosition.TOP,
@@ -85,8 +85,8 @@ class HomeController extends GetxController {
 
     allTransaction.value = TransactionFromJson(onlineres); 
 
-    incomeTransaction.value = filterTransaction.where((i) => i.value > 0).toList();
-    expenseTransaction.value = filterTransaction.where((i) => i.value < 0).toList();
+    incomeAllTran.value = allTransaction.where((i) => i.value > 0).toList();
+    expenseAllTran.value = allTransaction.where((i) => i.value < 0).toList();
 
     transactionByMonthYear(currentMonth.value);
   }
@@ -97,8 +97,8 @@ class HomeController extends GetxController {
 
     allTransaction.value = res;
 
-    incomeAllTran.value = filterTransaction.where((i) => i.value > 0).toList();
-    expenseAllTran.value = filterTransaction.where((i) => i.value < 0).toList();
+    incomeAllTran.value = allTransaction.where((i) => i.value > 0).toList();
+    expenseAllTran.value = allTransaction.where((i) => i.value < 0).toList();
 
     transactionByMonthYear(currentMonth.value);
   }
@@ -115,28 +115,20 @@ class HomeController extends GetxController {
     .eq('user_id', appController.userId.value).order('date', ascending: false);
 
     final asyncDataLength = (offlineData.length - onlineData.length).abs();
-    print(asyncDataLength);
 
     if (asyncDataLength == 0) {
       return;
     }
 
     if (offlineData.isEmpty && onlineData.isNotEmpty) {
-      // async onl to offline
-    }
-
-    else if (offlineData.isNotEmpty && onlineData.isEmpty) {
-
+      // sync online data to offline data
     }
 
 
-    if (offlineData.length > onlineData.length) {
-      // async off to onl
-      var arrayDataAsync = offlineData.sublist(offlineData.length - asyncDataLength, offlineData.length);
+    else if (offlineData.length > onlineData.length) {
+      // add transaction to online
+      var arrayDataAsync = offlineData.sublist(0, asyncDataLength);
 
-
-
-      print(arrayDataAsync.length);
       for (int i = 0; i < arrayDataAsync.length; i++) {
         var financewallet = await supabase.from('Wallets').select('*').eq('user_id', appController.userId.value).eq('name', 'finance');
 
@@ -149,6 +141,7 @@ class HomeController extends GetxController {
         });
 
         await supabase.from('Transactions').insert({
+          'id': arrayDataAsync[i].id,
           'description': arrayDataAsync[i].description,
           'date': arrayDataAsync[i].date,
           'value': arrayDataAsync[i].value,
@@ -157,22 +150,70 @@ class HomeController extends GetxController {
           'category_id': arrayDataAsync[i].category_id,
           'wallet_id': appController.userId.value
         });
-
       }
-
-      print('Offline to online');
     } 
-
     
     else if (offlineData.length < onlineData.length) {
-      // async onl to off
-      print('Online to offline');
-    }
-    
+      // delete transaction online
 
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      final List<String> deleteId = prefs.getStringList('deleteId') ?? [];
+
+      for (int i = 0; i < deleteId.length; i++) {
+        
+        var financewallet = await supabase.from('Wallets').select('*').eq('user_id', appController.userId.value).eq('name', 'finance');
+
+        var res = await supabase.from('Transactions').delete().eq('id', deleteId[i]).select().single();
+
+        await supabase.from('Wallets').upsert({
+          'id': appController.userId.value,
+          'name': 'finance',
+          'user_id': appController.userId.value,
+          'value': financewallet.isNotEmpty ? financewallet[0]['value'] - res['value']
+            : -res['value'],
+        });
+      
+      }
+
+      await prefs.remove('deleteId');
+    }
+  }
+
+  Future<void> deleteTransaction(String id) async {
+    if (!isOnline.value) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final saveListId = prefs.getStringList('deleteId') ?? [];
+      if (saveListId.contains(id)) {
+        await prefs.setStringList('deleteId', saveListId);
+      } else {
+        saveListId.add(id);
+        await prefs.setStringList('deleteId', saveListId);
+      }
+
+      print(saveListId);
+
+      await databaseService.deleteTransactionById(id);
+      await getOfflineAllTransaction();
+      return;
+    } 
+    await databaseService.deleteTransactionById(id);
+
+    var financewallet = await supabase.from('Wallets').select('*').eq('user_id', appController.userId.value).eq('name', 'finance');
+
+    var res = await supabase.from('Transactions').delete().eq('id', id).select().single();
+    await supabase.from('Wallets').upsert({
+      'id': appController.userId.value,
+      'name': 'finance',
+      'user_id': appController.userId.value,
+      'value': financewallet.isNotEmpty ? financewallet[0]['value'] - res['value']
+        : -res['value'],
+    });
+
+    await getOnlineAllTransaction();
+    
   }
   
-
   int incomeMonthValue() {
     int res = 0;
     for (int i = 0; i < incomeTransaction.value.length; i++) {
@@ -218,19 +259,6 @@ class HomeController extends GetxController {
 
     incomeTransaction.value = filterTransaction.value.where((i) => i.value > 0).toList();
     expenseTransaction.value = filterTransaction.value.where((i) => i.value < 0).toList();
-  }
-
-
-  Future<void> deleteTransaction(String id) async {
-    var x = 1; 
-    if (x > 0) {
-      await databaseService.deleteTransactionById(id);
-
-      await getOfflineAllTransaction();
-    } else {
-      await supabase.from('Transactions').delete().eq('id', id);
-    }
-    
   }
 
   void setCurrentMonth(String month) {

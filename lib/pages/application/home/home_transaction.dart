@@ -12,7 +12,7 @@ class HomeTransaction extends GetView<HomeController> {
   const HomeTransaction({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
 

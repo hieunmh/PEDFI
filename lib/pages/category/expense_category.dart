@@ -94,6 +94,7 @@ class ExpenseCategory extends GetView<CategoryController> {
                                     GestureDetector(
                                       onTap: () {
                                         controller.deleteCategory(element.id);
+                                        Get.back();
                                       },
                                       child: const Text(
                                         'Delete',
