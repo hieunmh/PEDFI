@@ -84,18 +84,6 @@ class ProfilePage extends GetView<ProfileController> {
                 ),
                 
                 const SizedBox(height: 20),
-                
-                SettingItem(
-                  title: 'Currency',
-                  icon: CupertinoIcons.money_dollar,
-                  iconColor: themeState.getDarkTheme? Colors.white : Colors.black87,
-                  value: 'USD',
-                  onTap: () {
-                    
-                  },
-                ),
-                
-                const SizedBox(height: 20),
 
                 SettingItem(
                   title: 'Category',

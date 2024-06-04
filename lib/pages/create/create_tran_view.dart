@@ -73,8 +73,7 @@ class CreateTransactionPage extends GetView<CreateTranController> {
                 padding: const EdgeInsets.all(20),
                 child: GestureDetector(
                   onTap: () {
-                    // controller.createTransaction();
-                    controller.createOfflineTransaction();
+                    controller.createTransaction();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15),
