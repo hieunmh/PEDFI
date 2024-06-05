@@ -55,7 +55,6 @@ class CustomCategoryPage extends GetView<CustomCategoryController> {
               onTap: () {
                 var uuid = const Uuid().v4();
                 controller.createCategory(uuid);
-                controller.createOfflineCategory(uuid);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
