@@ -154,7 +154,7 @@ class TranCatergory extends GetView<CreateTranController> {
                             Colors.grey.shade900 : Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
-                              color: controller.selectCategory.value == item.name ? 
+                              color: controller.selectCateId.value == item.id ? 
                               AppColor.expenseDarkColor : Colors.transparent,
                               width: 2.5
                             )

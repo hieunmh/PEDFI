@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pedfi/database/database_service.dart';
 import 'package:pedfi/model/category_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
+import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CustomCategoryController extends GetxController {
@@ -18,9 +19,11 @@ class CustomCategoryController extends GetxController {
   var selectIcon = 'beach.png'.obs;
 
   var appController = Get.find<ApplicationController>();
+  var homeController = Get.find<HomeController>();
 
 
-  void createOfflineCategory(String id) async {    
+
+  Future<void> createCategory(String id) async {    
     if (newCategory.text.isEmpty) {
       print('Please fill all!');
       return;
@@ -35,33 +38,23 @@ class CustomCategoryController extends GetxController {
 
     databaseService.createCategory(category);
 
-    await appController.getAllCategory();
-
-    Get.back();
-  }  
-
-
-  Future<void> createCategory(String id) async {    
-    if (newCategory.text.isEmpty) {
-      print('Please fill all!');
-      return;
+    if (homeController.isOnline.value) {
+      var res = await supabase.from('Categories').upsert({
+        'id': id,
+        'type': typecategory.value,
+        'name': newCategory.text,
+        'priority': null,
+        'image': selectIcon.value
+      }).select().single();
+      
+      Get.back(
+        result: {
+          'name': res['name'],
+          'id': res['id']
+        }
+      );
     }
 
-    var res = await supabase.from('Categories').upsert({
-      'id': id,
-      'type': typecategory.value,
-      'name': newCategory.text,
-      'priority': null,
-      'image': selectIcon.value
-    }).select().single();
-
     await appController.getAllCategory();
-
-    Get.back(
-      result: {
-        'name': res['name'],
-        'id': res['id']
-      }
-    );
   }
 }
