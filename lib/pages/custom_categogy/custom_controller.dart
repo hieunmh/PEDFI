@@ -39,7 +39,7 @@ class CustomCategoryController extends GetxController {
     databaseService.createCategory(category);
 
     if (homeController.isOnline.value) {
-      var res = await supabase.from('Categories').upsert({
+      await supabase.from('Categories').upsert({
         'id': id,
         'type': typecategory.value,
         'name': newCategory.text,
@@ -47,13 +47,14 @@ class CustomCategoryController extends GetxController {
         'image': selectIcon.value
       }).select().single();
       
-      Get.back(
+    }
+
+    Get.back(
         result: {
-          'name': res['name'],
-          'id': res['id']
+          'name': newCategory.text,
+          'id': id
         }
       );
-    }
 
     await appController.getAllCategory();
   }
