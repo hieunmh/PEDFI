@@ -60,7 +60,7 @@ class _MarketState extends State<Market> {
             children: [
               Padding(padding: EdgeInsets.only(bottom: myHeight * 0.025)),
               Container(
-                height: myHeight * 0.8,
+                height: myHeight * 0.75,
                 width: myWidth,
                 decoration: BoxDecoration(
                     color: bgColor,

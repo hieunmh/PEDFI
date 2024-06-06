@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:pedfi/consts/app_color.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:pedfi/model/candle_ticker_model.dart';
@@ -325,7 +326,8 @@ class _CoinSelectState extends State<CoinSelect> {
                                 return Center(
                                   child: Container(
                                     width: 200,
-                                    color: Theme.of(context).dialogBackgroundColor,
+                                    color:
+                                        Theme.of(context).dialogBackgroundColor,
                                     child: Wrap(
                                       children: intervals
                                           .map((e) => Padding(
@@ -387,6 +389,38 @@ class _CoinSelectState extends State<CoinSelect> {
                       ],
                     ),
                   ),
+                  const Divider(
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 110,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.incomeDarkColor),
+                            child: Center(
+                                child: Text("Buy",
+                                    style: TextStyle(fontSize: 16))),
+                          ),
+                          SizedBox(width: 25),
+                          Container(
+                            width: 110,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.expenseDarkColor),
+                            child: Center(
+                                child: Text("Sell",
+                                    style: TextStyle(fontSize: 16))),
+                          ),
+                        ],
+                      ))
                 ],
               );
             },
