@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
+import 'package:pedfi/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class HomeTransaction extends GetView<HomeController> {
@@ -16,7 +17,11 @@ class HomeTransaction extends GetView<HomeController> {
 
     final themeState = Provider.of<DarkThemeProvider>(context);
 
-    final Color color = themeState.getDarkTheme ? AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+    final Color color = themeState.getDarkTheme ? 
+    AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
+
+    final Color bgcolor = themeState.getDarkTheme ? 
+    AppColor.bgDarkThemeColor : AppColor.bgLightThemeColor;
 
     final currencyFormat = NumberFormat.currency(
       decimalDigits: 0,
@@ -51,7 +56,18 @@ class HomeTransaction extends GetView<HomeController> {
                           backgroundColor: AppColor.incomeDarkColor,
                           foregroundColor: Colors.white,
                           onPressed: (BuildContext context) {
-                            
+                            Get.toNamed(
+                              AppRoutes.EDIT_TRANSACTION,
+                              arguments: {
+                                'id': controller.filterTransaction[index].id,
+                                'image': controller.filterTransaction[index].image!.isEmpty ?
+                                  'assets/categoryicon/${controller.filterTransaction[index].category?['image']}'
+                                  : 'assets/categoryicon/${controller.filterTransaction[index].image}',
+                                'category': controller.filterTransaction[index].category?['name'] ?? 
+                                  controller.filterTransaction[index].name,
+                                'value': controller.filterTransaction[index].value.abs()
+                              }
+                            );
                           },
                         )
                       ],
@@ -66,7 +82,54 @@ class HomeTransaction extends GetView<HomeController> {
                           backgroundColor: AppColor.commonColor,
                           foregroundColor: Colors.white,
                           onPressed: (BuildContext context) {
-                            controller.deleteTransaction(controller.filterTransaction[index].id);
+                            showDialog(
+                              context: context, 
+                              builder: (_) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  backgroundColor: bgcolor,
+                                  content: Text(
+                                    'Are you sure to delete this transaction?',
+                                    style: TextStyle(
+                                      color: color
+                                    ),
+                                  ),
+                                  contentTextStyle: const TextStyle(
+                                    fontWeight: FontWeight.w700
+                                  ),
+                                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                                  actions: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        controller.deleteTransaction(controller.filterTransaction[index].id);
+                                        Get.back();
+                                      },
+                                      child: const Text(
+                                        'Delete',
+                                        style: TextStyle(
+                                          color: AppColor.commonColor,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.back(closeOverlays: true);
+                                      },
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          color: color,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                            );
                           },
                         )
                       ],

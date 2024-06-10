@@ -116,16 +116,7 @@ class HomeController extends GetxController {
 
     final asyncDataLength = (offlineData.length - onlineData.length).abs();
 
-    if (asyncDataLength == 0) {
-      return;
-    }
-
-    if (offlineData.isEmpty && onlineData.isNotEmpty) {
-      // sync online data to offline data
-    }
-
-
-    else if (offlineData.length > onlineData.length) {
+    if (offlineData.length > onlineData.length) {
       // add transaction to online
       var arrayDataAsync = offlineData.sublist(0, asyncDataLength);
 
@@ -176,6 +167,8 @@ class HomeController extends GetxController {
       
       }
 
+      print(prefs.getStringList('deleteId'));
+
       await prefs.remove('deleteId');
     }
   }
@@ -197,6 +190,7 @@ class HomeController extends GetxController {
       await getOfflineAllTransaction();
       return;
     } 
+
     await databaseService.deleteTransactionById(id);
 
     var financewallet = await supabase.from('Wallets').select('*').eq('user_id', appController.userId.value).eq('name', 'finance');

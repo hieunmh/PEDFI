@@ -7,6 +7,8 @@ import 'package:pedfi/pages/create/create_tran_bindings.dart';
 import 'package:pedfi/pages/create/create_tran_view.dart';
 import 'package:pedfi/pages/custom_categogy/custom_bindings.dart';
 import 'package:pedfi/pages/custom_categogy/custom_view.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_bidings.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_view.dart';
 import 'package:pedfi/pages/profile_detail/profiledetail_bindings.dart';
 import 'package:pedfi/pages/profile_detail/profiledetail_view.dart';
 import 'package:pedfi/pages/application/application_bindings.dart';
@@ -60,6 +62,12 @@ class AppPages {
       name: AppRoutes.CREATE_TRANSACTION, 
       page: () => CreateTransactionPage(),
       binding: CreateTranBidings()
+    ),
+
+    GetPage(
+      name: AppRoutes.EDIT_TRANSACTION, 
+      page: () => EditTransactionPage(),
+      binding: EditTranSactionBidings()
     ),
   ];
 }

@@ -108,13 +108,11 @@ class DatabaseService {
   Future<void> deleteTransactionById(String id) async {
     final db = await instance.database;
 
-    var res = await db.delete(
+    await db.delete(
       transactions,
       where: 'id = ?',
       whereArgs: [id]
     );
-
-    print(res);
   }
 
   Future<void> close() async {
