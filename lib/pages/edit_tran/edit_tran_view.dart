@@ -52,7 +52,7 @@ class EditTransactionPage extends GetView<EditTransactionController> {
         child: Column(
           children: [
             Text(
-              controller.argumentData[0]['id']
+              controller.argumentData['id'] ?? ''
             ),
           ],
         ),

@@ -58,7 +58,7 @@ class HomeTransaction extends GetView<HomeController> {
                           onPressed: (BuildContext context) {
                             Get.toNamed(
                               AppRoutes.EDIT_TRANSACTION,
-                              arguments: [{
+                              arguments: {
                                 'id': controller.filterTransaction[index].id,
                                 'image': controller.filterTransaction[index].image!.isEmpty ?
                                   'assets/categoryicon/${controller.filterTransaction[index].category?['image']}'
@@ -66,7 +66,7 @@ class HomeTransaction extends GetView<HomeController> {
                                 'category': controller.filterTransaction[index].category?['name'] ?? 
                                   controller.filterTransaction[index].name,
                                 'value': controller.filterTransaction[index].value.abs()
-                              }]
+                              }
                             );
                           },
                         )
