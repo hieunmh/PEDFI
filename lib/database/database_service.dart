@@ -115,6 +115,12 @@ class DatabaseService {
     );
   }
 
+  Future<void> editTransactionById(String id, Map<String, dynamic> data) async {
+    final db = await instance.database;
+
+    await db.update(transactions, data, where: 'id = ?', whereArgs: [id]);
+  }
+
   Future<void> close() async {
     final db = await instance.database;
     return db.close();

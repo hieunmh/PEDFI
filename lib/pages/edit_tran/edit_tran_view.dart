@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_amount.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_category.dart';
 import 'package:pedfi/pages/edit_tran/edit_tran_controller.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_date.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_note.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_type.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -51,9 +57,47 @@ class EditTransactionPage extends GetView<EditTransactionController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
-              controller.argumentData['id'] ?? ''
-            ),
+            const EditTranType(),
+
+            const EditTransactionDate(),
+
+            const EditTransactionAmount(),
+
+            const EditTransactionNote(),
+
+            const EditTransactionCategory(),
+
+            Padding(
+                padding: const EdgeInsets.all(20),
+                child: GestureDetector(
+                  onTap: () {
+                    controller.editTransaction();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: AppColor.commonColor,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: Obx(() =>
+                      Center(
+                        child: controller.isLoading.value ? 
+                          LoadingAnimationWidget.fallingDot(
+                            color: Colors.white, 
+                            size: 26
+                          ) : const Text(
+                          'Done',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18
+                          ),
+                        ) ,
+                      ),
+                    ),
+                  )
+                ),
+              )
           ],
         ),
       ),

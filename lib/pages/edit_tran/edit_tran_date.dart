@@ -1,16 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
-import 'package:pedfi/pages/create/create_tran_controller.dart';
+import 'package:pedfi/pages/edit_tran/edit_tran_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class DateInput extends GetView<CreateTranController> {
-  const DateInput({super.key});
+class EditTransactionDate extends GetView<EditTransactionController> {
+  const EditTransactionDate({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class DateInput extends GetView<CreateTranController> {
 
     final Color color = themeState.getDarkTheme ? 
     AppColor.textDarkThemeColor : AppColor.textLightThemeColor;
-
+    
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(
