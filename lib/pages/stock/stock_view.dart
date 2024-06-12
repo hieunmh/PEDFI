@@ -1,16 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/stock/News/page.dart';
 import 'package:pedfi/pages/stock/history.dart';
 import 'package:pedfi/pages/stock/stock_controller.dart';
-import 'package:pedfi/pages/stock/test.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:pedfi/pages/stock/home.dart';
-import 'package:pedfi/pages/stock/market.dart';
+import 'package:pedfi/pages/stock/market/market_view.dart';
 import 'package:pedfi/pages/stock/coinSelect.dart';
 
 class StockPage extends GetView<StockController> {
@@ -18,20 +14,15 @@ class StockPage extends GetView<StockController> {
 
   @override
   Widget build(BuildContext context) {
-    double myHeight = MediaQuery.of(context).size.height;
-    double myWidth = MediaQuery.of(context).size.width;
-    final themeState = Provider.of<DarkThemeProvider>(context);
+    double myHeight = Get.height;
 
-    final Color textColor = themeState.getDarkTheme
-        ? AppColor.textDarkThemeColor
-        : AppColor.textLightThemeColor;
+    final themeState = Provider.of<DarkThemeProvider>(context);
 
     final Color bgColor = themeState.getDarkTheme
         ? AppColor.bgDarkThemeColor
         : AppColor.bgLightThemeColor;
 
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       backgroundColor: bgColor,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -39,83 +30,83 @@ class StockPage extends GetView<StockController> {
         onPageChanged: (index) {
           controller.handlePageChange(index);
         },
-        children: const [Market(), CoinSelect(), NewsPage(), HistoryPage()],
+        children: const [MarketPage(), CoinSelect(), NewsPage(), HistoryPage()],
       ),
       bottomNavigationBar: Obx(() => Container(
-            decoration: const BoxDecoration(
-                border:
-                    Border(top: BorderSide(color: Colors.grey, width: 0.5))),
-            child: Theme(
-              data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
+        decoration: const BoxDecoration(
+            border:
+                Border(top: BorderSide(color: Colors.grey, width: 0.5))),
+        child: Theme(
+          data: ThemeData(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: bgColor,
+            currentIndex: controller.state.value,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            selectedItemColor: const Color(0xffFBC700),
+            unselectedItemColor: Colors.grey,
+            type: BottomNavigationBarType.fixed,
+            onTap: controller.handleNavBarTap,
+            items: [
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  'assets/icons/1.1.png',
+                  height: myHeight * 0.03,
+                  color: Colors.grey,
+                ),
+                label: '',
+                activeIcon: Image.asset(
+                  'assets/icons/1.2.png',
+                  height: myHeight * 0.03,
+                  color: Color(0xffFBC700),
+                ),
               ),
-              child: BottomNavigationBar(
-                backgroundColor: bgColor,
-                currentIndex: controller.state.value,
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
-                selectedItemColor: const Color(0xffFBC700),
-                unselectedItemColor: Colors.grey,
-                type: BottomNavigationBarType.fixed,
-                onTap: controller.handleNavBarTap,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
-                      'assets/icons/1.1.png',
-                      height: myHeight * 0.03,
-                      color: Colors.grey,
-                    ),
-                    label: '',
-                    activeIcon: Image.asset(
-                      'assets/icons/1.2.png',
-                      height: myHeight * 0.03,
-                      color: Color(0xffFBC700),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
-                      'assets/icons/7.1.png',
-                      height: myHeight * 0.03,
-                      color: Colors.grey,
-                    ),
-                    label: '',
-                    activeIcon: Image.asset(
-                      'assets/icons/7.2.png',
-                      height: myHeight * 0.03,
-                      color: Color(0xffFBC700),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
-                      'assets/icons/6.1.png',
-                      height: myHeight * 0.03,
-                      color: Colors.grey,
-                    ),
-                    label: '',
-                    activeIcon: Image.asset(
-                      'assets/icons/6.2.png',
-                      height: myHeight * 0.03,
-                      color: Color(0xffFBC700),
-                    ),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
-                      'assets/icons/4.1.png',
-                      height: myHeight * 0.03,
-                      color: Colors.grey,
-                    ),
-                    label: '',
-                    activeIcon: Image.asset(
-                      'assets/icons/4.2.png',
-                      height: myHeight * 0.03,
-                      color: Color(0xffFBC700),
-                    ),
-                  ),
-                ],
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  'assets/icons/7.1.png',
+                  height: myHeight * 0.03,
+                  color: Colors.grey,
+                ),
+                label: '',
+                activeIcon: Image.asset(
+                  'assets/icons/7.2.png',
+                  height: myHeight * 0.03,
+                  color: Color(0xffFBC700),
+                ),
               ),
-            ),
-          )),
-    ));
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  'assets/icons/6.1.png',
+                  height: myHeight * 0.03,
+                  color: Colors.grey,
+                ),
+                label: '',
+                activeIcon: Image.asset(
+                  'assets/icons/6.2.png',
+                  height: myHeight * 0.03,
+                  color: Color(0xffFBC700),
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  'assets/icons/4.1.png',
+                  height: myHeight * 0.03,
+                  color: Colors.grey,
+                ),
+                label: '',
+                activeIcon: Image.asset(
+                  'assets/icons/4.2.png',
+                  height: myHeight * 0.03,
+                  color: Color(0xffFBC700),
+                ),
+              ),
+            ],
+          ),
+        ),
+      )),
+    );
   }
 }
