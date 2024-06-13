@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/stock/overview/crypto_currency.dart';
 import 'package:pedfi/pages/stock/overview/overview_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -47,10 +48,10 @@ class OverviewPage extends GetView<OverviewController> {
         // ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Obx(() =>
-          Column(
+      body: Obx(() =>
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
               Row(
                 children: [
@@ -62,7 +63,7 @@ class OverviewPage extends GetView<OverviewController> {
                       fontSize: 14
                     ),
                   ),
-
+          
                   const SizedBox(width: 10),
           
                   SizedBox(
@@ -89,9 +90,9 @@ class OverviewPage extends GetView<OverviewController> {
                   )
                 ],
               ),
-
+          
               const SizedBox(height: 5),
-
+          
               controller.showTotalBalance.value ? 
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -117,10 +118,61 @@ class OverviewPage extends GetView<OverviewController> {
                   Icon(FontAwesomeIcons.starOfLife, color: color, size: 14),
                 ],
               ),
-
+          
               const Divider(),
 
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(0),
+                  child: DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: [
+                        TabBar(
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          indicatorColor: AppColor.commonColor,
+                          splashFactory: NoSplash.splashFactory,
+                          overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+                          labelColor: color,
+                          unselectedLabelColor: Colors.grey,
+                          dividerColor: Colors.grey,
+                          dividerHeight: 0.2,
+                          tabs: const [
+                            Tab(
+                              child: Text(
+                                'Cryptocurrency',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            Tab(
+                              child: Text(
+                                'History',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700
+                                ),
+                              ),
+                            )
+                          ]
+                        ),
 
+                        const Expanded(
+                          child: TabBarView(
+                            children: [
+                              CryptoCurrency(),
+
+                              Center(
+                                child: Text('Tab 2'),
+                              ),
+                            ]
+                          )
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              )
             ],
           ),
         ),

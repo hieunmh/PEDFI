@@ -64,18 +64,18 @@ class EditTransactionController extends GetxController {
     await databaseService.editTransactionById(id, transaction);
     await homeController.getOfflineAllTransaction();
 
-    // await supabase.from('Wallets').update({
-    //   'value': homeController.expenseMonthValue() + homeController.incomeMonthValue() - oldvalue + insertValue
-    // }).eq('id', appController.userId.value);
+    await supabase.from('Wallets').update({
+      'value': homeController.expenseMonthValue() + homeController.incomeMonthValue() - oldvalue + insertValue
+    }).eq('id', appController.userId.value);
 
-    // await supabase.from('Transactions').update({
-    //   'description': noteController.text,
-    //   'date': pickedDateTime.value,
-    //   'value': insertValue,
-    //   'is_notified': false,
-    // }).eq('id', id);
+    await supabase.from('Transactions').update({
+      'description': noteController.text,
+      'date': pickedDateTime.value,
+      'value': insertValue,
+      'is_notified': false,
+    }).eq('id', id);
 
-    // await homeController.getOnlineAllTransaction();
+    await homeController.getOnlineAllTransaction();
 
     isLoading.value = false;
     Get.back();
