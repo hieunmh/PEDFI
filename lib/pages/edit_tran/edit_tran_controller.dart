@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/database/database_service.dart';
+import 'package:pedfi/model/transaction_model.dart';
 import 'package:pedfi/pages/application/application_controller.dart';
 import 'package:pedfi/pages/application/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -46,6 +47,21 @@ class EditTransactionController extends GetxController {
 
     var insertValue = trantype.value == 'income' ? int.parse(amountController.text.replaceAll(',', '')) : 
         -1 * int.parse(amountController.text.replaceAll(',', ''));
+
+    var transaction = Transaction(
+      id: id, 
+      description: noteController.text, 
+      date: pickedDateTime.value, 
+      value: insertValue, 
+      category_id: selectCateId.value, 
+      is_notified: false, 
+      user_id: appController.userId.value.isNotEmpty ? appController.userId.value : 'nouserid', 
+      wallet_id: '', 
+      name: selectCategory.value,
+      image: selectCateImage.value
+    );
+
+    await databaseService.editTransactionById(id, transaction);
 
     await supabase.from('Wallets').update({
       'value': homeController.expenseMonthValue() + homeController.incomeMonthValue() - oldvalue + insertValue
