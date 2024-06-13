@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -139,14 +140,14 @@ class _CoinSelectState extends State<CoinSelect> {
                     height: 80,
                     width: double.maxFinite,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      padding: const EdgeInsets.only(left: 10, right: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           if (!snapshot.hasData)
-                            Center(
+                            const Center(
                               child: CircularProgressIndicator(),
                             ),
                           if (snapshot.hasData)
@@ -175,7 +176,7 @@ class _CoinSelectState extends State<CoinSelect> {
                                 ),
                               ),
                             ),
-                          const SizedBox(width: 20),
+                          const SizedBox(width: 10),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -348,7 +349,7 @@ class _CoinSelectState extends State<CoinSelect> {
                                                     },
                                                     child: Text(
                                                       e,
-                                                      style: const TextStyle(
+                                                      style: const TextStyle( 
                                                         color:
                                                             Color(0xFFF0B90A),
                                                       ),
@@ -394,30 +395,504 @@ class _CoinSelectState extends State<CoinSelect> {
                     color: Colors.grey,
                   ),
                   Container(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 110,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context, 
+                                builder: (_) {
+                                  return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child: IntrinsicWidth(
+                                      child: IntrinsicHeight(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                          child: Column(
+                                            children: [
+                                              
+                                              const Text(
+                                                'Buy',
+                                                style: TextStyle(
+                                                  fontSize: 20
+                                                ),
+                                              ),
+
+                                              const SizedBox(height: 10),
+                                          
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                                                child: const Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Icon(
+                                                      FontAwesomeIcons.minus,
+                                                      size: 16,
+                                                    ),
+                                          
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Value (USDT)',
+                                                          style: TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w500
+                                                          ),
+                                                        ),
+
+                                                        Text(
+                                                          '0,0000304',
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 14
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                          
+                                                    Icon(
+                                                      FontAwesomeIcons.plus,
+                                                      size: 16,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                                                child: const Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Icon(
+                                                      FontAwesomeIcons.minus,
+                                                      size: 16,
+                                                    ),
+                                          
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Quantity',
+                                                          style: TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w500
+                                                          ),
+                                                        ),
+
+                                                        Text(
+                                                          '1',
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 14
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                          
+                                                    Icon(
+                                                      FontAwesomeIcons.plus,
+                                                      size: 16,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              const Divider(),
+
+                                              const SizedBox(height: 10),
+
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                padding: const EdgeInsets.all(10),
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Total(USDT)',
+                                                    style:  TextStyle(
+                                                      fontWeight: FontWeight.w600
+                                                    ),
+                                                  ),
+                                                )
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              const Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Availability',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    '0 USDT',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 5),
+
+                                              const Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Buy max',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12,
+                                                      decoration: TextDecoration.underline
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    '0 BONK',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 5),
+
+                                              const Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Expected fee',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12,
+                                                      decoration: TextDecoration.underline
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    '0.01%',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: AppColor.incomeDarkColor,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Buy Bonk',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w500
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  );
+                                }
+                              );
+                            },
+                            child: Container(
+                              width: 110,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
                                 color: AppColor.incomeDarkColor),
-                            child: Center(
+                              child: const Center(
                                 child: Text("Buy",
-                                    style: TextStyle(fontSize: 16))),
+                                style:  TextStyle(fontSize: 16))),
+                            ),
                           ),
-                          SizedBox(width: 25),
-                          Container(
-                            width: 110,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColor.expenseDarkColor),
-                            child: Center(
+
+                          const SizedBox(width: 25),
+
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context, 
+                                builder: (_) {
+                                  return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child: IntrinsicWidth(
+                                      child: IntrinsicHeight(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                          child: Column(
+                                            children: [
+                                              
+                                              const Text(
+                                                'Sell',
+                                                style: TextStyle(
+                                                  fontSize: 20
+                                                ),
+                                              ),
+
+                                              const SizedBox(height: 10),
+                                          
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                                                child: const Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Icon(
+                                                      FontAwesomeIcons.minus,
+                                                      size: 16,
+                                                    ),
+                                          
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Value (USDT)',
+                                                          style: TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w500
+                                                          ),
+                                                        ),
+
+                                                        Text(
+                                                          '0,0000304',
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 14
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                          
+                                                    Icon(
+                                                      FontAwesomeIcons.plus,
+                                                      size: 16,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                                                child: const Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Icon(
+                                                      FontAwesomeIcons.minus,
+                                                      size: 16,
+                                                    ),
+                                          
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'Quantity',
+                                                          style: TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w500
+                                                          ),
+                                                        ),
+
+                                                        Text(
+                                                          '1',
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w600,
+                                                            fontSize: 14
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                          
+                                                    Icon(
+                                                      FontAwesomeIcons.plus,
+                                                      size: 16,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              const Divider(),
+
+                                              const SizedBox(height: 10),
+
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                padding: const EdgeInsets.all(10),
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Total(USDT)',
+                                                    style:  TextStyle(
+                                                      fontWeight: FontWeight.w600
+                                                    ),
+                                                  ),
+                                                )
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              const Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Availability',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    '0 USDT',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 5),
+
+                                              const Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Sell max',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12,
+                                                      decoration: TextDecoration.underline
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    '0 BONK',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 5),
+
+                                              const Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Expected fee',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12,
+                                                      decoration: TextDecoration.underline
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    '0.01%',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 12
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 10),
+
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: AppColor.expenseDarkColor,
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                child: const Center(
+                                                  child: Text(
+                                                    'Sell Bonk',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w500
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  );
+                                }
+                              );
+                            },
+                            child: Container(
+                              width: 110,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AppColor.expenseDarkColor),
+                              child: const Center(
                                 child: Text("Sell",
-                                    style: TextStyle(fontSize: 16))),
+                                style: TextStyle(fontSize: 16))),
+                            ),
                           ),
                         ],
                       ))
