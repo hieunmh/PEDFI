@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/stock/News/page.dart';
 import 'package:pedfi/pages/stock/history.dart';
+import 'package:pedfi/pages/stock/overview/overview_view.dart';
 import 'package:pedfi/pages/stock/stock_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class StockPage extends GetView<StockController> {
         onPageChanged: (index) {
           controller.handlePageChange(index);
         },
-        children: const [MarketPage(), CoinSelect(), NewsPage(), HistoryPage()],
+        children: const [MarketPage(), CoinSelect(), NewsPage(), OverviewPage()],
       ),
       bottomNavigationBar: Obx(() => Container(
         decoration: const BoxDecoration(
