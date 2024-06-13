@@ -61,8 +61,8 @@ class HomeTransaction extends GetView<HomeController> {
                               arguments: {
                                 'id': controller.filterTransaction[index].id,
                                 'image': controller.filterTransaction[index].image!.isEmpty ?
-                                  'assets/categoryicon/${controller.filterTransaction[index].category?['image']}'
-                                  : 'assets/categoryicon/${controller.filterTransaction[index].image}',
+                                  '${controller.filterTransaction[index].category?['image']}'
+                                  : '${controller.filterTransaction[index].image}',
                                 'category': controller.filterTransaction[index].category?['name'] ?? 
                                   controller.filterTransaction[index].name,
                                 'value': controller.filterTransaction[index].value,

@@ -118,7 +118,12 @@ class DatabaseService {
   Future<void> editTransactionById(String id, transactionmodel.Transaction  data) async {
     final db = await instance.database;
 
-    await db.update(transactions, data.toJson(), where: 'id = ?', whereArgs: [id]);
+    await db.update(
+      transactions, 
+      data.toJson(), 
+      where: 'id = ?', 
+      whereArgs: [id]
+    );
   }
 
   Future<void> close() async {
