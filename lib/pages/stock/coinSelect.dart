@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -97,9 +96,10 @@ class _CoinSelectState extends State<CoinSelect> {
     '1M',
   ];
   List<String> symbols = [];
-  String currentSymbol = "";
+  String currentSymbol = "ETHBTC";
   double availability = 0.0;
   final quantityController = TextEditingController(text: '1');
+  var maxStock = 0.0;
 
   List<Indicator> indicators = [
     BollingerBandsIndicator(
@@ -180,8 +180,9 @@ class _CoinSelectState extends State<CoinSelect> {
                                   fontSize: 20,
                                 ),
                               ),
-                            ),
+                          ),
                           const SizedBox(width: 10),
+                          
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -486,7 +487,7 @@ class _CoinSelectState extends State<CoinSelect> {
 
                                                         SizedBox(
                                                           height: 20,
-                                                          width: 30,
+                                                          width: 50,
                                                           child: TextField(
                                                             textAlignVertical: TextAlignVertical.top,
                                                             controller: quantityController,
@@ -611,8 +612,10 @@ class _CoinSelectState extends State<CoinSelect> {
                                               const SizedBox(height: 10),
 
                                               GestureDetector(
-                                                onTap: () {
-                                                  transactionStock(true, double.parse(quantityController.text));
+                                                onTap: () async {
+                                                  await transactionStock(true, double.parse(quantityController.text));
+                                                  await getMaxStock();
+                                                  Get.back();
                                                 },
                                                 child: Container(
                                                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -686,17 +689,12 @@ class _CoinSelectState extends State<CoinSelect> {
                                                   borderRadius: BorderRadius.circular(5)
                                                 ),
                                                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                                                child: const Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
-                                                    Icon(
-                                                      FontAwesomeIcons.minus,
-                                                      size: 16,
-                                                    ),
-                                          
                                                     Column(
                                                       children: [
-                                                        Text(
+                                                        const Text(
                                                           'Value (USDT)',
                                                           style: TextStyle(
                                                             color: Colors.grey,
@@ -706,19 +704,14 @@ class _CoinSelectState extends State<CoinSelect> {
                                                         ),
 
                                                         Text(
-                                                          '',
-                                                          style: TextStyle(
+                                                          candles.last.close.toString(),
+                                                          style: const TextStyle(
                                                             fontWeight: FontWeight.w600,
                                                             fontSize: 14
                                                           ),
                                                         )
                                                       ],
                                                     ),
-                                          
-                                                    Icon(
-                                                      FontAwesomeIcons.plus,
-                                                      size: 16,
-                                                    )
                                                   ],
                                                 ),
                                               ),
@@ -731,17 +724,13 @@ class _CoinSelectState extends State<CoinSelect> {
                                                   borderRadius: BorderRadius.circular(5)
                                                 ),
                                                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                                                child: const Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
-                                                    Icon(
-                                                      FontAwesomeIcons.minus,
-                                                      size: 16,
-                                                    ),
                                           
                                                     Column(
                                                       children: [
-                                                        Text(
+                                                        const Text(
                                                           'Quantity',
                                                           style: TextStyle(
                                                             color: Colors.grey,
@@ -750,20 +739,31 @@ class _CoinSelectState extends State<CoinSelect> {
                                                           ),
                                                         ),
 
-                                                        Text(
-                                                          '1',
-                                                          style: TextStyle(
-                                                            fontWeight: FontWeight.w600,
-                                                            fontSize: 14
+                                                        SizedBox(
+                                                          height: 20,
+                                                          width: 50,
+                                                          child: TextField(
+                                                            textAlignVertical: TextAlignVertical.top,
+                                                            controller: quantityController,
+                                                            style: const TextStyle(
+                                                              fontWeight: FontWeight.w700,
+                                                              
+                                                            ),
+                                                        
+                                                            keyboardType: TextInputType.number,
+                                                            cursorColor: Colors.black,
+                                                            decoration: const InputDecoration(
+                                                              border: InputBorder.none,
+                                                              hintText: '0', 
+                                                              hintStyle: TextStyle(
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.w500
+                                                              )
+                                                            ),
                                                           ),
                                                         )
                                                       ],
                                                     ),
-                                          
-                                                    Icon(
-                                                      FontAwesomeIcons.plus,
-                                                      size: 16,
-                                                    )
                                                   ],
                                                 ),
                                               ),
@@ -793,10 +793,10 @@ class _CoinSelectState extends State<CoinSelect> {
 
                                               const SizedBox(height: 10),
 
-                                              const Row(
+                                              Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     'Availability',
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.w500,
@@ -805,8 +805,8 @@ class _CoinSelectState extends State<CoinSelect> {
                                                   ),
 
                                                   Text(
-                                                    '0 USDT',
-                                                    style: TextStyle(
+                                                    '$availability USDT',
+                                                    style: const TextStyle(
                                                       fontWeight: FontWeight.w500,
                                                       fontSize: 12
                                                     ),
@@ -816,10 +816,10 @@ class _CoinSelectState extends State<CoinSelect> {
 
                                               const SizedBox(height: 5),
 
-                                              const Row(
+                                              Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
+                                                  const Text(
                                                     'Sell max',
                                                     style: TextStyle(
                                                       fontWeight: FontWeight.w500,
@@ -829,8 +829,8 @@ class _CoinSelectState extends State<CoinSelect> {
                                                   ),
 
                                                   Text(
-                                                    '0 BONK',
-                                                    style: TextStyle(
+                                                    '$maxStock $currentSymbol',
+                                                    style: const TextStyle(
                                                       fontWeight: FontWeight.w500,
                                                       fontSize: 12
                                                     ),
@@ -864,19 +864,26 @@ class _CoinSelectState extends State<CoinSelect> {
 
                                               const SizedBox(height: 10),
 
-                                              Container(
-                                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: AppColor.expenseDarkColor,
-                                                  borderRadius: BorderRadius.circular(5)
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'Sell $currentSymbol',
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w500
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  await transactionStock(false, -1 * double.parse(quantityController.text));
+                                                  await getMaxStock();
+                                                  Get.back();
+                                                },
+                                                child: Container(
+                                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: AppColor.expenseDarkColor,
+                                                    borderRadius: BorderRadius.circular(5)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'Sell $currentSymbol',
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w500
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -968,6 +975,23 @@ class _CoinSelectState extends State<CoinSelect> {
     });
     super.initState();
     getWalletCoin();
+    getMaxStock();
+  }
+
+  Future<void> getMaxStock() async {
+    final supabase = Supabase.instance.client;
+    var id = supabase.auth.currentUser?.id.toString() ?? '';
+
+    var res = await supabase.from('Coins').select()
+    .eq('user_id', id);
+    
+    if (res.isEmpty) {
+      return;
+    }
+
+    setState(() {
+      maxStock = res[0]['amount'].toDouble();
+    });
   }
 
   Future<void> getWalletCoin() async {
@@ -985,13 +1009,29 @@ class _CoinSelectState extends State<CoinSelect> {
     final supabase = Supabase.instance.client;
     var id = supabase.auth.currentUser?.id.toString() ?? '';
 
+    if (!type && maxStock == 0.0) {
+      return;
+    }
 
-    await supabase.from('Coins').upsert({
-      'user_id': id,
-      'coin_id': currentSymbol,
-      'amount': amount,
-      'average_price': candles.last.close
-    });
+    var res = await supabase.from('Coins').select()
+    .eq('user_id', id).eq('coin_id', currentSymbol);
+
+    if (res.isEmpty) {
+      await supabase.from('Coins').insert({
+        'user_id': id,
+        'coin_id': currentSymbol,
+        'amount': amount,
+        'average_price': candles.last.close
+      });
+    } else {
+      await supabase.from('Coins').update({
+        'user_id': id,
+        'coin_id': currentSymbol,
+        'amount': res[0]['amount'] + amount,
+        'average_price': candles.last.close
+      }).eq('user_id', id).eq('coin_id', currentSymbol);
+    }
+
 
     await supabase.from('CoinTransHistory').insert({
       'user_id': id,
@@ -1008,6 +1048,8 @@ class _CoinSelectState extends State<CoinSelect> {
       'value': type == true ? availability - z : availability + z
     })
     .eq('user_id', id).eq('name', 'coin');
+
+    quantityController.text = '1';
   }
 
   Future<void> loadMoreCandles() async {
