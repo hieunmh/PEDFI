@@ -132,7 +132,7 @@ class OverviewPage extends GetView<OverviewController> {
                           indicatorSize: TabBarIndicatorSize.tab,
                           indicatorColor: AppColor.commonColor,
                           splashFactory: NoSplash.splashFactory,
-                          overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+                          overlayColor: const MaterialStatePropertyAll(Colors.transparent),
                           labelColor: color,
                           unselectedLabelColor: Colors.grey,
                           dividerColor: Colors.grey,

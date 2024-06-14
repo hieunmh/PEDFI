@@ -99,7 +99,7 @@ class CategoryPage extends GetView<CategoryController> {
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicatorColor: AppColor.commonColor,
                       splashFactory: NoSplash.splashFactory,
-                      overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+                      overlayColor: const MaterialStatePropertyAll(Colors.transparent),
                       labelColor: AppColor.commonColor,
                       unselectedLabelColor: color,
                       dividerColor: Colors.grey,
