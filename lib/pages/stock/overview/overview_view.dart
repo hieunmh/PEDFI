@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/stock/overview/crypto_currency.dart';
+import 'package:pedfi/pages/stock/overview/history.dart';
 import 'package:pedfi/pages/stock/overview/overview_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -98,7 +99,7 @@ class OverviewPage extends GetView<OverviewController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '100.000 USD',
+                    '${controller.totalBalance.toStringAsFixed(2)} \$',
                     style: TextStyle(
                       height: 1,
                       color: color,
@@ -162,9 +163,7 @@ class OverviewPage extends GetView<OverviewController> {
                             children: [
                               CryptoCurrency(),
 
-                              Center(
-                                child: Text('Tab 2'),
-                              ),
+                              History()
                             ]
                           )
                         )
