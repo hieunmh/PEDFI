@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
+import 'package:intl/intl.dart';
 import 'package:pedfi/consts/app_color.dart';
 import 'package:pedfi/pages/stock/overview/overview_controller.dart';
 import 'package:pedfi/provider/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
-class CryptoCurrency extends GetView<OverviewController> {
-  const CryptoCurrency({super.key});
+class History extends GetView<OverviewController> {
+  const History({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +34,9 @@ class CryptoCurrency extends GetView<OverviewController> {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               childAspectRatio: 1,
-              mainAxisExtent: 80
+              mainAxisExtent: 90
             ),
-            children: controller.coinList.map(
+            children: controller.historyList.map(
               (item) => Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -53,25 +52,39 @@ class CryptoCurrency extends GetView<OverviewController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          item['coin_id'] ?? '',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: color
-                          ),
-                        ),
-
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(FontAwesomeIcons.starOfLife, color: color, size: 8),
-                            Icon(FontAwesomeIcons.starOfLife, color: color, size: 8),
-                            Icon(FontAwesomeIcons.starOfLife, color: color, size: 8),
-                            Icon(FontAwesomeIcons.starOfLife, color: color, size: 8),
-                            Icon(FontAwesomeIcons.starOfLife, color: color, size: 8),
-                            Icon(FontAwesomeIcons.starOfLife, color: color, size: 8),
+                            Text(
+                              item['coin_id'] ?? '',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: color,
+                                fontSize: 16
+                              ),
+                            ),
+
+                            const SizedBox(width: 5),
+
+                            Text(
+                              item['type_order'] ? 'Buy' : 'Sell',
+                              style: TextStyle(
+                                color: item['type_order'] ? AppColor.incomeDarkColor
+                                : AppColor.expenseDarkColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500
+                              ),
+                            )
                           ],
                         ),
+
+                        Text(
+                          DateFormat('HH:mm dd/MM/yyyy').format(DateTime.parse(item['created_at'])).toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey.shade500,
+                            fontSize: 12
+                          ),
+                        )
                       ],
                     ),
 
@@ -89,10 +102,10 @@ class CryptoCurrency extends GetView<OverviewController> {
                         ),
 
                         Text(
-                          item['amount'].toString(),
+                          item['amount'].abs().toString(),
                           style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12
                           ),
                         )
                       ],
@@ -110,10 +123,9 @@ class CryptoCurrency extends GetView<OverviewController> {
                         ),
 
                         Text(
-                          item['average_price'].toString(),
+                          item['price'].toString(),
                           style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12
+                            fontWeight: FontWeight.w500
                           ),
                         )
                       ],

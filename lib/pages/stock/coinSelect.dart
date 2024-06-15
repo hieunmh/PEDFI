@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pedfi/consts/app_color.dart';
+import 'package:pedfi/pages/stock/overview/overview_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -100,6 +101,7 @@ class _CoinSelectState extends State<CoinSelect> {
   double availability = 0.0;
   final quantityController = TextEditingController(text: '1');
   var maxStock = 0.0;
+  var overviewController = Get.find<OverviewController>();
 
   List<Indicator> indicators = [
     BollingerBandsIndicator(
@@ -407,6 +409,7 @@ class _CoinSelectState extends State<CoinSelect> {
                         children: [
                           GestureDetector(
                             onTap: () {
+                              getMaxStock();
                               showDialog(
                                 context: context, 
                                 builder: (_) {
@@ -615,6 +618,9 @@ class _CoinSelectState extends State<CoinSelect> {
                                                 onTap: () async {
                                                   await transactionStock(true, double.parse(quantityController.text));
                                                   await getMaxStock();
+                                                  await overviewController.getWalletCoin();
+                                                  await overviewController.getCoinList();
+                                                  await overviewController.getCoinHistory();
                                                   Get.back();
                                                 },
                                                 child: Container(
@@ -660,6 +666,7 @@ class _CoinSelectState extends State<CoinSelect> {
 
                           GestureDetector(
                             onTap: () {
+                              getMaxStock();
                               showDialog(
                                 context: context, 
                                 builder: (_) {
@@ -866,8 +873,11 @@ class _CoinSelectState extends State<CoinSelect> {
 
                                               GestureDetector(
                                                 onTap: () async {
-                                                  await transactionStock(false, -1 * double.parse(quantityController.text));
+                                                  await transactionStock(false, double.parse(quantityController.text));
                                                   await getMaxStock();
+                                                  await overviewController.getWalletCoin();
+                                                  await overviewController.getCoinList();
+                                                  await overviewController.getCoinHistory();
                                                   Get.back();
                                                 },
                                                 child: Container(
@@ -983,7 +993,7 @@ class _CoinSelectState extends State<CoinSelect> {
     var id = supabase.auth.currentUser?.id.toString() ?? '';
 
     var res = await supabase.from('Coins').select()
-    .eq('user_id', id);
+    .eq('user_id', id).eq('coin_id', currentSymbol);
     
     if (res.isEmpty) {
       return;
@@ -1027,7 +1037,7 @@ class _CoinSelectState extends State<CoinSelect> {
       await supabase.from('Coins').update({
         'user_id': id,
         'coin_id': currentSymbol,
-        'amount': res[0]['amount'] + amount,
+        'amount': type == true ? res[0]['amount'] + amount : res[0]['amount'] - amount,
         'average_price': candles.last.close
       }).eq('user_id', id).eq('coin_id', currentSymbol);
     }
