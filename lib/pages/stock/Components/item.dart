@@ -38,6 +38,7 @@ class Item extends StatelessWidget {
               width: 80,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     item.name,
@@ -47,14 +48,6 @@ class Item extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: textColor
                     ),
-                  ),
-                  Text(
-                    '0.4 ' + item.symbol,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 12, 
-                      color: Colors.grey
-                    )
                   ),
                 ],
               ),
